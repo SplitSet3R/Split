@@ -18,6 +18,7 @@ class CreateSharedExpenseTable extends Migration
             $table->float('amount_owed');
             $table->string('secondary_username');
             $table->string('comments');
+            $table->timestamp('date_added');
         });
     }
 
