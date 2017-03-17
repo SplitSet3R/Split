@@ -2,28 +2,47 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use Notifiable;
+    protected $table      = 'users';
+    protected $primaryKey = 'username';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * Method that returns the owned expenses by the user
+     * @return the expenses owned by the user
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    public function expenses()
+    {
+        return $this->hasMany('App\Expense', 'owner_username', 'username');
+    }
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * Method that returns the groups where the user is a member of
+     * @return the groups of user
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    public function groups()
+    {
+        return $this->belongsToMany('App\Group', 'groupmembers', 'username', 'group_id');
+    }
+
+    /**
+     * Method that returns all friends of user regardless of the status code.
+     * @return  all friends of user
+     */
+    public function allFriends()
+    {
+        return $this->belongsToMany('App\User', 'friends', 'username1', 'username2');
+    }
+
+    /**
+     * Method that returns all accepted friends of user.
+     * @return  all accepted friends of user
+     */
+    public function acceptedFriends()
+    {
+        return $this->belongsToMany('App\User', 'friends', 'username1', 'username2')
+                    ->wherePivot('status_code', '=', 'accepted');
+    }
 }
