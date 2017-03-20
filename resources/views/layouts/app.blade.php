@@ -12,12 +12,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap.min.css')}}">
+
     <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap-theme.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
     <!-- Scripts -->
-    <script src="{{asset('js/include/jquery-3.1.1.min.js')}}"></script>
-    <script src="{{asset('js/include/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/include/underscore-min.js')}}"></script>
     <script>
         window.Laravel = {!! json_encode([
@@ -65,7 +63,7 @@
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->email }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
