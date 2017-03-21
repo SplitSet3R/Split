@@ -19,9 +19,8 @@ class CreateExpensesTable extends Migration
             $table->float('amount');
             $table->date('date');
             $table->string('type');
-            $table->string('comments')->nullable();
-            $table->timestamp('updated_at');
-            $table->timestamp('created_at');
+            $table->string('comments');
+            $table->timestamp('date_added');
         });
     }
 
