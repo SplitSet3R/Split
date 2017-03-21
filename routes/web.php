@@ -10,7 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group(['middleware' => ['web']], function () {
+  Route::get('/', function () {
+      return view('welcome');
+  });
+  Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
+  Route::get('/dashboard', 'DashboardController@index');
 });
