@@ -11,10 +11,14 @@
 |
 */
 Route::group(['middleware' => ['web']], function () {
+
   Route::get('/', function () {
       return view('welcome');
   });
+
   Auth::routes();
 
   Route::get('/dashboard', 'DashboardController@index');
+
+  Route::post('/{username}/add', 'DashboardController@store');
 });

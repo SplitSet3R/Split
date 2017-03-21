@@ -9,8 +9,8 @@
                 </table></div>
                 <button href="#newExpense" class="btn btn-default" data-toggle="collapse">New Expense</button>
               <div class="collapse" id="newExpense">
-                  <form id="expForm" action="{{Auth::user()->firstname}}/add" method="POST" class="form-horizontal">
-
+                  <form id="expForm" action="/{{ Auth::user()->username }}/add" method="POST" class="form-horizontal">
+                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <label class="control-label">Type</label>
                           <select name="expType" class="form-control">
                                   <option value="Utilities">Utilities</option>
@@ -36,7 +36,11 @@
                       <button href="#newExpenseOwed" data-toggle="collapse" class="btn">Owed</button>
                           <div class="collapse" id="newExpenseOwed">
                               <h3>You have no friends!</h3>
-
+                              <label class="control-label">Owed</label>
+                              <select class="form-control" name="expOwerName">
+                                  <!-- TODO send via Dashboard controller a compact variable to display friends-->
+                                  <option value="expOwerUsername">UserName</option>
+                              </select>
                               <label class="control-label">Owed</label>
                               <input type="text" placeholder="Amount owed" class="form-control" name="expOwedAmount">
                               <label class="control-label">Comments:</label>
@@ -66,8 +70,27 @@
               </form>-->
               <div class='container'>
                 <table class='table' style='width:75%;' id='displayTable'>
-                  <thead class='thead-default'><th>Type<i class='fa fa-sort' aria-hidden='true'></i></th><th>Date<i class='fa fa-sort' aria-hidden='true'></i></th><th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th><th>Owed<i class='fa fa-sort' aria-hidden='true'></i></th><th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th><th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
-                  </thead><tbody></tbody></table>
+                    <thead class='thead-default'>
+                        <th>Type<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Owed<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
+                    </thead>
+                    <tbody>
+                    @foreach ($expenses as $expense)
+                        <tr>
+                            <td>{{$expense->type}}</td>
+                            <td>{{$expense->date}}</td>
+                            <td>{{$expense->amount}}</td>
+                            <td>{{$expense->amount_owed}}</td>
+                            <td>{{$expense->secondary_username}}</td>
+                            <td>{{$expense->comments}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
               </div>
               <script>$('table').tablesort();</script>
         </div>
