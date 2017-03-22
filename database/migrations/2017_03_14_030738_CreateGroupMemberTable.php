@@ -14,6 +14,7 @@ class CreateGroupMemberTable extends Migration
     public function up()
     {
         Schema::create('groupmembers', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('group_id');
             $table->string('username');
         });

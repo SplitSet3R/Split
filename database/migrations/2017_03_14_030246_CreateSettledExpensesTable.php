@@ -14,10 +14,12 @@ class CreateSettledExpensesTable extends Migration
     public function up()
     {
         Schema::create('settledexpenses', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('expense_id');
             $table->float('amount_owed');
             $table->string('secondary_username');
             $table->string('comments');
+            $table->date('date_added');
             $table->date('date_settled');
         });
     }

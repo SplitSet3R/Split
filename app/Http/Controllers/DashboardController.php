@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $newExpense->owner_username= Auth::user()->username;
         $newExpense->amount=$req->expAmount;
         $newExpense->type=$req->expType;
-        $newExpense->date=$req->expDate;
+        $newExpense->date_added=$req->expDate;
         $newExpense->comments=$req->expComments;
         if($newExpense->save()) {
             if(isset($req->expOwedAmount)&&isset($req->expOwerUsername)) {

@@ -78,7 +78,7 @@
                     @foreach ($expenses as $expense)
                         <tr>
                             <td>{{$expense->type}}</td>
-                            <td>{{$expense->date}}</td>
+                            <td>{{$expense->date_added}}</td>
                             <td>{{$expense->amount}}</td>
                             <td>{{$expense->amount_owed}}</td>
                             <td>{{$expense->secondary_username}}</td>

@@ -14,8 +14,8 @@ class UpdateGroupMemberTable extends Migration
     public function up()
     {
         Schema::table('groupmembers', function (Blueprint $table) {
-            // Primary Key
-            $table->primary(array('group_id', 'username'));
+            // Composite Unique Constraint
+            $table->unique(['group_id', 'username']);
 
             // Foreign Keys
             $table->foreign('group_id')->references('id')->on('groups');
