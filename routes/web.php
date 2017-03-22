@@ -17,4 +17,6 @@ Route::group(['middleware' => ['web']], function () {
   Auth::routes();
 
   Route::get('/dashboard', 'DashboardController@index');
+
+  Route::post('/{username}/add', 'DashboardController@store');
 });
