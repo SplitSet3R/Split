@@ -15,6 +15,7 @@ class UpdateUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             // Primary Key
+            $table->primary('username');
 
         });
     }

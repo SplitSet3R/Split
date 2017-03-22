@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SharedExpense extends Model
 {
-    protected $table      = 'sharedexpenses';
+    public  $incrementing = false;
+    public  $timestamps = false;
 }

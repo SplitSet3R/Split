@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Expense extends Model
 {
-    protected $table      = 'expenses';
-    protected $primaryKey = 'id';
-
+    public  $timestamps = false;
     /**
      * Method that returns the shared expenses from this expense
      * @return the shared expense from this expense.
