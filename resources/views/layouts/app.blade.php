@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
     <!-- Scripts -->
     <script src="{{asset('js/include/underscore-min.js')}}"></script>
-    <script src="{{asset('js/include/jquery-3.2.0.min.js')}}"></script>
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),

@@ -14,6 +14,9 @@ class UpdateFriendsTable extends Migration
     public function up()
     {
         Schema::table('friends', function (Blueprint $table) {
+            // Composite unique constraints
+            $table->unique(['username1', 'username2']);
+
             // Foreign keys
             $table->foreign('username1')->references('username')->on('users');
             $table->foreign('username2')->references('username')->on('users');
