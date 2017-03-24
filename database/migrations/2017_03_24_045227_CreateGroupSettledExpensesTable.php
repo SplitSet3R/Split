@@ -19,6 +19,7 @@ class CreateGroupSettledExpensesTable extends Migration
             $table->string('username');
             $table->float('amount_owed');
             $table->string('comments');
+            $table->date('date_added');
             $table->date('date_settled');
         });
     }
