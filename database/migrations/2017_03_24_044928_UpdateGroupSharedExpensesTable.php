@@ -14,7 +14,6 @@ class UpdateGroupSharedExpensesTable extends Migration
     public function up()
     {
         Schema::table('groupsharedexpenses', function (Blueprint $table) {
-            // Composite Unique Constraint
             $table->unique(['group_expense_id', 'username']);
 
             // Foreign Keys

@@ -17,9 +17,9 @@ class CreateGroupSharedExpensesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('group_expense_id');
             $table->string('username');
-            $table->unsignedInteger('amount_owed');
+            $table->float('amount_owed');
             $table->string('comments');
-            $table->dateTime('date_added');
+            $table->date('date_added');
         });
     }
 

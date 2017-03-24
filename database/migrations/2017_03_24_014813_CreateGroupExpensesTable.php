@@ -16,10 +16,10 @@ class CreateGroupExpensesTable extends Migration
         Schema::create('groupexpenses', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('group_id');
-            $table->unsignedInteger('amount');
+            $table->float('amount');
             $table->string('comments');
-            $table->dateTime('date_added');
-            $table->dateTime('date_settled');
+            $table->date('date_added');
+            $table->date('date_settled');
         });
     }
 

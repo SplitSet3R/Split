@@ -14,7 +14,6 @@ class UpdateGroupExpensesTable extends Migration
     public function up()
     {
         Schema::table('groupexpenses', function (Blueprint $table) {
-            $table->unique('group_id');
 
             // Foreign Keys
             $table->foreign('group_id')->references('id')->on('groups');
