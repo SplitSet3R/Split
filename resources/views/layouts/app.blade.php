@@ -12,9 +12,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
 
-    <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap-theme.min.css')}}">
+
     <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+
+
     <!-- Scripts -->
     <script src="{{asset('js/include/underscore-min.js')}}"></script>
     <script>
@@ -87,6 +92,7 @@
         </nav>
         @yield('styles')
         @yield('content')
+
     </div>
 
     <!-- Scripts -->
