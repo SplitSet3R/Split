@@ -20,7 +20,7 @@ class CreateGroupSharedExpensesTable extends Migration
             $table->float('amount_owed');
             $table->string('comments');
             $table->date('date_added');
-            $table->date('date_settled'):
+            $table->date('date_settled');
         });
     }
 
