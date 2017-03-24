@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupMemberTable extends Migration
+class AlterColumnsExpenseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateGroupMemberTable extends Migration
      */
     public function up()
     {
-        Schema::create('groupmembers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('group_id');
-            $table->string('username');
-        });
+        //
+        DB::statement('ALTER TABLE `expenses` MODIFY `comments` VARCHAR(255) NULL;');
+        DB::statement('ALTER TABLE `expenses` MODIFY `date_added` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ;');
     }
 
     /**
@@ -27,6 +25,6 @@ class CreateGroupMemberTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groupmembers');
+        //
     }
 }
