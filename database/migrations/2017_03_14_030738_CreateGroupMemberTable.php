@@ -17,6 +17,9 @@ class CreateGroupMemberTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('group_id');
             $table->string('username');
+            $table->boolean('status_code');
+            $table->unsignedInteger('action_group_id');
+            $table->boolean('is_Admin');
         });
     }
 
