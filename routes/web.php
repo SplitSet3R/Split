@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => ['web']], function () {
   Route::get('/', function () {
       return view('welcome');
   });
@@ -18,5 +17,10 @@ Route::group(['middleware' => ['web']], function () {
 
   Route::get('/dashboard', 'DashboardController@index');
 
-  Route::post('/{username}/add', 'DashboardController@store');
-});
+  Route::post('/{username}/addexpense', 'DashboardController@store');
+
+  Route::get('/search', 'AddFriendController@index');
+
+  Route::post('/search/addfriend', 'AddFriendController@addFriend');
+
+  Route::post('/search', 'AddFriendController@index');

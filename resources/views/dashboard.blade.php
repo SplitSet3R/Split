@@ -9,7 +9,7 @@
                 </table></div>
                 <button href="#newExpense" class="btn btn-default" data-toggle="collapse">New Expense</button>
               <div class="collapse" id="newExpense">
-                  <form id="expForm" action="/{{ Auth::user()->username }}/add" method="POST" class="form-horizontal">
+                  <form id="expForm" action="/{{ Auth::user()->username }}/addexpense" method="POST" class="form-horizontal">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <label class="control-label">Type</label>
                       <select name="expType" class="form-control">
