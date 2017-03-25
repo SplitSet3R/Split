@@ -17,7 +17,7 @@
         </div>
     </div>
   <br />
-  @if(isset($search_users))
+  @if(isset($search_users) && count($search_users) > 0)
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="well">
         @foreach($search_users as $user)
@@ -27,7 +27,7 @@
         <hr />
         @endforeach
     </div>
-    @else
+    @elseif (isset($search_users) && count($search_users) == 0)
       <h3>No users to show</h3>
     @endif
   </form>

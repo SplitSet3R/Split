@@ -19,8 +19,13 @@
 
   Route::post('/{username}/addexpense', 'DashboardController@store');
 
-  Route::get('/search', 'AddFriendController@index');
+  //TODO please implement the controller for this BE. Feel free to change the URIs if needed.
 
-  Route::post('/search/addfriend', 'AddFriendController@addFriend');
+  // This route goes to the search user page
+  // Route::get('/search', '[BackendController]');
 
-  Route::post('/search', 'AddFriendController@index');
+  // This route is an ajax request where the authenticated user invites a user as a friend
+  // Route::post('/search/addfriend', '[BackendController]');
+
+  // A post request that returns all users matched with the given search query
+  // Route::post('/search', '[BackendController]');
