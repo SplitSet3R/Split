@@ -19,4 +19,9 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('/dashboard', 'DashboardController@index');
 
   Route::post('/{username}/add', 'DashboardController@store');
+
+  Route::get('profile/{profile_name}','ProfileController@index');
+
+  /* Used for back-end testing */
+  Route::get('/debug', 'FriendController@index');
 });
