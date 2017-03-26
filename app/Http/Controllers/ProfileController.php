@@ -28,18 +28,15 @@ class ProfileController extends Controller
         $friendship = Friend::whereIn('username1', [Auth::user()->username, $profile_name])
             ->whereIn('username2', [Auth::user()->username, $profile_name])
             ->where('status_code', 'approved')->get();
+        //what if username1 == username2? this shouldn't happen but is a possibility.
         if ($friendship->count() == 0) {
-            return 2;
+            return config('constants.NOT_FRIENDS');
         } else if ($friendship->first()->status_code == "pending") {
-            return 1;
+            return config('constants.PENDING');
         } else if ($friendship->first()->status_code == "approved") {
-            return 0;
+            return config('constants.FRIENDS');
         }
-        return 3;
-    }
-
-    public function getSharedExpenses($profile_name){
-
+        return config('constants.PROFILE_ERROR');
     }
 
     /*
@@ -53,16 +50,45 @@ class ProfileController extends Controller
             ->groupBy('g.id')
             ->having('two_members', '=', '2')
             ->get();
-
-/*        $sharedgroups = DB::table('groups AS g')
-            ->join('groupmembers AS gm', 'g.id', '=', 'gm.group_id')
-            ->select('g.id AS group_id', 'g.name AS group_name', 'g.description AS desc')
-            ->whereIn('username', [Auth::user()->username, $profile_name])
-            ->groupBy('g.id')
-            ->having(DB::raw('COUNT(g.id) = 2'))
-            ->get();*/
         //TODO: try to implement this without having the count in the SELECT
+        //(Intersect and DB::raw in the where() don't work
         return $sharedgroups;
+    }
+
+    /*
+     * Queries shared expenses table and returns expenses
+     * owed to the person who's profile the user is visiting
+     */
+    public function getOwedExpenses($profile_name) {
+        $owedexpenses = DB::table('expenses AS e')
+            ->join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->where('e.owner_username', Auth::user()->username)
+            ->where('se.secondary_username', $profile_name)
+            ->select('se.amount_owed AS amount',
+                'e.type AS type',
+                'se.comments AS comments',
+                'se.date_added AS date_added',
+                'se.date_settled AS date_settled')
+            ->get();
+        return $owedexpenses;
+    }
+
+    /*
+    * Queries shared expenses table and returns expenses
+    * owed to the person who's profile the user is visiting
+    */
+    public function getOwingExpenses($profile_name) {
+        $owingexpenses = DB::table('expenses AS e')
+            ->join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->where('e.owner_username', $profile_name)
+            ->where('se.secondary_username', Auth::user()->username)
+            ->select('se.amount_owed AS amount',
+                'e.type AS type',
+                'se.comments AS comments',
+                'se.date_added AS date_added',
+                'se.date_settled AS date_settled')
+            ->get();
+        return $owingexpenses;
     }
 
     /*
@@ -72,18 +98,19 @@ class ProfileController extends Controller
     public function index($profile_name) {
         $profile_name = trim($profile_name);
         if (Auth::user()->username == $profile_name) {
-            return view('debug');
+            return view('welcome');
             // TODO: return own profile
         }
         $status = $this->friendCheck($profile_name);
-        if($status == 0) {
-            $sharedexpenses = $this->getSharedExpenses($profile_name);
+        if($status == config('constants.FRIENDS')) {
+            $owedexpenses = $this->getOwedExpenses($profile_name);
+            $owingexpenses = $this->getOwingExpenses($profile_name);
             $sharedgroups = $this->getSharedGroups($profile_name);
-            //$groupexpenses = $this->getGroupExpenses;
-            //TODO: add querying of groups expenses, clarify with FE on how they want to display this
-            return view('debug', compact('status', 'sharedgroups'));
+            return view('debug', compact('status', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
+            //TODO: implement redirect to frontend, replace "debug" with whatever page.
+        } else {
+            return view('debug', compsct('ststus'));
+            //TODO: this should return to a view where a limited profile is shown displaying either pending or not friends
         }
-
-        return view('debug', compact('status'));
     }
 }
