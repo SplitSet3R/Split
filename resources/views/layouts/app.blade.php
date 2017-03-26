@@ -12,11 +12,16 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
 
-    <link rel="stylesheet" href="{{ asset('css/bootstrap/bootstrap-theme.min.css')}}">
+
     <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+
+
     <!-- Scripts -->
-    <script src="{{asset('js/include/underscore-min.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -87,10 +92,12 @@
         </nav>
         @yield('styles')
         @yield('content')
+
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <!-- Custom Scripts -->
+    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{asset('js/include/underscore-min.js')}}"></script>
     @yield('scripts')
 </body>
 </html>
