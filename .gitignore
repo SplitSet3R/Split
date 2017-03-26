@@ -11,7 +11,9 @@ Vagrantfile
 .env
 /bootstrap/compiled.php
 /vendor
-/config/database.php
+
+# TODO After this branch is merged please remove this comment!!
+#/config/database.php
 
 
 /build/logs
