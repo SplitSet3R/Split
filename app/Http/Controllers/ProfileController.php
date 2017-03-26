@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Friend;
+use App\User;
 
 class ProfileController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    /*
+     * Returns user's info based on the profile name specified in the URL
+     */
+    public function getProfile($profile_name) {
+        return User::find($profile_name);
     }
 
     /*
@@ -103,10 +110,11 @@ class ProfileController extends Controller
         }
         $status = $this->friendCheck($profile_name);
         if($status == config('constants.FRIENDS')) {
+            $profile = $this->getProfile($profile_name);
             $owedexpenses = $this->getOwedExpenses($profile_name);
             $owingexpenses = $this->getOwingExpenses($profile_name);
             $sharedgroups = $this->getSharedGroups($profile_name);
-            return view('debug', compact('status', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
+            return view('debug', compact('profile','status', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
             //TODO: implement redirect to frontend, replace "debug" with whatever page.
         } else {
             return view('debug', compsct('ststus'));
