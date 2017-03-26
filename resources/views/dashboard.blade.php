@@ -1,12 +1,5 @@
 @extends('layouts.app')
 @section('content')
-    <div class="wrapper">
-    <div class="sidebar" data-color="green" >
-    @include('includes.sidebar')
-    </div>
-
-
-
     <div class="main-panel">
             <div class="container-fluid">
               <h4>{{ Auth::user()->firstname}}'s expenses</h4>

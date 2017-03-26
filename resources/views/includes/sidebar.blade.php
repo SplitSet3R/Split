@@ -1,4 +1,5 @@
 
+<div class="sidebar" data-color="green" >
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="active">
@@ -29,3 +30,4 @@
 
         </ul>
     </div>
+  </div>

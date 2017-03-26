@@ -90,9 +90,13 @@
                 </div>
             </div>
         </nav>
+        <div class="wrapper">
         @yield('styles')
+          @if(Auth::check())
+            @include('includes.sidebar')
+          @endif
         @yield('content')
-
+      </div>
     </div>
 
     <!-- Custom Scripts -->

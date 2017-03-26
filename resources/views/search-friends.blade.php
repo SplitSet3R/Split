@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
-<div class="container">
+<div class="container main-panel">
   <h3>Search Users</h3>
   <hr />
   <form method="POST" action="/search">
