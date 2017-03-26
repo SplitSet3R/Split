@@ -8,7 +8,7 @@
 <script src="https://use.fontawesome.com/156688d0a4.js"></script>
 @endsection
 @section('content')
-<div class="container">
+<div class="container main-content">
     <div class="row">
       <div class="jumbotron" style="background-image: url('images/gathering.jpg');" >
         <br>

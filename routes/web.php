@@ -12,7 +12,7 @@
 */
   Route::get('/', function () {
       return view('welcome');
-  });
+  })->middleware('guest');
   Auth::routes();
 
   Route::get('/dashboard', 'DashboardController@index');
