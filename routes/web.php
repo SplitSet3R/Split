@@ -19,6 +19,8 @@
 
   Route::post('/{username}/addexpense', 'DashboardController@store');
 
+  Route::get('/friends', 'FriendsController@index');
+
   //TODO please implement the controller for this BE. Feel free to change the URIs if needed.
 
   // This route goes to the search user page

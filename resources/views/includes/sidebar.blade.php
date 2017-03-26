@@ -20,12 +20,12 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="/friends">
                     <i class="material-icons">library_books</i>
                     <p>add friend</p>
                 </a>
             </li>
-            
+
 
         </ul>
     </div>
