@@ -21,7 +21,7 @@
 
 
     <!-- Scripts -->
-    <script src="{{asset('js/include/underscore-min.js')}}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -95,8 +95,9 @@
 
     </div>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <!-- Custom Scripts -->
+    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{asset('js/include/underscore-min.js')}}"></script>
     @yield('scripts')
 </body>
 </html>

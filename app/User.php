@@ -7,10 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $table      = 'users';
-    protected $primaryKey = 'username';
-    public    $timestamps = false;
-    public $incrementing = false;
+    protected $table        = 'users';
+    protected $primaryKey   = 'username';
+    public    $incrementing = false;
+    public    $timestamps   = false;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +29,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
 
     /**
      * Method that returns the owned expenses by the user

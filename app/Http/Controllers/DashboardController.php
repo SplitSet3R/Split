@@ -16,6 +16,7 @@ class DashboardController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function store(Request $req)
     {
         $this->validate($req, [
@@ -47,6 +48,7 @@ class DashboardController extends Controller
         }
         return redirect()->action('DashboardController@index');
     }
+
     public function getExpenses()
     {
         $expensesWhereUserOwns = DB::table('expenses AS e')
@@ -61,6 +63,7 @@ class DashboardController extends Controller
             ->get();
         return $allExpenses;
     }
+    
     public function getFriends()
     {
     }
