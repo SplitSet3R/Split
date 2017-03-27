@@ -1,11 +1,11 @@
 
-<div class="sidebar" data-color="green" >
+<div class="sidebar" data-color="green">
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="active">
-                <a href="dashboard.html">
+                <a class="openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">
                     <i class="material-icons">dashboard</i>
-                    <p>add Expense</p>
+                    <p>Add Expense</p>
                 </a>
             </li>
             <li>
@@ -24,11 +24,11 @@
 
                 <a href='/friends/search'>
                     <i class="material-icons">library_books</i>
-                    <p>add friend</p>
+                    <p>Add Friend</p>
                 </a>
             </li>
 
 
         </ul>
     </div>
-  </div>
+</div>
