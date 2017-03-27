@@ -31,7 +31,3 @@
   Route::get('/search', 'SearchController@index');
   Route::post('/search', 'SearchController@search');
   Route::post('search/addfriend', 'AjaxController@addfriend');
-
-  Route::get('/debug', function() {
-      return view('debug');
-    });
