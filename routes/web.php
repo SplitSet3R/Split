@@ -17,6 +17,10 @@
 
   Route::get('/dashboard', 'DashboardController@index');
 
+
+  Route::post('/{username}/add', 'DashboardController@store');
+
+  Route::get('profile/{profile_name}','ProfileController@index');
   Route::post('/{username}/addexpense', 'DashboardController@store');
 
   //TODO please implement the controller for this BE. Feel free to change the URIs if needed.
