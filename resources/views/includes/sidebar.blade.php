@@ -9,7 +9,8 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <!-- redirects to profile page based on username -->
+                <a href="profile/{{ Auth::user()->username }}">
                     <i class="material-icons">person</i>
                     <p>User Profile</p>
                 </a>
