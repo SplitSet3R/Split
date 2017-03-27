@@ -2,7 +2,7 @@
 @section('content')
 <div class="container main-panel">
   <h3>Search Users</h3>
-  <hr />
+  <br />
   <form method="POST" action="/search">
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="row">
@@ -10,7 +10,7 @@
               <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Search for...">
                 <span class="input-group-btn">
-                  <button name="submit" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></button>
+                  <button name="submit" class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </span>
               </div>
         </div>

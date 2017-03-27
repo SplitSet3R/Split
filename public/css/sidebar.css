@@ -526,7 +526,6 @@ h2.title {
   -webkit-overflow-scrolling: touch;
 }
 
-.btn,
 .navbar .navbar-nav > li > a.btn {
   border: none;
   border-radius: 3px;
