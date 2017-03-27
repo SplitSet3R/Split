@@ -83,7 +83,11 @@
                         <label class="control-label">Date</label>
                         <input type="date" name="expDate" class="form-control required">
                         <label class="control-label">Amount</label>
-                        <input type="text" name="expAmount" class="form-control required">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" value="0.00" id="expAmountInput" class="form-control required"
+                                   min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expAmount">
+                        </div>
                         <label class="control-label">Comments</label>
                         <input type="textarea" name="expComments" class="form-control">
                         <br>
@@ -91,7 +95,11 @@
                         <div class="collapse" id="newExpenseOwed">
                             <h3>You have no friends!</h3>
                             <label class="control-label">Owed</label>
-                            <input type="text" placeholder="Amount owed" class="form-control" name="expOwedAmount">
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="number" value="0.00" id="expOwedInput" class="form-control required"
+                                       min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expOwedAmount">
+                            </div>
                             <label class="control-label">Comments:</label>
                             <input type="textarea" class="form-control" name="expOwerComments">
                         </div>
