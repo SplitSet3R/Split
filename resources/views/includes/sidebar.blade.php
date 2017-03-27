@@ -21,6 +21,7 @@
                 </a>
             </li>
             <li>
+
                 <a href='/friends/search'>
                     <i class="material-icons">library_books</i>
                     <p>add friend</p>
