@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller
 {
+
     /*
      * AJAX Request to handle adding a friend specified in the request
      * conducted by the user currently authenticated
