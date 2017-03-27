@@ -1,4 +1,5 @@
 
+<div class="sidebar" data-color="green" >
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="active">
@@ -20,12 +21,13 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href='/friends/search'>
                     <i class="material-icons">library_books</i>
                     <p>add friend</p>
                 </a>
             </li>
-            
+
 
         </ul>
     </div>
+  </div>
