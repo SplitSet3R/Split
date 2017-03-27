@@ -1,54 +1,15 @@
 @extends('layouts.app')
 @section('content')
     <div class="main-panel">
-            <div class="container-fluid">
-              <h4>{{ Auth::user()->firstname}}'s expenses</h4>
-              <button href="#newExpense" class="btn btn-danger" data-toggle="collapse">New Expense</button>
-              <div class="collapse" id="newExpense">
-                  <form id="expForm" action="/{{ Auth::user()->username }}/addexpense" method="POST" class="form-horizontal">
-                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                      <label class="control-label">Type</label>
-                      <select name="expType" class="form-control">
-                            <option value="Utilities">Utilities</option>
-                            <option value="Groceries">Groceries</option>
-                            <option value="Household">Household</option>
-                            <option value="Rent">Rent/Mortgage</option>
-                            <option value="Loan">Loan</option>
-                            <option value="Restaurants">Restaurants</option>
-                            <option value="Active">Active</option>
-                            <option value="Clothing">Clothing</option>
-                            <option value="Entertainment">Entertainment</option>
-                            <option value="Hobbies">Hobbies</option>
-                            <option value="Work">Work</option>
-                            <option value="Insurance">Insurance</option>
-                            <option value="Savings">Savings</option>
-                      </select>
-                      <label class="control-label">Date</label>
-                      <input type="date" name="expDate" class="form-control required">
-                      <label class="control-label">Amount</label>
-                      <input type="text" name="expAmount" class="form-control required">
-                      <label class="control-label">Comments</label>
-                      <input type="textarea" name="expComments" class="form-control">
-                      <button href="#newExpenseOwed" data-toggle="collapse" class="btn">Owed</button>
-                      <div class="collapse" id="newExpenseOwed">
-                              <h3>You have no friends!</h3>
-
-                              <label class="control-label">Owed</label>
-                              <input type="text" placeholder="Amount owed" class="form-control" name="expOwedAmount">
-                              <label class="control-label">Comments:</label>
-                              <input type="textarea" class="form-control" name="expOwerComments">
-                          </div>
-                      <input type="submit" placeholder="Submit" id="expSubmit" name="newExpBtn" class="btn">
-                  </form>
-                  <script>
-                  //$("#expForm").validate();
-                  </script>
-              </div>
-              <div>
-                <table class='table'><thead><tr><th>OWED</th><th>OWES</th><th>TTL</th><th>BAL</th></tr></thead><tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
-                </table></div>
+        <div class="container-fluid">
+          <h4>{{ Auth::user()->firstname}}'s expenses</h4>
+            <button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">Add Expense</button>
+          <div>
+              <table class='table'><thead><tr><th>OWED</th><th>OWES</th><th>TTL</th><th>BAL</th></tr></thead><tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
+              </table>
           </div>
-          <div class="col-sm-9">
+        </div>
+        <div class="col-sm-9">
               <!--
               <form method="get" action="">
               <label>Order By</label>
@@ -90,5 +51,58 @@
               <script>$('table').tablesort();</script>
         </div>
     </div>
+
+    <div class="modal fade openAddExpenseModal" id="addExpenseModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="addExpenseModalLabel">Add an Expense</h4>
+                </div>
+
+                <form id="expForm" action="/{{ Auth::user()->username }}/addexpense" method="POST" class="form-horizontal">
+                    <div class="modal-body">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <label class="control-label">Type</label>
+                        <select name="expType" class="form-control">
+                            <option value="Utilities">Utilities</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Household">Household</option>
+                            <option value="Rent">Rent/Mortgage</option>
+                            <option value="Loan">Loan</option>
+                            <option value="Restaurants">Restaurants</option>
+                            <option value="Active">Active</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Hobbies">Hobbies</option>
+                            <option value="Work">Work</option>
+                            <option value="Insurance">Insurance</option>
+                            <option value="Savings">Savings</option>
+                        </select>
+                        <label class="control-label">Date</label>
+                        <input type="date" name="expDate" class="form-control required">
+                        <label class="control-label">Amount</label>
+                        <input type="text" name="expAmount" class="form-control required">
+                        <label class="control-label">Comments</label>
+                        <input type="textarea" name="expComments" class="form-control">
+                        <br>
+                        <button href="#newExpenseOwed" data-toggle="collapse" class="btn btn-default">Owed</button>
+                        <div class="collapse" id="newExpenseOwed">
+                            <h3>You have no friends!</h3>
+                            <label class="control-label">Owed</label>
+                            <input type="text" placeholder="Amount owed" class="form-control" name="expOwedAmount">
+                            <label class="control-label">Comments:</label>
+                            <input type="textarea" class="form-control" name="expOwerComments">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" placeholder="Submit" id="expSubmit" name="newExpBtn" class="btn btn-success openAddExpenseModal">
+                        <button type="button" id="closeAddExpenseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 @endsection
