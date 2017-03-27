@@ -16,6 +16,7 @@
                 <button href="#newExpense" class="btn btn-danger" data-toggle="collapse">New Expense</button>
               <div class="collapse" id="newExpense">
                   <form id="expForm" action="/{{ Auth::user()->username }}/addexpense" method="POST" class="form-horizontal">
+                      {{ csrf_field() }}
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <label class="control-label">Type</label>
                       <select name="expType" class="form-control">
