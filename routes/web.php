@@ -23,7 +23,7 @@
   Route::get('profile/{profile_name}','ProfileController@index');
   Route::post('/{username}/addexpense', 'DashboardController@store');
 
-  Route::get('/friends', 'FriendsController@index');
+  Route::get('/friends/search', 'FriendsController@search_view');
 
   //TODO please implement the controller for this BE. Feel free to change the URIs if needed.
 
