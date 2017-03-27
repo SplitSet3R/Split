@@ -24,7 +24,7 @@ class AjaxController extends Controller
                 $friendship->status_code = 'pending';
                 $friendship->action_username = Auth::user()->username;
                 $friendship->save();
-                return response()->json(array("message" => "friend added successfully"), 200);
+                return response()->json(array("message" => "friend request sent!"), 200);
             }
         }
         return response()->json(array("message" => "generic error message"), 500);

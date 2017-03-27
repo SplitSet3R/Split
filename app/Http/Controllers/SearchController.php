@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /*
      * Returns query results based on the search request.
      * Exludes the user who is currently authenticated from
@@ -15,9 +21,14 @@ class SearchController extends Controller
      */
     public function search(Request $req) {
         if (isset($req->search)) {
-            $query = trim($req->search);
-            $search_users = User::where('username', 'like', '%' . $query . '%')
-                ->where('username', '!=', Auth::user()->username)
+            $searchparam = trim($req->search);
+            $search_users = User::where('username', '!=', Auth::user()->username)
+                ->where(function($query) use ($searchparam) {
+                    $query->where('username', 'like', '%' . $searchparam . '%')
+                        ->orWhere('firstname', 'like', '%' . $searchparam . '%')
+                        ->orWhere('lastname', 'like', '%' . $searchparam . '%')
+                        ->orWhere('email', 'like', '%' . $searchparam . '%');
+                        })
                 ->get();
             return view('search-friends', compact('search_users'));
         }
