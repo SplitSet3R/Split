@@ -105,8 +105,8 @@ class ProfileController extends Controller
     public function index($profile_name) {
         $profile_name = trim($profile_name);
         if (Auth::user()->username == $profile_name) {
-            return view('welcome');
-            // TODO: return own profile
+            // TODO: return own profile - DONE
+            return view('profile');
         }
         $status = $this->friendCheck($profile_name);
         if($status == config('constants.FRIENDS')) {
