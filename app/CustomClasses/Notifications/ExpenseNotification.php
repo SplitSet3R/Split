@@ -22,19 +22,21 @@ class ExpenseNotification extends Notification
     public function messageForNotification(Notification $notification)
     {
         $message = "";
-        $message .= 'Expense ';
+        $message .= 'New Expense ';
 
         switch($notification->type) {
             case NotificationTypeEnum::REQUEST:
-                $message .= 'request from ';
+                $message .= 'request from: ';
+                $message .= $notification->sender;
+                $message .= ': $'.$notification->parameters;
                 break;
             case NotificationTypeEnum::ACTIVITY:
+                //perhaps it would be better to use this for settled expenses
                 $message .= 'generated in '.$notification->parameters . ' category';
                 break;
             default:
                 $message .= "error";
         }
-        $message .= $notification->sender;
         return $message;
     }
 

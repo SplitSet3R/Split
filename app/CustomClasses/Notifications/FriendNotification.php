@@ -20,10 +20,10 @@ class FriendNotification extends Notification
     public function messageForNotification(Notification $notification)
     {
         $message = "";
-        $message .= 'Friend ';
+        $message .= 'New Friend ';
         switch($notification->type) {
             case NotificationTypeEnum::REQUEST:
-                $message .= 'request from ' . $notification->sender;
+                $message .= 'request from: ' . $notification->sender;
                 break;
             case NotificationTypeEnum::ACTIVITY:
                 $message .= 'activity in ';

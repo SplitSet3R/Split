@@ -19,7 +19,7 @@ class CreateNotificationsTable extends Migration
             $table->string('sender_username');
             $table->smallInteger('category');
             $table->smallInteger('type');
-            $table->string('parameters');
+            $table->string('parameters')->nullable();
             $table->boolean('is_read')->default(0);
             $table->integer('reference_id');
             $table->timestamp('date_added');
@@ -33,6 +33,6 @@ class CreateNotificationsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('notifications');
     }
 }
