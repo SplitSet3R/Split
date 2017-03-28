@@ -38,27 +38,22 @@ class AjaxController extends Controller
         if ($req->json() && isset ($req->username)) {
             $friendship = Friend::whereIn('username1', [Auth::user()->username, $req->username])
                 ->whereIn('username2', [Auth::user()->username, $req->username])
-                ->where('status_code', 'pending');
+                ->where('status_code', 'pending')
+                ->get();
             if (isset ($req->accepted)) {
                 if ($req->accepted == 'accepted') {
                     $friendship->status_code = 'accepted';
+                    return response()->json(array("message" => "friend request accepted!"), 200);
                 } else if ($req->accepted == 'denied') {
-                    $friendship->statuts_code = 'denied';
+                    $friendship->status_code = 'denied';
+                    return response()->json(array("message" => "friend request denied!"), 200);
                 }
-                $friendship->save();
-
+                $friendship->save(); //may not actually save into db
             }
-            // accepted is a temp name may change
-
-            // What is Action_username?
-            // Order may matter?
+            // accepted is a temp name; may change
+            // What is action_username for?
+            // Username order may matter?
         }
-        /*
-        //if (isset( $req-> #####)) // have to figure out naming from json in req
-            //$search_param = trim($req->#####)
-            $search_users = User::where('username', '!=', Auth::user()->username)
-              // may have to exclude friends/ rejected users?
-                ->get();
-        */
+        return response()->json(array("message" => "generic error message"), 500);
     }
 }
