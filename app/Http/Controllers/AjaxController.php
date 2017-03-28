@@ -29,4 +29,68 @@ class AjaxController extends Controller
         }
         return response()->json(array("message" => "generic error message"), 500);
     }
+
+    /*
+     * AJAX Request to handle accepting/declining a friend request
+     *
+     */
+    public function processFriendRequest(Request $req) {
+        if ($req->json() && isset ($req->username)) {
+            $friendship = Friend::whereIn('username1', [Auth::user()->username, $req->username])
+                ->whereIn('username2', [Auth::user()->username, $req->username])
+                ->where('status_code', 'pending');
+            if (isset ($req->accepted)) {
+                if ($req->accepted == 'accepted') {
+                    $friendship->status_code = 'accepted';
+                } else if ($req->accepted == 'denied') {
+                    $friendship->statuts_code = 'denied';
+                }
+                $friendship->save();
+
+            }
+            // accepted is a temp name may change
+
+            // What is Action_username?
+            // Order may matter?
+        }
+        //if (isset( $req-> #####)) // have to figure out naming from json in req
+            //$search_param = trim($req->#####)
+            $search_users = User::where('username', '!=', Auth::user()->username)
+              // may have to exclude friends/ rejected users?
+                ->get();
+    }
+/*
+    public function search(Request $req) {
+        if (isset($req->search)) {
+            $searchparam = trim($req->search);
+            $search_users = User::where('username', '!=', Auth::user()->username)
+                ->where(function($query) use ($searchparam) {
+                    $query->where('username', 'like', '%' . $searchparam . '%')
+                        ->orWhere('firstname', 'like', '%' . $searchparam . '%')
+                        ->orWhere('lastname', 'like', '%' . $searchparam . '%')
+                        ->orWhere('email', 'like', '%' . $searchparam . '%');
+                })
+                ->get();
+            return view('search-friends', compact('search_users'));
+        }
+        return view('search-friends');
+    }
+*/
+    /*
+    public function search(Request $req) {
+        if (isset($req->search)) {
+            $searchparam = trim($req->search);
+            $search_users = User::where('username', '!=', Auth::user()->username)
+                ->where(function($query) use ($searchparam) {
+                    $query->where('username', 'like', '%' . $searchparam . '%')
+                        ->orWhere('firstname', 'like', '%' . $searchparam . '%')
+                        ->orWhere('lastname', 'like', '%' . $searchparam . '%')
+                        ->orWhere('email', 'like', '%' . $searchparam . '%');
+                })
+                ->get();
+            return view('search-friends', compact('search_users'));
+        }
+        return view('search-friends');
+    }
+    */
 }
