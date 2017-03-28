@@ -19,4 +19,5 @@ Route::group(['middleware' => ['web']], function () {
   Route::get('/dashboard', 'DashboardController@index');
 
   Route::post('/{username}/add', 'DashboardController@store');
+  Route::get('/friends', 'FriendController@index');
 });

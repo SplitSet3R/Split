@@ -61,9 +61,32 @@ class User extends Authenticatable
      * Method that returns all accepted friends of user.
      * @return  all accepted friends of user
      */
+
     public function acceptedFriends()
     {
-        return $this->belongsToMany('App\User', 'friends', 'username1', 'username2')
-                    ->wherePivot('status_code', '=', 'accepted');
+        $foundInUser2 = $this->belongsToMany('App\User', 'friends', 'username2', 'username1')
+            ->wherePivot('status_code', '=', 'accepted')->get();
+        $foundInUser1 = $this->belongsToMany('App\User', 'friends', 'username1', 'username2')
+                             ->wherePivot('status_code', '=', 'accepted')->get();
+
+        $merged = $foundInUser1->merge($foundInUser2);
+        return $merged;
+
+    }
+
+    /**
+     * method returns all friend requests sent to the user that have not been accepted
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function friendsRequests()
+    {
+        $foundInUser1 =  $this->belongsToMany('App\User', 'friends', 'username1', 'username2')
+                              ->wherePivot('status_code', '=', 'pending')
+                              ->wherePivot('action_username', '!=', $this->username)->get();
+        $foundInUser2 =  $this->belongsToMany('App\User', 'friends', 'username2', 'username1')
+                              ->wherePivot('status_code', '=', 'pending')
+                              ->wherePivot('action_username', '!=', $this->username)->get();
+        $merged = $foundInUser1->merge($foundInUser2);
+        return $merged;
     }
 }
