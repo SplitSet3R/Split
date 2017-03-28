@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupMemberTable extends Migration
+class CreateGroupSettledExpensesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateGroupMemberTable extends Migration
      */
     public function up()
     {
-        Schema::create('groupmembers', function (Blueprint $table) {
+        Schema::create('groupsettledexpenses', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('group_id');
+            $table->unsignedInteger('group_shared_expense_id');
             $table->string('username');
-            $table->string('status_code');
-            $table->unsignedInteger('action_group_id');
-            $table->boolean('is_Admin');
+            $table->float('amount_owed');
+            $table->string('comments');
+            $table->date('date_added');
+            $table->date('date_settled');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateGroupMemberTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groupmembers');
+        Schema::dropIfExists('groupsettledexpenses');
     }
 }
