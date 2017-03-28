@@ -80,13 +80,8 @@ class User extends Authenticatable
      */
     public function friendsRequests()
     {
-        $foundInUser1 =  $this->belongsToMany('App\User', 'friends', 'username1', 'username2')
+        return $this->belongsToMany('App\User', 'friends', 'username2', 'username1')
                               ->wherePivot('status_code', '=', 'pending')
                               ->wherePivot('action_username', '!=', $this->username)->get();
-        $foundInUser2 =  $this->belongsToMany('App\User', 'friends', 'username2', 'username1')
-                              ->wherePivot('status_code', '=', 'pending')
-                              ->wherePivot('action_username', '!=', $this->username)->get();
-        $merged = $foundInUser1->merge($foundInUser2);
-        return $merged;
     }
 }

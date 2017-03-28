@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class FriendController extends Controller
 {
-    public function Index(){
+    public function index(){
         $user = \App\User::find(Auth::user() -> username);
         $acceptedFriends = $user->acceptedFriends();
         $incomingRequests = $user->friendsRequests();
-        return view('friends', compact('acceptedFriends', 'incomingRequests'));
+        //TODO return view file once Front End completes it
+//        return view('friends', compact('acceptedFriends', 'incomingRequests'));
     }
 }
