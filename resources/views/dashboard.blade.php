@@ -2,8 +2,30 @@
 @section('content')
     <div class="main-panel">
         <div class="container-fluid">
-          <h4>{{ Auth::user()->firstname}}'s expenses</h4>
-            <button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">Add Expense</button>
+            <div class="row">
+                <div class="col-md-2">
+                    <h4>{{ Auth::user()->firstname}}'s expenses</h4>
+                </div>
+                <div class="col-md-10">
+                    <button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">Add Expense</button>
+                    <div class="btn-group">
+                        <button class="btn" type="button" data-toggle="dropdown"><i class="material-icons">person_add</i></button>
+                        <ul class="dropdown-menu" >
+                            @foreach($friendNotifications as $fnotification)
+                                <li>{{$fnotification[1]}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn" type="button" data-toggle="dropdown"><i class="material-icons">notifications_active</i></button>
+                        <ul class="dropdown-menu">
+                            @foreach($expenseNotifications as $enotification)
+                                <li>{{$enotification[1]}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
           <div>
               <table class='table'><thead><tr><th>OWED</th><th>OWES</th><th>TTL</th><th>BAL</th></tr></thead><tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
               </table>
