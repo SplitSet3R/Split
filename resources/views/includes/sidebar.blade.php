@@ -10,7 +10,7 @@
             </li>
             <li>
                 <!-- redirects to profile page based on username -->
-                <a href="profile/{{ Auth::user()->username }}">
+                <a href="./profile/{{ Auth::user()->username }}">
                     <i class="material-icons">person</i>
                     <p>User Profile</p>
                 </a>
