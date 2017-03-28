@@ -6,6 +6,7 @@ use App\CustomClasses\Notifications\NotificationCategoryEnum;
 use App\CustomClasses\Notifications\NotificationTypeEnum;
 use Illuminate\Http\Request;
 use App\Expense;
+use App\Notification;
 use App\SharedExpense;
 use DB;
 use Auth;
@@ -74,7 +75,12 @@ class DashboardController extends Controller
     {
     }
 
-    public function newExpenseRequestNotification(Expense $expense, Expense $sharedExpense)
+    /**
+     * Generate an expense request notification.
+     * @param Expense $expense
+     * @param Expense $sharedExpense
+     */
+    public function makeExpenseRequestNotification(Expense $expense, Expense $sharedExpense)
     {
         $notification = new Notification;
         $notification->recipient_username = $sharedExpense->secondary_username;
@@ -87,15 +93,15 @@ class DashboardController extends Controller
     }
 
     /**
-     * Get notifications where user is the recipient or it involves user and other friends.
-     * @return mixed
+     * Get notifications where user is the recipient of the friend request.
+     * @return an array of arrays. Each sub array contains 1. Notification object, 2. Notification message (string)
      */
     public function getFriendNotifications()
     {
         $requests = DB::table('notifications')
             ->where('recipient_username', Auth::user()->username)
-            ->where('category', 2)
-            //->where('type', 1) //Uncomment for just friend request notifications
+            ->where('category', 2) //category 2 is for just Friend notifications
+            ->where('type', 1) //Just request notifications
             ->orderBy('is_read', 'ASC')
             ->get();
         $notifications = array();
@@ -112,12 +118,16 @@ class DashboardController extends Controller
         return $notifications;
     }
 
+    /**
+     * Get expense request notifications where the user is the recipient.
+     * @return array holding subarrays of 1. Notification object, 2. Notification message as string
+     */
     public function getExpenseNotifications()
     {
         $requests = DB::table('notifications')
         ->where('recipient_username', Auth::user()->username)
-        ->where('category', 1)
-        //->where('type', 1) //uncomment for just expense request notifications
+        ->where('category', 1) //only expense notifications
+        ->where('type', 1) //only requests -- uncomment for all types
         ->orderBy('is_read', 'ASC')
         ->get();
         $notifications = array();

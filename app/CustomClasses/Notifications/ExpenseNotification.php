@@ -34,6 +34,7 @@ class ExpenseNotification extends Notification
             default:
                 $message .= "error";
         }
+        $message .= $notification->sender;
         return $message;
     }
 
