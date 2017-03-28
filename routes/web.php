@@ -26,11 +26,9 @@
   Route::get('profile/{profile_name}','ProfileController@index');
   Route::post('/{username}/addexpense', 'DashboardController@store');
 
-  Route::get('/friends/search', 'FriendsController@search_view');
-
-  //TODO please implement the controller for this BE. Feel free to change the URIs if needed.
-
   // This route goes to the search user page
   Route::get('/search', 'SearchController@index');
   Route::post('/search', 'SearchController@search');
-  Route::post('search/addfriend', 'AjaxController@addfriend');
+  Route::post('/search/addfriend', 'AjaxController@addfriend');
+
+  Route::get('/friends', 'FriendController@index');
