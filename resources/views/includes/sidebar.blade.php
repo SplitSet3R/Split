@@ -28,8 +28,6 @@
                     <p>Add Friend</p>
                 </a>
             </li>
-
-
         </ul>
     </div>
 </div>

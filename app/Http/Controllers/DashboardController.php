@@ -1,7 +1,12 @@
 <?php
 namespace App\Http\Controllers;
+use App\CustomClasses\Notifications\ExpenseNotification;
+use App\CustomClasses\Notifications\FriendNotification;
+use App\CustomClasses\Notifications\NotificationCategoryEnum;
+use App\CustomClasses\Notifications\NotificationTypeEnum;
 use Illuminate\Http\Request;
 use App\Expense;
+use App\Notification;
 use App\SharedExpense;
 use DB;
 use Auth;
@@ -29,7 +34,7 @@ class DashboardController extends Controller
         $newExpense->owner_username= Auth::user()->username;
         $newExpense->amount=$req->expAmount;
         $newExpense->type=$req->expType;
-        $newExpense->date_added=$req->expDate;
+        $newExpense->date=$req->expDate;
         $newExpense->comments=$req->expComments;
         if($newExpense->save()) {
             if(isset($req->expOwedAmount)&&isset($req->expOwerUsername)) {
@@ -43,7 +48,9 @@ class DashboardController extends Controller
                 $newSharedExpense->amount_owed=$req->expOwedAmount;
                 $newSharedExpense->comments=$req->expOwerComments;
                 $newSharedExpense->secondary_username=$req->expOwerUsername;
-                $newSharedExpense->save();
+                if($newSharedExpense->save()) {
+                    $this->makeExpenseRequestNotification($newExpense, $newSharedExpense);
+                }
             }
         }
         return redirect()->action('DashboardController@index');
@@ -69,6 +76,75 @@ class DashboardController extends Controller
     }
 
     /**
+     * Generate an expense request notification.
+     * @param Expense $expense
+     * @param Expense $sharedExpense
+     */
+    public function makeExpenseRequestNotification(Expense $expense, Expense $sharedExpense)
+    {
+        $notification = new Notification;
+        $notification->recipient_username = $sharedExpense->secondary_username;
+        $notification->sender_username = $expense->owner_username;
+        $notification->category = NotificationCategoryEnum::EXPENSE;
+        $notification->type = NotificationTypeEnum::REQUEST;
+        $notification->parameters = $sharedExpense->amount_owed;
+        $notification->reference_id = $sharedExpense->id;
+        $notification->save();
+    }
+
+    /**
+     * Get notifications where user is the recipient of the friend request.
+     * @return an array of arrays. Each sub array contains 1. Notification object, 2. Notification message (string)
+     */
+    public function getFriendNotifications()
+    {
+        $requests = DB::table('notifications')
+            ->where('recipient_username', Auth::user()->username)
+            ->where('category', 2) //category 2 is for just Friend notifications
+            ->where('type', 1) //Just request notifications
+            ->orderBy('is_read', 'ASC')
+            ->get();
+        $notifications = array();
+        foreach($requests as $request)
+        {
+            $n = new FriendNotification($request->recipient_username,
+                $request->sender_username,
+                $request->category, $request->type,
+                $request->parameters, $request->reference_id);
+
+            $notification = array($n, $n->messageForNotification($n));
+            array_push($notifications, $notification);
+        }
+        return $notifications;
+    }
+
+    /**
+     * Get expense request notifications where the user is the recipient.
+     * @return array holding subarrays of 1. Notification object, 2. Notification message as string
+     */
+    public function getExpenseNotifications()
+    {
+        $requests = DB::table('notifications')
+        ->where('recipient_username', Auth::user()->username)
+        ->where('category', 1) //only expense notifications
+        ->where('type', 1) //only requests -- uncomment for all types
+        ->orderBy('is_read', 'ASC')
+        ->get();
+        $notifications = array();
+        foreach($requests as $request) {
+            $n = new ExpenseNotification($request->recipient_username,
+                $request->sender_username,
+                $request->category,
+                $request->type,
+                $request->parameters,
+                $request->reference_id);
+            $notification = array($n, $n->messageForNotification($n));
+            array_push($notifications, $notification);
+        }
+        return $notifications;
+    }
+
+    /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
@@ -76,7 +152,8 @@ class DashboardController extends Controller
     public function index()
     {
         $expenses = $this->getExpenses();
-        //$friends = getFriends();
-        return view('dashboard', compact('expenses'));
+        $friendNotifications = $this->getFriendNotifications();
+        $expenseNotifications = $this->getExpenseNotifications();
+        return view('dashboard', compact('expenses', 'friendNotifications', 'expenseNotifications'));
     }
 }
