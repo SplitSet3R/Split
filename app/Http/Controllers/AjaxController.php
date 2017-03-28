@@ -53,44 +53,12 @@ class AjaxController extends Controller
             // What is Action_username?
             // Order may matter?
         }
+        /*
         //if (isset( $req-> #####)) // have to figure out naming from json in req
             //$search_param = trim($req->#####)
             $search_users = User::where('username', '!=', Auth::user()->username)
               // may have to exclude friends/ rejected users?
                 ->get();
+        */
     }
-/*
-    public function search(Request $req) {
-        if (isset($req->search)) {
-            $searchparam = trim($req->search);
-            $search_users = User::where('username', '!=', Auth::user()->username)
-                ->where(function($query) use ($searchparam) {
-                    $query->where('username', 'like', '%' . $searchparam . '%')
-                        ->orWhere('firstname', 'like', '%' . $searchparam . '%')
-                        ->orWhere('lastname', 'like', '%' . $searchparam . '%')
-                        ->orWhere('email', 'like', '%' . $searchparam . '%');
-                })
-                ->get();
-            return view('search-friends', compact('search_users'));
-        }
-        return view('search-friends');
-    }
-*/
-    /*
-    public function search(Request $req) {
-        if (isset($req->search)) {
-            $searchparam = trim($req->search);
-            $search_users = User::where('username', '!=', Auth::user()->username)
-                ->where(function($query) use ($searchparam) {
-                    $query->where('username', 'like', '%' . $searchparam . '%')
-                        ->orWhere('firstname', 'like', '%' . $searchparam . '%')
-                        ->orWhere('lastname', 'like', '%' . $searchparam . '%')
-                        ->orWhere('email', 'like', '%' . $searchparam . '%');
-                })
-                ->get();
-            return view('search-friends', compact('search_users'));
-        }
-        return view('search-friends');
-    }
-    */
 }
