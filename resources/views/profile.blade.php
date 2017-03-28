@@ -15,7 +15,18 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        <img src="http://split.app/images/default-profile-picture.jpg" id="profileImage" style="width: 200px;">
+                        <?php
+                            // TODO upload user profile image - feature not yet implemented;
+                            $uploadedImg = false;
+                            if ($uploadedImg) {
+                                echo "'<img src='" . asset('images/#uploaded_user_profile') . "'";
+                                echo "id='profileImage'" . "style='width: 200px;'>";
+                            } else {
+                                // default profile pic
+                                echo "'<img src='" . asset('images/default-profile-picture.jpg') . "'";
+                                echo "id='profileImage'" . "style='width: 200px;'>";
+                            }
+                        ?>
                         <h2>{{ Auth::user()->username }}</h2>
                     </div>
                     <div class="col-md-6">
