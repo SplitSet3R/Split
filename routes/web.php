@@ -20,6 +20,9 @@
 
   Route::post('/{username}/add', 'DashboardController@store');
 
+  Route::get('/friends', 'FriendController@index');
+
+
   Route::get('profile/{profile_name}','ProfileController@index');
   Route::post('/{username}/addexpense', 'DashboardController@store');
 
