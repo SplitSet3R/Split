@@ -117,7 +117,7 @@ class ProfileController extends Controller
             return view('debug', compact('profile','status', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
             //TODO: implement redirect to frontend, replace "debug" with whatever page.
         } else {
-            return view('debug', compsct('ststus'));
+            return view('debug', compact('ststus'));
             //TODO: this should return to a view where a limited profile is shown displaying either pending or not friends
         }
     }
