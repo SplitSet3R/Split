@@ -28,10 +28,6 @@
   //TODO please implement the controller for this BE. Feel free to change the URIs if needed.
 
   // This route goes to the search user page
-  // Route::get('/search', '[BackendController]');
-
-  // This route is an ajax request where the authenticated user invites a user as a friend
-  // Route::post('/search/addfriend', '[BackendController]');
-
-  // A post request that returns all users matched with the given search query
-  // Route::post('/search', '[BackendController]');
+  Route::get('/search', 'SearchController@index');
+  Route::post('/search', 'SearchController@search');
+  Route::post('search/addfriend', 'AjaxController@addfriend');
