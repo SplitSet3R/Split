@@ -11,7 +11,7 @@ function addFriend(username, token) {
     })
 };
 
-function addFriend(username, response) {
+function friendRequestResponse(username, response) {
     $.ajax({
         type: "POST",
         url: '/friend/process',
