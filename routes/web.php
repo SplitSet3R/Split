@@ -32,3 +32,4 @@
   Route::post('/search/addfriend', 'AjaxController@addfriend');
 
   Route::get('/friends', 'FriendController@index');
+ // Route::post('/friends/process', backEndController)

@@ -11,9 +11,9 @@
                 @foreach($incomingRequests as $user)
                     <!-- TODO route to user's profile-->
                         <a href="#"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
-                    <span class="pull-right"><button type="button" onclick="friendRequestResponse(this.value)" class="btn btn-danger" name="decline-request" value="declined">Decline</button></span>
-                    <span class="pull-right"><button type="button" onclick="friendRequestResponse(this.value)" class="btn btn-danger" name="accept-request" value="accepted">Accept</button></span>
-
+                    <span class="pull-right" id="accept-{{ $user->username }}"><button type="button" onclick="friendRequestResponse(this.value)" class="btn btn-danger" name="decline-request" value="declined">Decline</button></span>
+                    <span class="pull-right" id="declined-{{ $user->username }}"><button type="button" onclick="friendRequestResponse(this.value)" class="btn btn-danger" name="accept-request" value="accepted">Accept</button></span>
+                    <span class="pull-right" id="feedback"></span>
                     @endforeach
                 </div>
             @elseif (isset($incomingRequests) && count($incomingRequests) == 0)
