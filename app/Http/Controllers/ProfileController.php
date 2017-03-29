@@ -114,11 +114,19 @@ class ProfileController extends Controller
             $owedexpenses = $this->getOwedExpenses($profile_name);
             $owingexpenses = $this->getOwingExpenses($profile_name);
             $sharedgroups = $this->getSharedGroups($profile_name);
-            return view('debug', compact('profile','status', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
+            //return view('debug', compact('profile','status', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
+
             //TODO: implement redirect to frontend, replace "debug" with whatever page.
         } else {
             return view('debug', compact('ststus'));
             //TODO: this should return to a view where a limited profile is shown displaying either pending or not friends
         }
+
+
+    }
+
+    public function userProfile(){
+        return view('userProfile');
+
     }
 }

@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\SharedExpense;
 use DB;
 use Auth;
-class DashboardController extends Controller
+
+class AddExpenseController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -63,7 +65,7 @@ class DashboardController extends Controller
             ->get();
         return $allExpenses;
     }
-    
+
     public function getFriends()
     {
     }
@@ -77,6 +79,6 @@ class DashboardController extends Controller
     {
         $expenses = $this->getExpenses();
         //$friends = getFriends();
-        return view('dashboard', compact('expenses'));
+        return view('addExpense', compact('expenses'));
     }
 }
