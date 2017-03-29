@@ -18,9 +18,9 @@ function friendRequestResponse(username, response) {
         data:  { 'username' : username, 'accepted' : response },
         dataType: 'json',
         success: function(data) {
-            $("#accept-" + username).remove();
-            $("#declined-" + username).remove();
-            $("#feedback").text(data.message);
+            $("#" + username + " #accept").remove();
+            $("#" + username + " #declined").remove();
+            $("#" + username + " #feedback").text(data.message);
         }
     })
 };
