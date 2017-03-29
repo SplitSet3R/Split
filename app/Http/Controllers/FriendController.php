@@ -13,6 +13,6 @@ class FriendController extends Controller
         $acceptedFriends = $user->acceptedFriends();
         $incomingRequests = $user->friendsRequests();
         //TODO return view file once Front End completes it
-//        return view('friends', compact('acceptedFriends', 'incomingRequests'));
+        return view('friends', compact('acceptedFriends', 'incomingRequests'));
     }
 }

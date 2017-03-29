@@ -23,12 +23,17 @@
             </li>
             <li>
 
-                <a href='/friends/search'>
+                <a href='/search'>
                     <i class="material-icons">library_books</i>
                     <p>Add Friend</p>
                 </a>
             </li>
-
+            <li>
+                <a href="/friends">
+                    <i class="material-icons">content_paste</i>
+                    <p>Friends List</p>
+                </a>
+            </li>
 
         </ul>
     </div>
