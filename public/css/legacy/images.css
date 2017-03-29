@@ -1,0 +1,13 @@
+.front-page-images {
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.jumbotron-img {
+    background-image: url('images/finances.png');
+}
+
+#profileImage {
+    width: 200px;
+}
