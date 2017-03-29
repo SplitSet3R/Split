@@ -10,7 +10,7 @@
                     <!-- TODO route to user's profile-->
                     <div id="{{ $user->username }}">
                       <a href="#"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
-                      <span class="pull-right" id="declined"><button type="button" onclick="friendRequestResponse('{{ $user->username }}', this.value)" class="btn btn-danger" name="accepted" value="denied">Decline</button></span>
+                      <span class="pull-right" id="declined"><button type="button" onclick="friendRequestResponse('{{ $user->username }}', this.value)" class="btn btn-danger" name="accepted" value="declined">Decline</button></span>
                       <span class="pull-right" id="accept"><button type="button" onclick="friendRequestResponse('{{ $user->username }}', this.value)" class="btn btn-danger" name="accepted" value="accepted">Accept</button></span>
                       <span class="pull-right" id="feedback"></span>
                       <hr />
