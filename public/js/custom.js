@@ -14,11 +14,11 @@ function addFriend(username, token) {
 function friendRequestResponse(username, response) {
     $.ajax({
         type: "POST",
-        url: '/friend/process',
+        url: '/friends/process',
         data:  { 'username' : username, 'accepted' : response },
         dataType: 'json',
         success: function(data) {
-            $("#accepted-" + username).remove();
+            $("#accept-" + username).remove();
             $("#declined-" + username).remove();
             $("#feedback").text(data.message);
         }
