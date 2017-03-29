@@ -52,9 +52,13 @@ class User extends Authenticatable
      * Method that returns all friends of user regardless of the status code.
      * @return  all friends of user
      */
-    public function allFriends()
+    public function allRelatedUsers()
     {
-        return $this->belongsToMany('App\User', 'friends', 'username1', 'username2');
+        $foundInUser1 =  $this->belongsToMany('App\User', 'friends', 'username1', 'username2')->get();
+        $foundInUser2 =  $this->belongsToMany('App\User', 'friends', 'username2', 'username1')->get();
+
+        $merged = $foundInUser1->merge($foundInUser2);
+        return $merged;
     }
 
     /**

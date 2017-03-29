@@ -1,25 +1,24 @@
 @extends('layouts.app')
 @section('content')
     <div class="container main-panel">
-        <h3>Friends</h3>
-        <br />
         <h3>Pending Friend Requests</h3>
-
             @if(isset($incomingRequests) && count($incomingRequests) > 0)
 
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="well">
                 @foreach($incomingRequests as $user)
                     <!-- TODO route to user's profile-->
-                        <a href="#"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
-                    <span class="pull-right" id="declined-{{ $user->username }}"><button type="button" onclick="friendRequestResponse('{{ $user->username }}', this.value)" class="btn btn-danger" name="accepted" value="declined">Decline</button></span>
-                    <span class="pull-right" id="accept-{{ $user->username }}"><button type="button" onclick="friendRequestResponse('{{$user->username}}', this.value)" class="btn btn-danger" name="accepted" value="accepted">Accept</button></span>
-                    <span class="pull-right" id="feedback"></span>
-                    <hr/>
+                    <div id="{{ $user->username }}">
+                      <a href="#"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
+                      <span class="pull-right" id="accept"><button type="button" onclick="friendRequestResponse({{ $user->username }}, this.value)" class="btn btn-danger" name="decline-request" value="declined">Decline</button></span>
+                      <span class="pull-right" id="declined"><button type="button" onclick="friendRequestResponse(this.value)" class="btn btn-danger" name="accept-request" value="accepted">Accept</button></span>
+                      <span class="pull-right" id="feedback"></span>
+                      <hr />
+                    </div>
+
                     @endforeach
                 </div>
             @elseif (isset($incomingRequests) && count($incomingRequests) == 0)
-            {{var_dump($incomingRequests)}}
                 <h3>No friend requests to show</h3>
             @endif
 
