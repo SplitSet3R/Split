@@ -28,7 +28,7 @@
             <li>
                 <a href="{{ url('/search') }}">
                     <i class="material-icons">today</i>
-                    <p>add friend</p>
+                    <p>Add Friend</p>
 
                 </a>
             </li>
