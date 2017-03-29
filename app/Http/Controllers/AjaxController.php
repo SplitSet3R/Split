@@ -36,13 +36,12 @@ class AjaxController extends Controller
      */
     public function processFriendRequest(Request $req) {
         if ($req->json() && isset ($req->username)) {
-            //$friendship = Friend::where('username2', Auth::user()->username)->where('username1', $req->username)->where('status_code', 'pending')->where('action_username', '!=', Auth::user()->username)->get();
-
             $friendship = Friend::where('username2', '=', Auth::user()->username)
                 ->where('username1', '=',  $req->username)
                 ->where('status_code', '=', 'pending')
                 ->where('action_username', '!=', Auth::user()->username)
                 ->first();
+
             if (isset ($req->accepted)) {
                 if ($req->accepted == 'accepted') {
                     $friendship->status_code = 'accepted';
