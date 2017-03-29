@@ -1,18 +1,20 @@
 
-<div class="sidebar" data-color="green" >
+<div class="sidebar" data-color="green">
     <div class="sidebar-wrapper">
         <ul class="nav">
 
             <li class="active">
                 <a href="{{ url('/addExpense') }}">
-                    <i class ="material-icons">book</i>
+                    <i class="material-icons">dashboard</i>
                     <p>Add Expense</p>
                 </a>
             </li>
 
             <li>
-                <a href="{{ url('/userProfile') }}">
+                <!-- redirects to profile page based on username -->
+                <a href="../profile/{{ Auth::user()->username }}">
                     <i class="material-icons">face</i>
+
                     <p>User Profile</p>
                 </a>
             </li>
@@ -24,10 +26,10 @@
                 </a>
             </li>
             <li>
-
                 <a href="{{ url('/search') }}">
                     <i class="material-icons">today</i>
                     <p>add friend</p>
+
                 </a>
             </li>
 
@@ -38,8 +40,6 @@
                     <p>Statistics</p>
                 </a>
             </li>
-
-
         </ul>
     </div>
-  </div>
+</div>

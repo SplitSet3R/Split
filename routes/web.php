@@ -33,6 +33,14 @@
 
 
 
+  Route::get('/friends', 'FriendController@index');
+
+
+  Route::get('profile/{profile_name}','ProfileController@index');
+  Route::post('/{username}/addexpense', 'DashboardController@store');
+
+
+
   /* FriendController */
   //Route::get('/friends/search', 'FriendsController@search_view');
 

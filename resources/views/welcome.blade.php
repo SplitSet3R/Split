@@ -17,7 +17,8 @@
    <div class="container" style="font-family:courier;color:white;background: rgba(33, 33, 33, .9);">
         <br>
       <div>
-         <h1>Split</h1>
+          <!-- way to direct back to dashboard from split.app -->
+          <a href="./dashboard" style="text-decoration: none !important; color: white;"><h1>Split</h1></a>
             <hr>
          <p style="font-size:18px;">Track shared expenses as well as your own -- all in one place.</p>
          <!--<p><a class="btn btn-lg" href="signup.php" role="button">Learn more &raquo;</a></p>-->
