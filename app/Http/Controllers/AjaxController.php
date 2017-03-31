@@ -47,8 +47,8 @@ class AjaxController extends Controller
                     $friendship->status_code = 'accepted';
                     $friendship->save();
                     return response()->json(array("message" => "friend request accepted!"), 200);
-                } else if ($req->accepted == 'denied') {
-                    $friendship->status_code = 'denied';
+                } else if ($req->accepted == 'declined') {
+                    $friendship->status_code = 'declined';
                     $friendship->save();
                     return response()->json(array("message" => "friend request denied!"), 200);
                 }
