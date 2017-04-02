@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -108,6 +109,8 @@ class ProfileController extends Controller
      *          please check for @if(session('success')) to see successful edit was made.
      */
     public function edit(Request $req) {
+        //TODO: handle email conflict more elegantly
+        //TODO: talk to front end about refining error messages/how to sort them
         if(isset($profile_name) && Auth::user()->username == $profile_name ) {
             try {
                 $user = User::findOrFail(Auth::user()->username);
@@ -124,7 +127,13 @@ class ProfileController extends Controller
                 $user->bio = $req->bio;
             if(isset($req->avatar))
                 $user->avatar = $req->avatar;
-            $user->save();
+            try {
+                $user->save();
+            } catch (QueryException $e) {
+                if ($e->errorInfo[1] == 1062) {
+                    return redirect()->back()->with('error', 'email address already taken');
+                }
+            }
             return redirect()->back()->with('success', 'success');
         } else {
             return redirect()->back()->with('error', 'error message');
