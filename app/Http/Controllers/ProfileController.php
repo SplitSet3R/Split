@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Friend;
 use App\User;
 
@@ -104,7 +105,7 @@ class ProfileController extends Controller
      * name of the user authenticated as an error message can be accessed on the other side and a success message if it can
      *
      * FE Note: please check for @if(session('error')) to see if this is being thrown.
-     *          please check for @if(session('success')) to see successful edit
+     *          please check for @if(session('success')) to see successful edit was made.
      */
     public function edit(Request $req) {
         if(isset($profile_name) && Auth::user()->username == $profile_name ) {
