@@ -109,8 +109,7 @@ class ProfileController extends Controller
     public function edit(Request $req) {
         if(isset($profile_name) && Auth::user()->username == $profile_name ) {
             try {
-                $user = User::findOrFail(Auth::user()->username)
-                    ->first();
+                $user = User::findOrFail(Auth::user()->username);
             } catch (ModelNotFoundException $e) {
                 return redirect()->back()->with('error', 'no user found with this username');
             }
