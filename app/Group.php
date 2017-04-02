@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     public  $timestamps = false;
-
+    protected $fillable = [
+        'name', 'description'
+    ];
     /**
      * Method that returns the members of this group.
      * @return members of this group
