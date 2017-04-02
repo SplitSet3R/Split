@@ -132,12 +132,12 @@ class ProfileController extends Controller
                 $user->save();
             } catch (QueryException $e) {
                 if ($e->errorInfo[1] == 1062) {
-                    return redirect()->back()->with('error', 'email address already taken');
+                    return redirect()->back()->with('error', 'Email address already taken');
                 }
             }
             return redirect()->back()->with('success', 'success');
         } else {
-            return redirect()->back()->with('error', 'error message');
+            return redirect()->back()->with('error', 'You can only edit your own profile!');
         }
     }
 
