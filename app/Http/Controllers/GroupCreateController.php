@@ -17,7 +17,7 @@ class GroupCreateController extends Controller
      */
     public function store(Request $req)
     {
-        if (isset($req->name) &&  Group::where('name', '=', '$req->name')->get()->isEmpty()) {
+        if (isset($req->name) &&  Group::where('name', '=', $req->name)->get()->isEmpty()) {
             $group = new Group; // probably auto creates id
             $group->name = $req->name;
             $group->description = $req->description;
