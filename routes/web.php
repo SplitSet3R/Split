@@ -33,3 +33,6 @@
 
   Route::get('/friends', 'FriendController@index');
   Route::post('/friends/process', 'AjaxController@processFriendRequest');
+
+  /* Groups controller */
+  Route::get('/groups', 'GroupDashboardController@index');
