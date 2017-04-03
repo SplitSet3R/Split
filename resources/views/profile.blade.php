@@ -49,6 +49,14 @@
                             </tr>
                         </table>
                         <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+                        @if(session('error'))
+                            <br><br>
+                            <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error') }}</p>
+                        @endif
+                        @if(session('success'))
+                            <br><br>
+                            <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}</p>
+                        @endif
                     </div>
                 </div> <!-- row -->
             </div> <!-- container-fluid -->
@@ -81,7 +89,7 @@
                                 <input type="email" name="email" id="modal_email" class="form-control" value="{{ Auth::user()->email }}">
 
                                 {!! Form::label('bio', 'Biography:') !!}
-                                <input type="text" name="bio" id="modal_bio" class="form-control" value="{{ Auth::user()->bio }}">
+                                <textarea name="bio" id="modal_bio" class="form-control" rows="3" cols="75">{{ Auth::user()->bio }}</textarea>
                             </div>
                         </div>
                     </div>
