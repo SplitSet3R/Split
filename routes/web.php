@@ -10,24 +10,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-  Route::get('/', function () {
-      return view('welcome');
-  })->middleware('guest');
-  Auth::routes();
+Route::get('/', function () {
+  return view('welcome');
+})->middleware('guest');
+Auth::routes();
 
-  Route::get('/dashboard', 'DashboardController@index');
+/*  Profile Routes*/
+Route::get('profile/{profile_name}','ProfileController@index');
+Route::post('profile/{profile_name}/edit', 'ProfileController@edit');
 
+/*Dashboard Routes*/
+Route::post('/{username}/addexpense', 'DashboardController@store');
+Route::get('/dashboard', 'DashboardController@index');
+Route::post('/{username}/add', 'DashboardController@store');
 
-  Route::post('/{username}/add', 'DashboardController@store');
+/*Search Routes*/
+Route::get('/search', 'SearchController@index');
+Route::post('/search', 'SearchController@search');
+Route::post('/search/addfriend', 'AjaxController@addfriend');
 
-  Route::get('profile/{profile_name}','ProfileController@index');
-  Route::post('/{username}/addexpense', 'DashboardController@store');
-
-  Route::get('/friends/search', 'FriendsController@search_view');
-
-  //TODO please implement the controller for this BE. Feel free to change the URIs if needed.
-
-  // This route goes to the search user page
-  Route::get('/search', 'SearchController@index');
-  Route::post('/search', 'SearchController@search');
-  Route::post('search/addfriend', 'AjaxController@addfriend');
+/*Friends routes*/
+Route::get('/friends', 'FriendController@index');
+Route::post('/friends/process', 'AjaxController@processFriendRequest');
