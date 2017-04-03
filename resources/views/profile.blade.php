@@ -19,17 +19,20 @@
                             // TODO upload user profile image - feature not yet implemented;
                             $avatar = Auth::user()->avatar;
                             if (isset($avatar)) {
-                                echo "'<img src='" . asset('images/'. $avatar) . "'";
-                                echo "id='profileImage'>";
+                                echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
                             } else {
-                                // default profile pic
-                                echo "'<img src='" . asset('images/default-profile-picture.jpg') . "'";
-                                echo "id='profileImage'>";
+                                echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
                             }
                         ?>
                         <h2>{{ Auth::user()->username }}</h2>
                     </div>
                     <div class="col-md-6">
+                        @if(session('error'))
+                            <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error') }}</p>
+                        @endif
+                        @if(session('success'))
+                            <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}</p>
+                        @endif
                         <table class="table table-striped table-bordered table-hover text-center control-label">
                             <tr class="active">
                                 <td>First Name: </td>
@@ -49,14 +52,6 @@
                             </tr>
                         </table>
                         <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
-                        @if(session('error'))
-                            <br><br>
-                            <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">{{ Session::get('error') }}</p>
-                        @endif
-                        @if(session('success'))
-                            <br><br>
-                            <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}</p>
-                        @endif
                     </div>
                 </div> <!-- row -->
             </div> <!-- container-fluid -->
@@ -80,17 +75,38 @@
                                 <input type="text" name="username" id="modal_username" class="form-control" value="{{ Auth::user()->username }}" readonly="true">
 
                                 {!! Form::label('firstname', 'First name:') !!}
-                                <input type="text" name="firstname" id="modal_firstname" class="form-control" value="{{ Auth::user()->firstname }}">
+                                <input type="text" name="firstname" id="modal_firstname" class="form-control" value="{{ Auth::user()->firstname }}" required="true">
 
                                 {!! Form::label('lastname', 'Last name:') !!}
-                                <input type="text" name="lastname" id="modal_lastname" class="form-control" value="{{ Auth::user()->lastname }}">
+                                <input type="text" name="lastname" id="modal_lastname" class="form-control" value="{{ Auth::user()->lastname }}" required="true">
 
                                 {!! Form::label('email', 'Email:') !!}
-                                <input type="email" name="email" id="modal_email" class="form-control" value="{{ Auth::user()->email }}">
+                                <input type="email" name="email" id="modal_email" class="form-control" value="{{ Auth::user()->email }}" required="true">
                             </div>
                             <div class="col-md-6 text-center">
                                 <br>
-                                <img src="{{ asset('images/default-profile-picture.jpg') }}" id="profileImage">
+                                <?php
+                                    $avatar = Auth::user()->avatar;
+                                    if (isset($avatar)) {
+                                        echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
+                                    } else {
+                                        echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
+                                    }
+                                ?>
+                                <br><br>
+                                {{-- TODO avatar table to pull selections, unless we hardcode their options below
+                                <select name="avatar" id="modal_avatar" class="alert-info">
+                                    @foreach($avatars as $avatar)
+                                        <option value="{{ $avatar->src }}">{{ $avatar->avatar_name }}</option>
+                                    #@endforeach
+                                </select>
+                                --}}
+                                <select name="avatar" id="modal_avatar" class="alert-info">
+                                    <option value="default-profile-picture.jpg">Default</option>
+                                    <option value="avatar1">Avatar 1</option>
+                                    <option value="avatar2">Avatar 2</option>
+                                    <option value="avatar3">Avatar 3</option>
+                                </select>
                             </div>
                         </div>
                         <div class="row">
