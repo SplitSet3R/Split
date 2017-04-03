@@ -17,14 +17,14 @@
                     <div class="col-md-3 text-center">
                         <?php
                             // TODO upload user profile image - feature not yet implemented;
-                            $uploadedImg = false;
-                            if ($uploadedImg) {
-                                echo "'<img src='" . asset('images/#uploaded_user_profile') . "'";
-                                echo "id='profileImage'" . "style='width: 200px;'>";
+                            $avatar = Auth::user()->avatar;
+                            if (isset($avatar)) {
+                                echo "'<img src='" . asset('images/'. $avatar) . "'";
+                                echo "id='profileImage'>";
                             } else {
                                 // default profile pic
                                 echo "'<img src='" . asset('images/default-profile-picture.jpg') . "'";
-                                echo "id='profileImage'" . "style='width: 200px;'>";
+                                echo "id='profileImage'>";
                             }
                         ?>
                         <h2>{{ Auth::user()->username }}</h2>
@@ -75,7 +75,7 @@
                     {{csrf_field()}}
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 {!! Form::label('username', 'Username:') !!}
                                 <input type="text" name="username" id="modal_username" class="form-control" value="{{ Auth::user()->username }}" readonly="true">
 
@@ -87,9 +87,17 @@
 
                                 {!! Form::label('email', 'Email:') !!}
                                 <input type="email" name="email" id="modal_email" class="form-control" value="{{ Auth::user()->email }}">
-
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <br>
+                                <img src="{{ asset('images/default-profile-picture.jpg') }}" id="profileImage">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <br>
                                 {!! Form::label('bio', 'Biography:') !!}
-                                <textarea name="bio" id="modal_bio" class="form-control" rows="3" cols="75">{{ Auth::user()->bio }}</textarea>
+                                <textarea name="bio" id="modal_bio" class="form-control" rows="3" cols="75" placeholder="Enter your biography here...">{{ Auth::user()->bio }}</textarea>
                             </div>
                         </div>
                     </div>
