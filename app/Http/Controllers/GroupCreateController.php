@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\GroupMember;
 
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class GroupCreateController extends Controller
      */
     public function store(Request $req)
     {
-        if ($req->json() && isset($req->name)) {
+        if (isset($req->name) &&  Group::where('name', '=', '$req->name')->get()->isEmpty()) {
             $group = new Group; // probably auto creates id
             $group->name = $req->name;
             $group->description = $req->description;
@@ -38,7 +39,6 @@ class GroupCreateController extends Controller
                 $groupMember->action_group_id = #####; // have to figure out what this is
                 $groupMember->is_Admin = 0;
                 $groupMember->save();
-
             }
             return; // need to return somthing
         }
