@@ -11,6 +11,23 @@
 
             <hr>
             <h5>My Groups: </h5>
+            <table id="myTalbe" class="table table-striped table-bordered table-hover table-condensed text-center">
+                <thead class="thead-default">
+                <tr class = "success">
+                    <th class="text-center">Group id</th>
+                    <th class="text-center">Group Name</th>
+                    <th class="text-center">I owed</th>
+                    <th class="text-center">Owed To me</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                </tbody>
+
+            </table>
+
         </div>
 
     </div>
@@ -25,25 +42,53 @@
 
                 <form id="expForm" action="/{{ Auth::user()->username }}/groups" method="POST" class="form-horizontal">
                     <div class="modal-body">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <div class ="">
-                            <label class="control-label">Group Name</label>
-                            <input type="text"  name="groupName" id="groupNmae" class ="form-control">
+                        {{ Form::open(['url' => 'creategroup']) }}
+                        <h4>Create Groups</h4>
+                        <div class="">
+                            {!! Form::label('modal_group_name', 'Group Name:', ['class'=>'control-label']) !!}
+                            {!! Form::text('modal_group_name', '', array('id'=>'modal_group_name',
+                                    'class'=>'form-control')) !!}
                         </div>
-
-                        <div class ="">
-                            <label class="control-label">Discription</label>
-                            <input type="text"  name="groupDisc" id="groupDisc" class ="form-control">
+                        <div class="">
+                            {!! Form::label('modal_desc', 'Description:', ['class'=>'control-label']) !!}
+                            {!! Form::text('modal_desc', '', array('id'=>'modal_start_date',
+                                    'class'=>'form-control')) !!}
                         </div>
+                        <div class="">
+                            {!! Form::label('modal_desc', 'Select Friends:', ['class'=>'control-label']) !!}
+                            <select id="friend_id" name="friend_id" class="">
 
+                            </select>
 
+                      </div>
+                        <hr>
+                        <p>Display Added friend</p>
+                        <table id="myTalbe" class="table table-striped table-bordered table-hover table-condensed text-center">
+                            <thead class="thead-default">
+                            <tr class = "success">
+                                <th class="text-center">friend Id</th>
+                                <th class="text-center">friend Name</th>
+                                <th class="text-center">Delete</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            </tbody>
+
+                        </table>
 
                     </div>
-
                     <div class="modal-footer">
-                        <input type="submit" placeholder="Submit" id="expSubmit" name="newExpBtn" class="btn btn-success openAddExpenseModal">
-                        <button type="button" id="closeAddExpenseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <span class="pull-right">
+                                            {!! Form::submit('Create',['class'=> 'btn btn-info form-control']) !!}
+                        </span>
                     </div>
+                    {{ Form::close() }}
+
+
+
                 </form>
             </div>
         </div>

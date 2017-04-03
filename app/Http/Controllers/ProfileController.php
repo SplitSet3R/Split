@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\QueryException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Friend;
 use App\User;
 
@@ -96,6 +99,46 @@ class ProfileController extends Controller
                 'se.date_settled AS date_settled')
             ->get();
         return $owingexpenses;
+    }
+
+    /*
+     * Handles edit request for the user, does not allow changing of username.
+     * If user tries to make a call to edit profile with a profile_name not matching the
+     * name of the user authenticated as an error message can be accessed on the other side and a success message if it can
+     *
+     * FE Note: please check for @if(session('error')) to see if this is being thrown.
+     *          please check for @if(session('success')) to see successful edit was made.
+     */
+    public function edit(Request $req) {
+        //TODO: handle email conflict more elegantly
+        //TODO: talk to front end about refining error messages/how to sort them
+        if(isset($profile_name) && Auth::user()->username == $profile_name ) {
+            try {
+                $user = User::findOrFail(Auth::user()->username);
+            } catch (ModelNotFoundException $e) {
+                return redirect()->back()->with('error', 'no user found with this username');
+            }
+            if(isset($req->email))
+                $user->email = $req->email;
+            if(isset($req->firstname))
+                $user->firstname = $req->firstname;
+            if(isset($req->lastname))
+                $user->lastname = $req->lastname;
+            if(isset($req->bio))
+                $user->bio = $req->bio;
+            if(isset($req->avatar))
+                $user->avatar = $req->avatar;
+            try {
+                $user->save();
+            } catch (QueryException $e) {
+                if ($e->errorInfo[1] == 1062) {
+                    return redirect()->back()->with('error', 'Email address already taken');
+                }
+            }
+            return redirect()->back()->with('success', 'success');
+        } else {
+            return redirect()->back()->with('error', 'You can only edit your own profile!');
+        }
     }
 
     /*
