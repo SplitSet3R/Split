@@ -16,6 +16,26 @@ class GroupDashboardController extends Controller
         //
     }
 
+    /*
+     *  if (isset($req->search)) {
+            $searchparam = trim($req->search);
+
+            // Search users that match the search keyword
+            $search_users = User::where('username', '!=', Auth::user()->username)
+                    ->where(function($query) use ($searchparam) {
+                        $query->where('username',    'like', '%' . $searchparam . '%')
+                              ->orWhere('firstname', 'like', '%' . $searchparam . '%')
+                              ->orWhere('lastname',  'like', '%' . $searchparam . '%')
+                              ->orWhere('email',     'like', '%' . $searchparam . '%');
+                    })->get();
+
+            // Get users that are already related toe user in any way (Pending, Accepted, Rejected)
+            $related_users = Auth::user()->allRelatedUsers();
+
+            return view('search-friends', compact('search_users', 'related_users'));
+        }
+     */
+
     /**
      * Show the form for creating a new resource.
      *
