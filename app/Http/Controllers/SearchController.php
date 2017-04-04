@@ -34,10 +34,10 @@ class SearchController extends Controller
 
             // Get users that are already related toe user in any way (Pending, Accepted, Rejected)
             $related_users = Auth::user()->allRelatedUsers();
-
             return view('search-friends', compact('search_users', 'related_users'));
         }
         return view('search-friends');
+//return "From search : " . print_r($search_users) . print_r($related_users);
     }
 
     /*
