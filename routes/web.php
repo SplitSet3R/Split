@@ -34,5 +34,5 @@ Route::get('/friends', 'FriendController@index');
 Route::post('/friends/process', 'AjaxController@processFriendRequest');
 
 /*Settle Expenses Routes*/
-Route::post('/settleSharedExpense', 'SettleController@settleSharedExpense');
-Route::post('/settleGroupExpense', 'SettleController@settleGroupExpense');
+Route::post('/settleSharedExpense', 'SettleExpenseController@settleSharedExpense');
+Route::post('/settleGroupExpense', 'SettleExpenseController@settleGroupSharedExpense');
