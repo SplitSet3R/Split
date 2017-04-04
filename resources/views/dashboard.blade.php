@@ -6,24 +6,8 @@
                 <div class="col-md-2">
                     <h4>{{ Auth::user()->firstname}}'s expenses</h4>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-2">
                     <button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">Add Expense</button>
-                    <div class="btn-group">
-                        <button class="btn" type="button" data-toggle="dropdown"><i class="material-icons">person_add</i></button>
-                        <ul class="dropdown-menu" >
-                            @foreach($friendNotifications as $fnotification)
-                                <li>{{$fnotification[1]}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn" type="button" data-toggle="dropdown"><i class="material-icons">notifications_active</i></button>
-                        <ul class="dropdown-menu">
-                            @foreach($expenseNotifications as $enotification)
-                                <li>{{$enotification[1]}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
                 </div>
             </div>
           <div>
@@ -70,7 +54,7 @@
                     </tbody>
                 </table>
               </div>
-              <script>$('table').tablesort();</script>
+              <!--<script>$('table').tablesort();</script>-->
         </div>
     </div>
 
