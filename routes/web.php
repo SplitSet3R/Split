@@ -35,8 +35,9 @@
   Route::get('/friends', 'FriendController@index');
   Route::post('/friends/process', 'AjaxController@processFriendRequest');
 
-  /* Groups controller */
-  Route::get('/groups', 'GroupDashboardController@index');
+    /* Groups controller */
+    Route::get('/groups', 'GroupCreateController@index');
+    Route::post('/creategroup', 'GroupCreateController@store');
 
 Route::get('/', function () {
   return view('welcome');

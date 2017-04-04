@@ -10,6 +10,7 @@
                  Create</button>
 
             <hr>
+
             <h5>My Groups: </h5>
             <table id="myTalbe" class="table table-striped table-bordered table-hover table-condensed text-center">
                 <thead class="thead-default">
@@ -18,15 +19,24 @@
                     <th class="text-center">Group Name</th>
                     <th class="text-center">I owed</th>
                     <th class="text-center">Owed To me</th>
+                    <th class="text-center">Edit</th>
                     <th class="text-center">Delete</th>
+
                 </tr>
                 </thead>
 
                 <tbody>
+                @foreach ($friends as $friend)
+                    <tr>
+                        <td>{{$friend->id}}</td>
+                        <td>{{$friend->username2}}</td>
 
+                    </tr>
+                @endforeach
                 </tbody>
 
             </table>
+
 
         </div>
 
@@ -45,39 +55,24 @@
                         {{ Form::open(['url' => 'creategroup']) }}
                         <h4>Create Groups</h4>
                         <div class="">
+
                             {!! Form::label('modal_group_name', 'Group Name:', ['class'=>'control-label']) !!}
-                            {!! Form::text('modal_group_name', '', array('id'=>'modal_group_name',
+                            {!! Form::text('modal_group_name', '', array('id'=>'name',
                                     'class'=>'form-control')) !!}
                         </div>
                         <div class="">
                             {!! Form::label('modal_desc', 'Description:', ['class'=>'control-label']) !!}
-                            {!! Form::text('modal_desc', '', array('id'=>'modal_start_date',
+                            {!! Form::text('modal_desc', '', array('id'=>'description',
                                     'class'=>'form-control')) !!}
                         </div>
                         <div class="">
-                            {!! Form::label('modal_desc', 'Select Friends:', ['class'=>'control-label']) !!}
-                            <select id="friend_id" name="friend_id" class="">
+                            {!! Form::label('modal_desc', 'Select Friends:', ['class'=>'control-label']) !!}<br>
+                            @foreach($friends as $friend)
+                                <input id="friend" type="checkbox" name="friend[]" value="friend" />
+                                <label for="username2">{{$friend->username2}}</label><br>
+                            @endforeach
 
-                            </select>
-
-                      </div>
-                        <hr>
-                        <p>Display Added friend</p>
-                        <table id="myTalbe" class="table table-striped table-bordered table-hover table-condensed text-center">
-                            <thead class="thead-default">
-                            <tr class = "success">
-                                <th class="text-center">friend Id</th>
-                                <th class="text-center">friend Name</th>
-                                <th class="text-center">Delete</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-
-                            </tbody>
-
-                        </table>
-
+                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -89,8 +84,11 @@
 
 
 
+
+
                 </form>
             </div>
         </div>
     </div>
+
 @endsection

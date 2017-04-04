@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Friend;
+use Auth;
 use App\Group;
 use App\GroupMember;
 use App\CustomClasses\Groups\GroupsStatusCodeEnum;
@@ -46,11 +48,16 @@ class GroupCreateController extends Controller
         return; // need to return somthing
     }
 
+
     /**
      * For filling select field in create group modal
      */
     public function index() {
-        $friends = Auth::user()->acceptedFriends(); // Hansol  says she'll query on the front end
-        return view('groups',compact('friends'));
+        //$friends = Auth::user()->acceptedFriends(); // Hansol  says she'll query on the front end
+        $friends = Friend::where('username1', '=', Auth::user()->username)
+            ->orwhere('username2', '=', Auth::user()->username)
+            ->get();
+
+        return view('groups', compact('friends'));
     }
 }
