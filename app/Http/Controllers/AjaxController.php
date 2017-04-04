@@ -57,4 +57,25 @@ class AjaxController extends Controller
         }
         return response()->json(array("message" => "generic error message"), 500);
     }
+
+    /**
+     * Ajax Request to retrieve a user's friends
+     *
+     */
+    public function retrieveFriends(Request $req) {
+
+      if($req->json() && isset($req->search)) {
+        $search_term = $req->search;
+
+        $friends = Auth::user()->acceptedFriends()->filter(function($d) use ($search_term) {
+            return   strpos($d->username, $search_term)  !== false
+                  || strpos($d->firstname, $search_term) !== false
+                  || strpos($d->lastname, $search_term)  !== false;
+        });
+
+        return response()->json($friends, 200);
+      }
+
+      return response()->json(array("message" => "generic error message"), 500);
+    }
 }

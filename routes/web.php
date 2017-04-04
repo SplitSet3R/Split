@@ -33,3 +33,4 @@
 
   Route::get('/friends', 'FriendController@index');
   Route::post('/friends/process', 'AjaxController@processFriendRequest');
+  Route::post('/friends/sharedexpense', 'AjaxController@retrieveFriends');

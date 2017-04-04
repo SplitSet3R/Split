@@ -48,11 +48,11 @@
                 <h4 class="modal-title" id="addExpenseModalLabel">Add an Expense</h4>
             </div>
 
-            <form id="expForm" action="/{{ Auth::user()->username }}/addexpense" method="POST" class="form-horizontal">
+            <form id="expForm" action="/{{ Auth::user()->username }}/addexpense" method="POST" class="form-horizontal" autocomplete="on">
                 <div class="modal-body">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <label class="control-label">Type</label>
-                    <select name="expType" class="form-control">
+                    <select name="expType" class="form-control" >
                         <option value="Utilities">Utilities</option>
                         <option value="Groceries">Groceries</option>
                         <option value="Household">Household</option>
@@ -80,7 +80,14 @@
                     <br>
                     <button href="#newExpenseOwed" data-toggle="collapse" class="btn btn-default">Owed</button>
                     <div class="collapse" id="newExpenseOwed">
-                        <h3>You have no friends!</h3>
+                        <label class="control-label">Friends</label>
+                        <input id="expOwerUsername" onload="retrieveFriends" type="text" class="form-control" name="expOwerUsername" autocomplete="on">
+                        <div id="friend-pill" style="display:none;">
+                          <a class="btn btn-danger" href="#">
+                            <span class="friend-text"></span>
+                            <div style="display:inline"onclick="deleteFriendFromAddExpense()"><i class="glyphicon glyphicon-remove"></i></div>
+                          </a>
+                        </div>
                         <label class="control-label">Owed</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
