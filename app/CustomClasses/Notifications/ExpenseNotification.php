@@ -8,7 +8,6 @@
 
 namespace App\CustomClasses\Notifications;
 
-
 class ExpenseNotification extends Notification
 {
     public function __construct($recipient, $sender, $category, $type, $parameters, $referenceId)
@@ -48,4 +47,5 @@ class ExpenseNotification extends Notification
         }
         return $messages;
     }
+
 }
