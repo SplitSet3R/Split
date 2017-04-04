@@ -20,7 +20,7 @@ class CreateSharedExpenseTable extends Migration
             $table->string('secondary_username');
             $table->string('comments')->nullable();
             $table->timestamp('date_added');
-            $table->timestamp('date_settled');
+            $table->timestamp('date_settled')->nullable();
         });
     }
 

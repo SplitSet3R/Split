@@ -20,7 +20,7 @@ class CreateSettledExpensesTable extends Migration
             $table->string('secondary_username');
             $table->string('comments');
             $table->timestamp('date_added');
-            $table->timestamp('date_settled');
+            $table->timestamp('date_settled')->nullable();
         });
     }
 
