@@ -103,7 +103,7 @@
         @yield('content')
       </div>
     </div>
-
+    @if(Auth::check())
     <div class="modal fade openAddExpenseModal" id="addExpenseModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -165,6 +165,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Custom Scripts -->
     <script src="{{ asset('js/custom.js') }}"></script>
