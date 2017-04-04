@@ -38,26 +38,28 @@
     /* Groups controller */
     Route::get('/groups', 'GroupCreateController@index');
     Route::post('/creategroup', 'GroupCreateController@store');
+    Route::post('/groupDelete','GroupCreateController@deleteGroup');
 
-Route::get('/', function () {
-  return view('welcome');
-})->middleware('guest');
-Auth::routes();
+    Route::get('/', function () {
+      return view('welcome');
+    })->middleware('guest');
+    Auth::routes();
 
-/*  Profile Routes*/
-Route::get('profile/{profile_name}','ProfileController@index');
-Route::post('profile/{profile_name}/edit', 'ProfileController@edit');
+    /*  Profile Routes*/
+    Route::get('profile/{profile_name}','ProfileController@index');
+    Route::post('profile/{profile_name}/edit', 'ProfileController@edit');
 
-/*Dashboard Routes*/
-Route::post('/{username}/addexpense', 'DashboardController@store');
-Route::get('/dashboard', 'DashboardController@index');
-Route::post('/{username}/add', 'DashboardController@store');
 
-/*Search Routes*/
-Route::get('/search', 'SearchController@index');
-Route::post('/search', 'SearchController@search');
-Route::post('/search/addfriend', 'AjaxController@addfriend');
+    /*Dashboard Routes*/
+    Route::post('/{username}/addexpense', 'DashboardController@store');
+    Route::get('/dashboard', 'DashboardController@index');
+    Route::post('/{username}/add', 'DashboardController@store');
 
-/*Friends routes*/
-Route::get('/friends', 'FriendController@index');
-Route::post('/friends/process', 'AjaxController@processFriendRequest');
+    /*Search Routes*/
+    Route::get('/search', 'SearchController@index');
+    Route::post('/search', 'SearchController@search');
+    Route::post('/search/addfriend', 'AjaxController@addfriend');
+
+    /*Friends routes*/
+    Route::get('/friends', 'FriendController@index');
+    Route::post('/friends/process', 'AjaxController@processFriendRequest');

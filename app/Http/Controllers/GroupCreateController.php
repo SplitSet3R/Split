@@ -48,6 +48,13 @@ class GroupCreateController extends Controller
         return redirect()->action('GroupCreateController@index');
     }
 
+    public function deleteGroup(Request $req) {
+        if (Group::find($req->modal_groupid_delete)) {
+            $group = Group::find($req->modal_groupid_delete);
+            $group->delete();
+        }
+        return redirect()->action('GroupCreateController@index');
+    }
 
     /**
      * For filling select field in create group modal
@@ -63,8 +70,9 @@ class GroupCreateController extends Controller
             ->get();
         $allfriends = $friends->union($friends2);
 
-       
+        $groups = Group::All();
 
-        return view('groups', compact('allfriends'));
+
+        return view('groups', compact('allfriends','groups'));
     }
 }
