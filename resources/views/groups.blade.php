@@ -26,13 +26,7 @@
                 </thead>
 
                 <tbody>
-                @foreach ($friends as $friend)
-                    <tr>
-                        <td>{{$friend->id}}</td>
-                        <td>{{$friend->username2}}</td>
 
-                    </tr>
-                @endforeach
                 </tbody>
 
             </table>
@@ -50,26 +44,27 @@
                     <h4 class="modal-title" id="CreateGroupModalLabel"></h4>
                 </div>
 
-                <form id="expForm" action="/{{ Auth::user()->username }}/groups" method="POST" class="form-horizontal">
+
                     <div class="modal-body">
                         {{ Form::open(['url' => 'creategroup']) }}
                         <h4>Create Groups</h4>
                         <div class="">
 
-                            {!! Form::label('modal_group_name', 'Group Name:', ['class'=>'control-label']) !!}
-                            {!! Form::text('modal_group_name', '', array('id'=>'name',
+                            {!! Form::label('name', 'Group Name:', ['class'=>'control-label']) !!}
+                            {!! Form::text('name', '', array('id'=>'name',
                                     'class'=>'form-control')) !!}
                         </div>
                         <div class="">
-                            {!! Form::label('modal_desc', 'Description:', ['class'=>'control-label']) !!}
-                            {!! Form::text('modal_desc', '', array('id'=>'description',
+                            {!! Form::label('description', 'Description:', ['class'=>'control-label']) !!}
+                            {!! Form::text('description', '', array('id'=>'description',
                                     'class'=>'form-control')) !!}
                         </div>
                         <div class="">
-                            {!! Form::label('modal_desc', 'Select Friends:', ['class'=>'control-label']) !!}<br>
-                            @foreach($friends as $friend)
-                                <input id="friend" type="checkbox" name="friend[]" value="friend" />
-                                <label for="username2">{{$friend->username2}}</label><br>
+                            <br>
+                            <p><strong>Select Your Group member</strong></p>
+                            @foreach($allfriends as $allfriend)
+                                <input id="groupMembers" type="checkbox" name="groupMembers[]" value="{{$allfriend->username}}">
+                                <label for="groupMembers">{{$allfriend->username}}</label><br>
                             @endforeach
 
                          </div>
@@ -82,11 +77,6 @@
                     </div>
                     {{ Form::close() }}
 
-
-
-
-
-                </form>
             </div>
         </div>
     </div>

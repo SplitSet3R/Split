@@ -39,13 +39,13 @@ class GroupCreateController extends Controller
         for ($i = 0; $i < sizeof($req->groupMembers); $i++) {
             $groupMember = new GroupMember;
             $groupMember->group_id = $group->id;
-            $groupMember->username = $req->groupMembers[$i]->username;
+            $groupMember->username = $req->groupMembers[$i];
             $groupMember->status_code = GroupsStatusCodeEnum::PENDING; // have to change 'pending' into a constant
             $groupMember->action_group_id = $group->id;
             $groupMember->is_Admin = 0;
             $groupMember->save();
         }
-        return; // need to return somthing
+        return redirect()->action('GroupCreateController@index');
     }
 
 
@@ -55,9 +55,16 @@ class GroupCreateController extends Controller
     public function index() {
         //$friends = Auth::user()->acceptedFriends(); // Hansol  says she'll query on the front end
         $friends = Friend::where('username1', '=', Auth::user()->username)
-            ->orwhere('username2', '=', Auth::user()->username)
+            ->select('username2 AS username')
             ->get();
 
-        return view('groups', compact('friends'));
+        $friends2 = Friend::where('username2', '=', Auth::user()->username)
+            ->select ('username1 AS username')
+            ->get();
+        $allfriends = $friends->union($friends2);
+
+       
+
+        return view('groups', compact('allfriends'));
     }
 }
