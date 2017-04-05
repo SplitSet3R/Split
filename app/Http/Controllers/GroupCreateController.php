@@ -9,6 +9,7 @@ use App\GroupMember;
 use App\CustomClasses\Groups\GroupsStatusCodeEnum;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GroupCreateController extends Controller
 {
@@ -70,9 +71,13 @@ class GroupCreateController extends Controller
             ->get();
         $allfriends = $friends->union($friends2);
 
-        $groups = Group::All();
+        $groups = DB('groupmembers')
+            ->join('groups', 'groupmembers.group_id', 'groups.id')
+            ->join('groupexpenses', 'groups.id', 'groupexpenses.group_id')
+            ->select('groupmembers.username', 'groups.id', 'groups.name', 'groupexpenses.amount')
+            ->get();
 
-
+        // amount is for the group not for the individual
         return view('groups', compact('allfriends','groups'));
     }
 }
