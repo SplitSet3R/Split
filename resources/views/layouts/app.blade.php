@@ -132,6 +132,7 @@
                             <option value="Work">Work</option>
                             <option value="Insurance">Insurance</option>
                             <option value="Savings">Savings</option>
+                            <option value="Drinks">Drinks</option>
                         </select>
                         <label class="control-label">Date</label>
                         <input type="date" name="expDate" class="form-control required">

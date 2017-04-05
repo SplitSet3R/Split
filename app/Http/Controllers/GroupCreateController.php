@@ -56,6 +56,34 @@ class GroupCreateController extends Controller
         return redirect()->action('GroupCreateController@index');
     }
 
+    public function updateGroup(Request $req) {
+        if (Group::find($req->id)) {
+            $group = Group::find($req->id);
+            $group->name = $req->name;
+            $group->description = $req->description;
+            $group->save();
+
+            $adminGroupMember = new GroupMember;
+            $adminGroupMember->group_id = $group->id;
+            $adminGroupMember->username = Auth::user()->username;
+            $adminGroupMember->status_code = GroupsStatusCodeEnum::ACCEPTED; // have to change 'accepted' into a constant
+            $adminGroupMember->action_group_id = $group->id;
+            $adminGroupMember->is_Admin = 1;
+            $adminGroupMember->save();
+            for ($i = 0; $i < sizeof($req->groupMembers); $i++) {
+                $groupMember = new GroupMember;
+                $groupMember->group_id = $group->id;
+                $groupMember->username = $req->groupMembers[$i];
+                $groupMember->status_code = GroupsStatusCodeEnum::PENDING; // have to change 'pending' into a constant
+                $groupMember->action_group_id = $group->id;
+                $groupMember->is_Admin = 0;
+                $groupMember->save();
+            }
+
+        }
+        return redirect()->action('GroupCreateController@index');
+    }
+
     /**
      * For filling select field in create group modal
      */

@@ -33,7 +33,10 @@
                         <td></td>
                         <td><button class="btn btn-info open-EditGroupDialog"
                                     data-toggle="modal"
-                                    data-target="#EditGroupModal"
+                                    data-id="{{$group->id}}"
+                                    data-name="{{$group-> name}}"
+                                    data-description="{{$group->description}}"
+                                    data-target="#editGroupModal"
                                     >Edit</button></td>
                         <td><button class="btn btn-danger open-DeleteGroupDialog"
                                     data-toggle="modal"
@@ -74,6 +77,7 @@
                         </div>
                         <div class="">
                             <br>
+                            <!--TODO dropdown or serch bar for frends.-->
                             <p><strong>Select Your Group member</strong></p>
                             @foreach($allfriends as $allfriend)
                                 <input id="groupMembers" type="checkbox" name="groupMembers[]" value="{{$allfriend->username}}">
@@ -91,26 +95,26 @@
             </div>
         </div>
     </div>
-    <div class="modal fade openEditGroupModal" id="EditGroupModal" tabindex="-1" role="dialog">
+    <div class="modal fade openEditGroupModal" id="editGroupModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="EditGroupModalLabel"></h4>
+                    <h4 class="modal-title" id="editGroupModalLabel"></h4>
                 </div>
                 <div class="modal-body">
-                    {{ Form::open(['url' => 'updategroup']) }}
+                    {{ Form::open(['url' => 'updateGroup']) }}
                     <h4>Create Groups</h4>
                     <div class="">
                         {!! Form::label('name', 'Group Name:', ['class'=>'control-label']) !!}
-                        {!! Form::text('name', '', array('id'=>'name',
-                                'class'=>'form-control')) !!}
+                        {!! Form::text('name', '', array('id'=>'modal_groupname_name',
+                                                         'class'=>'form-control')) !!}
                     </div>
                     <div class="">
                         {!! Form::label('description', 'Description:', ['class'=>'control-label']) !!}
-                        {!! Form::text('description', '', array('id'=>'description',
-                                'class'=>'form-control')) !!}
+                        {!! Form::text('description', '', array('id'=>'modal_description_name',
+                                                                'class'=>'form-control')) !!}
                     </div>
                     <div class="">
                         <br>
@@ -160,6 +164,18 @@
     </div>
 
     <script>
+        $(document).on('click', '.open-EditGroupDialog', function() {
+            //document.getElementById('editGroupForm').reset();
+            var id = $(this).parent().siblings(":first").text();
+            var name = $(this).parent().siblings(":nth-child(2)").text();
+            var description = $(this).parent().siblings(":nth-child(3)").text();
+
+            console.log(description);
+            $('.modal-body #modal_groupid_name').attr('value', id);
+            $('.modal-body #modal_groupname_name').attr('value', name);
+            $('.modal-body #modal_description_name').attr('value', description);
+
+        });
         $(document).on('click', '.open-DeleteGroupDialog', function() {
             document.getElementById('deleteGroupForm').reset();
             var group_id = $(this).parent().siblings(":first").text();

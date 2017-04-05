@@ -38,6 +38,7 @@
     /* Groups controller */
     Route::get('/groups', 'GroupCreateController@index');
     Route::post('/creategroup', 'GroupCreateController@store');
+    Route::post('/updateGroup','GroupCreateController@updateGroup');
     Route::post('/groupDelete','GroupCreateController@deleteGroup');
 
     Route::get('/', function () {
