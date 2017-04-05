@@ -11,13 +11,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
+
 
 
     <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
+
 
 
     <!-- Scripts -->
@@ -56,7 +58,6 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -66,7 +67,11 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+
+                            <li class=".addExdansebtn"><button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">
+                                    Add Expense</button>&nbsp &nbsp</li>
                             <li class="dropdown">
+
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->email }} <span class="caret"></span>
                                 </a>
@@ -85,6 +90,7 @@
                                     </li>
                                 </ul>
                             </li>
+
                         @endif
                     </ul>
                 </div>
@@ -98,6 +104,69 @@
         @yield('content')
       </div>
     </div>
+    @if(Auth::check())
+    <div class="modal fade openAddExpenseModal" id="addExpenseModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="addExpenseModalLabel">Add an Expense</h4>
+                </div>
+
+                <form id="expForm" action="/{{ Auth::user()->username }}/addexpense" method="POST" class="form-horizontal">
+                    <div class="modal-body">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <label class="control-label">Type</label>
+                        <select name="expType" class="form-control">
+                            <option value="Utilities">Utilities</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Household">Household</option>
+                            <option value="Rent">Rent/Mortgage</option>
+                            <option value="Loan">Loan</option>
+                            <option value="Restaurants">Restaurants</option>
+                            <option value="Active">Active</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Hobbies">Hobbies</option>
+                            <option value="Work">Work</option>
+                            <option value="Insurance">Insurance</option>
+                            <option value="Savings">Savings</option>
+                        </select>
+                        <label class="control-label">Date</label>
+                        <input type="date" name="expDate" class="form-control required">
+                        <label class="control-label">Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" value="0.00" id="expAmountInput" class="form-control required"
+                                   min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expAmount">
+                        </div>
+                        <label class="control-label">Comments</label>
+                        <input type="textarea" name="expComments" class="form-control">
+                        <br>
+                        <button href="#newExpenseOwed" data-toggle="collapse" class="btn btn-default">Owed</button>
+                        <div class="collapse" id="newExpenseOwed">
+                            <h3>You have no friends!</h3>
+                            <label class="control-label">Owed</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">$</span>
+                                <input type="number" value="0.00" id="expOwedInput" class="form-control required"
+                                       min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expOwedAmount">
+                            </div>
+                            <label class="control-label">Comments:</label>
+                            <input type="textarea" class="form-control" name="expOwerComments">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" placeholder="Submit" id="expSubmit" name="newExpBtn" class="btn btn-success openAddExpenseModal">
+                        <button type="button" id="closeAddExpenseBtn" class="btn btn-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <!-- Custom Scripts -->
     <script src="{{ asset('js/custom.js') }}"></script>
