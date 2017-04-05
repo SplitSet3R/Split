@@ -101,7 +101,7 @@ class GroupCreateController extends Controller
         $allfriends = $friends->union($friends2);
 
         /*
-        $groups = DB('groupmembers')
+        $groups = DB::('groupmembers')
             ->join('groups', 'groupmembers.group_id', 'groups.id')
             ->join('groupexpenses', 'groups.id', 'groupexpenses.group_id')
             ->select('groupmembers.username', 'groups.id', 'groups.name', 'groupexpenses.amount')
