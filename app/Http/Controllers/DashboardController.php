@@ -1,8 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\SharedExpense;
+use App\User;
 use DB;
 use Auth;
 class DashboardController extends Controller
@@ -20,10 +23,9 @@ class DashboardController extends Controller
     public function store(Request $req)
     {
         $this->validate($req, [
-            'expAmount' => 'required|numeric',
+            'expAmount' => 'required|numeric|min:1',
             'expType' => 'required|max:255',
-            'expDate' => 'required|date',
-            'expComments' => 'nullable|max:255'
+            'expDate' => 'required|date'
         ]);
         $newExpense = new Expense;
         $newExpense->owner_username= Auth::user()->username;
@@ -31,19 +33,31 @@ class DashboardController extends Controller
         $newExpense->type=$req->expType;
         $newExpense->date_added=$req->expDate;
         $newExpense->comments=$req->expComments;
+
+        // TODO Refactor to not save an expense row when shared expenses has errors
         if($newExpense->save()) {
-            if(isset($req->expOwedAmount)&&isset($req->expOwerUsername)) {
-                $this->validate($req, [
-                    'expOwedAmount' => 'required|numeric',
-                    'expOwerUsername' => 'required|max:255',
-                    'expOwerComments' => 'nullable|max:255'
-                ]);
-                $newSharedExpense = new SharedExpense;
-                $newSharedExpense->expense_id=$newExpense->id;
-                $newSharedExpense->amount_owed=$req->expOwedAmount;
-                $newSharedExpense->comments=$req->expOwerComments;
-                $newSharedExpense->secondary_username=$req->expOwerUsername;
-                $newSharedExpense->save();
+            if(isset($req->username) || isset($req->expOwedAmount)) {
+
+              // TODO Set comment to nullable in database
+              $this->validate($req, [
+                  'expOwedAmount'   => 'required|numeric|min:1',
+                  'username'        => 'exists:users|required|max:255',
+                  'expOwerComments' => 'required|max:255'
+              ]);
+              /*
+              try {
+                $secondary_username = User::findOrFail($req->username);
+              } catch (ModelNotFoundException $e) {
+                // TODO
+                return redirect()->back()->with("errorUsername", "User entered does not exist in the database");
+              }
+              */
+              $newSharedExpense = new SharedExpense;
+              $newSharedExpense->expense_id=$newExpense->id;
+              $newSharedExpense->amount_owed=$req->expOwedAmount;
+              $newSharedExpense->comments=$req->expOwerComments;
+              $newSharedExpense->secondary_username=$req->username;
+              $newSharedExpense->save();
             }
         }
         return redirect()->action('DashboardController@index');
@@ -62,10 +76,6 @@ class DashboardController extends Controller
             ->union($expensesWhereUserOwns)
             ->get();
         return $allExpenses;
-    }
-    
-    public function getFriends()
-    {
     }
 
     /**

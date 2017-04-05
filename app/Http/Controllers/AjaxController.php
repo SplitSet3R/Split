@@ -65,12 +65,18 @@ class AjaxController extends Controller
     public function retrieveFriends(Request $req) {
 
       if($req->json() && isset($req->search)) {
-        $search_term = $req->search;
+        $terms       = explode(" ", $req->search);
 
-        $friends = Auth::user()->acceptedFriends()->filter(function($d) use ($search_term) {
-            return   strpos($d->username, $search_term)  !== false
-                  || strpos($d->firstname, $search_term) !== false
-                  || strpos($d->lastname, $search_term)  !== false;
+        $friends = Auth::user()->acceptedFriends()->filter(function($d) use ($terms) {
+            foreach($terms as $term) {
+              if( strpos($d->username,  $term)  !== false
+               || strpos($d->firstname, $term)  !== false
+               || strpos($d->lastname,  $term)  !== false) {
+                 return true;
+              }
+            }
+
+            return false;
         });
 
         return response()->json($friends, 200);

@@ -67,35 +67,70 @@
                         <option value="Insurance">Insurance</option>
                         <option value="Savings">Savings</option>
                     </select>
+                    @if ($errors->has('expType'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('expType') }}</strong>
+                        </span>
+                    @endif
+
                     <label class="control-label">Date</label>
                     <input type="date" name="expDate" class="form-control required">
+
+                    @if ($errors->has('expDate'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('expDate') }}</strong>
+                        </span>
+                    @endif
                     <label class="control-label">Amount</label>
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
                         <input type="number" value="0.00" id="expAmountInput" class="form-control required"
                                min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expAmount">
                     </div>
+
+                    @if ($errors->has('expAmount'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('expAmount') }}</strong>
+                        </span>
+                    @endif
                     <label class="control-label">Comments</label>
                     <input type="textarea" name="expComments" class="form-control">
                     <br>
-                    <button href="#newExpenseOwed" data-toggle="collapse" class="btn btn-default">Owed</button>
+                    <button id="owedButton" href="#newExpenseOwed" data-toggle="collapse" class="btn btn-default">Owed</button>
                     <div class="collapse" id="newExpenseOwed">
                         <label class="control-label">Friends</label>
-                        <input id="expOwerUsername" onload="retrieveFriends" type="text" class="form-control" name="expOwerUsername" autocomplete="on">
+                        <input id="expOwerUsername" onload="retrieveFriends" type="text" class="form-control" name="username" autocomplete="on">
                         <div id="friend-pill" style="display:none;">
                           <a class="btn btn-danger" href="#">
                             <span class="friend-text"></span>
                             <div style="display:inline"onclick="deleteFriendFromAddExpense()"><i class="glyphicon glyphicon-remove"></i></div>
                           </a>
                         </div>
+                        @if ($errors->has('username'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('username') }}</strong>
+                            </span>
+                        @endif
                         <label class="control-label">Owed</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
                             <input type="number" value="0.00" id="expOwedInput" class="form-control required"
                                    min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expOwedAmount">
                         </div>
+                        @if ($errors->has('expOwedAmount'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('expOwedAmount') }}</strong>
+                            </span>
+                        @endif
                         <label class="control-label">Comments:</label>
                         <input type="textarea" class="form-control" name="expOwerComments">
+
+                        <!-- TODO comments should be nullable. Back end issue -->
+                        @if ($errors->has('expOwerComments'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('expOwerComments') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
 
@@ -107,3 +142,11 @@
         </div>
     </div>
 </div>
+<script>
+  @if (count($errors) > 0)
+      $('#addExpenseModal').modal('show');
+      @if($errors->has('expOwedAmount') || $errors->has('username'))
+        $("#owedButton").click();
+      @endif
+  @endif
+</script>

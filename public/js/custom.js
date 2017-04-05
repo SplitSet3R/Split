@@ -56,8 +56,8 @@ function retrieveFriends() {
            var usernames = _.map(data, d => {
              return {
                'username' : d.username,
-               'firstname': d.lastname,
-               'lastname' : d.firstname
+               'firstname': d.firstname,
+               'lastname' : d.lastname
              };
            });
            response( usernames );
@@ -66,7 +66,7 @@ function retrieveFriends() {
     }
   }).data("uiAutocomplete")._renderItem =  function( ul, item ) {
     return $( "<li>" )
-    .append( "<a>" + item.username + "</a>" )
+    .append(item.firstname + " " + item.lastname + " (" + item.username +")" )
     .appendTo( ul );
   };
 }
