@@ -33,6 +33,10 @@ Route::post('/search/addfriend', 'AjaxController@addfriend');
 Route::get('/friends', 'FriendController@index');
 Route::post('/friends/process', 'AjaxController@processFriendRequest');
 
+/*Notifications routes*/
+Route::get('/notifications', 'AjaxController@getNotifications');
+Route::post('/notifications', 'AjaxController@updateNotifications');
+
 /*Settle Expenses Routes*/
 Route::post('/settleSharedExpense', 'SettleExpenseController@settleSharedExpense');
 Route::post('/settleGroupExpense', 'SettleExpenseController@settleGroupSharedExpense');

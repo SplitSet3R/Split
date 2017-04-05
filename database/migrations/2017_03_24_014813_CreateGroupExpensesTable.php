@@ -19,7 +19,7 @@ class CreateGroupExpensesTable extends Migration
             $table->float('amount');
             $table->string('comments');
             $table->date('date_added');
-            $table->date('date_settled');
+            $table->date('date_settled')->nullable();
         });
     }
 

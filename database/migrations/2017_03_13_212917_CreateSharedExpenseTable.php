@@ -18,9 +18,9 @@ class CreateSharedExpenseTable extends Migration
             $table->unsignedInteger('expense_id');
             $table->float('amount_owed');
             $table->string('secondary_username');
-            $table->string('comments');
-            $table->date('date_added');
-            $table->date('date_settled');
+            $table->string('comments')->nullable();
+            $table->timestamp('date_added');
+            $table->timestamp('date_settled')->nullable();
         });
     }
 

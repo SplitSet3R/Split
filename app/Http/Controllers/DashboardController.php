@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\CustomClasses\Notifications\ExpenseNotification;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\SharedExpense;
@@ -29,7 +30,7 @@ class DashboardController extends Controller
         $newExpense->owner_username= Auth::user()->username;
         $newExpense->amount=$req->expAmount;
         $newExpense->type=$req->expType;
-        $newExpense->date_added=$req->expDate;
+        $newExpense->date=$req->expDate;
         $newExpense->comments=$req->expComments;
         if($newExpense->save()) {
             if(isset($req->expOwedAmount)&&isset($req->expOwerUsername)) {
@@ -43,7 +44,9 @@ class DashboardController extends Controller
                 $newSharedExpense->amount_owed=$req->expOwedAmount;
                 $newSharedExpense->comments=$req->expOwerComments;
                 $newSharedExpense->secondary_username=$req->expOwerUsername;
-                $newSharedExpense->save();
+                if($newSharedExpense->save()) {
+                    //ExpenseNotification::makeExpenseRequestNotification($newExpense, $newSharedExpense);
+                }
             }
         }
         return redirect()->action('DashboardController@index');
@@ -63,10 +66,6 @@ class DashboardController extends Controller
             ->get();
         return $allExpenses;
     }
-    
-    public function getFriends()
-    {
-    }
 
     /**
      * Show the application dashboard.
@@ -76,7 +75,6 @@ class DashboardController extends Controller
     public function index()
     {
         $expenses = $this->getExpenses();
-        //$friends = getFriends();
         return view('dashboard', compact('expenses'));
     }
 }
