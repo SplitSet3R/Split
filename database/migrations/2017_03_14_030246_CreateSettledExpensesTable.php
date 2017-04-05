@@ -19,8 +19,8 @@ class CreateSettledExpensesTable extends Migration
             $table->float('amount_owed');
             $table->string('secondary_username');
             $table->string('comments');
-            $table->date('date_added');
-            $table->date('date_settled');
+            $table->timestamp('date_added');
+            $table->timestamp('date_settled')->nullable();
         });
     }
 

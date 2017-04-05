@@ -1107,6 +1107,7 @@ h2.title {
   border-top: 1px solid #b9b9b9;
   background-color: #eaeaeb;
 }
+
 .ui-menu .ui-menu-item a {
   font-size: 12px;
 }
@@ -1157,4 +1158,9 @@ h2.title {
       -webkit-border-radius: 0px;
       -moz-border-radius: 0px;
       background-image: none;
+}
+
+#profileImage {
+  width: 200px;
+  border-radius: 5px;
 }

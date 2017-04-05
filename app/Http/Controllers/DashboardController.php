@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\CustomClasses\Notifications\ExpenseNotification;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\SharedExpense;
@@ -31,7 +32,7 @@ class DashboardController extends Controller
         $newExpense->owner_username= Auth::user()->username;
         $newExpense->amount=$req->expAmount;
         $newExpense->type=$req->expType;
-        $newExpense->date_added=$req->expDate;
+        $newExpense->date=$req->expDate;
         $newExpense->comments=$req->expComments;
 
         // TODO Refactor to not save an expense row when shared expenses has errors
@@ -86,7 +87,6 @@ class DashboardController extends Controller
     public function index()
     {
         $expenses = $this->getExpenses();
-        //$friends = getFriends();
         return view('dashboard', compact('expenses'));
     }
 }
