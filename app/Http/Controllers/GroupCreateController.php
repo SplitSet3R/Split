@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class GroupCreateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //get friend list
 
     /**
