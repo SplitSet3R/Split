@@ -16,10 +16,6 @@ class UpdateSettledExpensesTable extends Migration
         Schema::table('settledexpenses', function (Blueprint $table) {
             // Composite Unique Constraint
             $table->unique(['expense_id', 'secondary_username']);
-
-            // Foreign keys
-            $table->foreign('expense_id')->references('expense_id')->on('sharedexpenses');
-            $table->foreign('secondary_username')->references('secondary_username')->on('sharedexpenses');
         });
     }
 

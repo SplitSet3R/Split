@@ -15,7 +15,7 @@ Route::get('/', function () {
 })->middleware('guest');
 Auth::routes();
 
-/*  Profile Routes*/
+/*Profile Routes*/
 Route::get('profile/{profile_name}','ProfileController@index');
 Route::post('profile/{profile_name}/edit', 'ProfileController@edit');
 
@@ -29,6 +29,10 @@ Route::get('/search', 'SearchController@index');
 Route::post('/search', 'SearchController@search');
 Route::post('/search/addfriend', 'AjaxController@addfriend');
 
-/*Friends routes*/
+/*Friends Routes*/
 Route::get('/friends', 'FriendController@index');
 Route::post('/friends/process', 'AjaxController@processFriendRequest');
+
+/*Settle Expenses Routes*/
+Route::post('/settleSharedExpense', 'SettleExpenseController@settleSharedExpense');
+Route::post('/settleGroupExpense', 'SettleExpenseController@settleGroupSharedExpense');
