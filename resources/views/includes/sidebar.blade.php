@@ -74,7 +74,7 @@
                     @endif
 
                     <label class="control-label">Date</label>
-                    <input type="date" name="expDate" class="form-control required">
+                    <input type="date" name="expDate" value="{{\Carbon\Carbon::now()->toDateString()}}" class="form-control required">
 
                     @if ($errors->has('expDate'))
                         <span class="help-block">
