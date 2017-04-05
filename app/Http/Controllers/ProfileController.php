@@ -109,14 +109,14 @@ class ProfileController extends Controller
      * FE Note: please check for @if(session('error')) to see if this is being thrown.
      *          please check for @if(session('success')) to see successful edit was made.
      */
-    public function edit(Request $req) {
+    public function edit(Request $req, $profile_name) {
         //TODO: handle email conflict more elegantly
         //TODO: talk to front end about refining error messages/how to sort them
         if(isset($profile_name) && Auth::user()->username == $profile_name ) {
             try {
                 $user = User::findOrFail(Auth::user()->username);
             } catch (ModelNotFoundException $e) {
-                return redirect()->back()->with('error', 'no user found with this username');
+                return redirect()->back()->with('error', 'No user found with this username.');
             }
             if(isset($req->email))
                 $user->email = $req->email;
@@ -132,10 +132,10 @@ class ProfileController extends Controller
                 $user->save();
             } catch (QueryException $e) {
                 if ($e->errorInfo[1] == 1062) {
-                    return redirect()->back()->with('error', 'Email address already taken');
+                    return redirect()->back()->with('error', 'Email address already taken.');
                 }
             }
-            return redirect()->back()->with('success', 'success');
+            return redirect()->back()->with('success', 'Success! Changes saved.');
         } else {
             return redirect()->back()->with('error', 'You can only edit your own profile!');
         }
