@@ -15,7 +15,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        <?php
+                        @php
                             // TODO upload user profile image - feature not yet implemented;
                             $avatar = Auth::user()->avatar;
                             if (isset($avatar)) {
@@ -23,7 +23,7 @@
                             } else {
                                 echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
                             }
-                        ?>
+                        @endphp
                         <h2>{{ Auth::user()->username }}</h2>
                     </div>
                     <div class="col-md-6">
@@ -85,14 +85,14 @@
                             </div>
                             <div class="col-md-6 text-center">
                                 <br>
-                                <?php
+                                @php
                                     $avatar = Auth::user()->avatar;
                                     if (isset($avatar)) {
                                         echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
                                     } else {
                                         echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
                                     }
-                                ?>
+                                @endphp
                                 <br><br>
                                 {{-- TODO avatar table to pull selections, unless we hardcode their options below
                                 <select name="avatar" id="modal_avatar" class="alert-info">
