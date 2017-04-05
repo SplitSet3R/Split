@@ -11,6 +11,10 @@ use Carbon\Carbon;
 
 class SettleExpenseController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /*
      * Takes a request to settle a shared expense.
      * Requires a POST variable for shared_expenses.id AS id.
