@@ -8,6 +8,7 @@ use App\Group;
 use App\GroupMember;
 use App\CustomClasses\Groups\GroupsStatusCodeEnum;
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -63,7 +64,7 @@ class GroupCreateController extends Controller
             $group->name = $req->name;
             $group->description = $req->description;
             $group->save();
-
+            
             $adminGroupMember = new GroupMember;
             $adminGroupMember->group_id = $group->id;
             $adminGroupMember->username = Auth::user()->username;
@@ -99,11 +100,19 @@ class GroupCreateController extends Controller
             ->get();
         $allfriends = $friends->union($friends2);
 
+        /*
         $groups = DB('groupmembers')
             ->join('groups', 'groupmembers.group_id', 'groups.id')
             ->join('groupexpenses', 'groups.id', 'groupexpenses.group_id')
             ->select('groupmembers.username', 'groups.id', 'groups.name', 'groupexpenses.amount')
             ->get();
+
+        */
+
+        $groups = DB::table('groups AS g')
+            ->join('groupmembers AS gm','g.id', '=', 'gm.group_id')
+            ->get();
+        //$groups =Group::All();
 
         // amount is for the group not for the individual
         return view('groups', compact('allfriends','groups'));

@@ -18,6 +18,7 @@
                     <th class="text-center">Id</th>
                     <th class="text-center">Group Name</th>
                     <th class="text-center">Description</th>
+                    <th class="text-center">Group member</th>
                     <th class="text-center">I owed</th>
                     <th class="text-center">Edit</th>
                     <th class="text-center">Delete</th>
@@ -30,6 +31,7 @@
                         <td>{{$group->id}}</td>
                         <td>{{$group->name}}</td>
                         <td>{{$group->description}}</td>
+                        <td>{{$group->username}}</td>
                         <td></td>
                         <td><button class="btn btn-info open-EditGroupDialog"
                                     data-toggle="modal"
