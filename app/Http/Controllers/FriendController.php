@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class FriendController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(){
         $user = \App\User::find(Auth::user() -> username);
         $acceptedFriends = $user->acceptedFriends();

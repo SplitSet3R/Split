@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\DB;
 
 class GroupCreateController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //get friend list
 
     /**

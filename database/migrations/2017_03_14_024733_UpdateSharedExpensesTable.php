@@ -16,10 +16,6 @@ class UpdateSharedExpensesTable extends Migration
         Schema::table('sharedexpenses', function (Blueprint $table) {
             // Composite Unique Constraint
             $table->unique(['expense_id', 'secondary_username']);
-
-            // Foreign keys
-            $table->foreign('expense_id')->references('id')->on('expenses');
-            $table->foreign('secondary_username')->references('username')->on('users');
         });
     }
 
