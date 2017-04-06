@@ -3,15 +3,15 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             <li class="active">
-                <a class="openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">
+                <a href="/dashboard">
                     <i class="material-icons">dashboard</i>
-                    <p>Add Expense</p>
+                    <p>Dashboard</p>
                 </a>
             </li>
             <li>
                 <!-- redirects to profile page based on username -->
                 <a href="../profile/{{ Auth::user()->username }}">
-                    <i class="material-icons">person</i>
+                    <i class="material-icons">face</i>
                     <p>User Profile</p>
                 </a>
             </li>
@@ -84,6 +84,12 @@
                 <a href="/friends">
                     <i class="material-icons">content_paste</i>
                     <p>Friends List</p>
+                </a>
+            </li>
+            <li>
+                <a href="/groups">
+                    <i class="material-icons">group</i>
+                    <p>Groups</p>
                 </a>
             </li>
         </ul>
