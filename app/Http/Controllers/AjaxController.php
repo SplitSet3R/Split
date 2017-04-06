@@ -28,7 +28,7 @@ class AjaxController extends Controller
                 $friendship->status_code = 'pending';
                 $friendship->action_username = Auth::user()->username;
                 $friendship->save();
-                //NotificationManager::makeFriendRequestNotification($friendship); //generate notification on success
+                NotificationManager::makeFriendRequestNotification($friendship); //generate notification on success
                 return response()->json(array("message" => "friend request sent!"), 200);
             }
         }

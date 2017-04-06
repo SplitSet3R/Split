@@ -39,20 +39,11 @@ class DashboardController extends Controller
         if($newExpense->save()) {
             if(isset($req->username) || isset($req->expOwedAmount)) {
 
-              // TODO Set comment to nullable in database
               $this->validate($req, [
                   'expOwedAmount'   => 'required|numeric|min:1',
-                  'username'        => 'exists:users|required|max:255',
-                  'expOwerComments' => 'required|max:255'
+                  'username'        => 'exists:users|required|max:255'
               ]);
-              /*
-              try {
-                $secondary_username = User::findOrFail($req->username);
-              } catch (ModelNotFoundException $e) {
-                // TODO
-                return redirect()->back()->with("errorUsername", "User entered does not exist in the database");
-              }
-              */
+
               $newSharedExpense = new SharedExpense;
               $newSharedExpense->expense_id=$newExpense->id;
               $newSharedExpense->amount_owed=$req->expOwedAmount;
