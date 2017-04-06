@@ -32,6 +32,7 @@ Route::post('/search/addfriend', 'AjaxController@addfriend');
 /*Friends Routes*/
 Route::get('/friends', 'FriendController@index');
 Route::post('/friends/process', 'AjaxController@processFriendRequest');
+Route::post('/friends/sharedexpense', 'AjaxController@retrieveFriends');
 
 /*Notifications routes*/
 Route::get('/notifications', 'AjaxController@getNotifications');

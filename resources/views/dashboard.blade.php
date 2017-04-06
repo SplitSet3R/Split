@@ -11,7 +11,10 @@
                 </div>
             </div>
           <div>
-              <table class='table'><thead><tr><th>OWED</th><th>OWES</th><th>TTL</th><th>BAL</th></tr></thead><tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
+              <table class='table'>
+                <thead>
+                  <tr><th>OWED</th><th>OWES</th><th>TTL</th><th>BAL</th></tr></thead>
+                  <tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
               </table>
           </div>
         </div>
