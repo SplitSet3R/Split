@@ -37,7 +37,10 @@ class DashboardController extends Controller
 
         // TODO Refactor to not save an expense row when shared expenses has errors
         if($newExpense->save()) {
-            if(isset($req->username) || isset($req->expOwedAmount)) {
+
+            // Band-aid fix for a bug. This whole functionality needs to be refactored.
+            // Not a good fix but covers most use cases
+            if(isset($req->username) || ($req->expOwedAmount != "0.00")) {
 
               $this->validate($req, [
                   'expOwedAmount'   => 'required|numeric|min:1',
