@@ -19,6 +19,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/profile.css') }}" rel="stylesheet" />
 
 
     <!-- Scripts -->
