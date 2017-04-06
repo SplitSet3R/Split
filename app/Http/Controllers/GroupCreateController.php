@@ -9,6 +9,7 @@ use App\GroupMember;
 use App\CustomClasses\Groups\GroupsStatusCodeEnum;
 
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,17 +40,22 @@ class GroupCreateController extends Controller
         $adminGroupMember->is_Admin = 1;
         $adminGroupMember->save();
         for ($i = 0; $i < sizeof($req->groupMembers); $i++) {
-            $groupMember = new GroupMember;
-            $groupMember->group_id = $group->id;
-            $groupMember->username = $req->groupMembers[$i];
-            $groupMember->status_code = GroupsStatusCodeEnum::PENDING; // have to change 'pending' into a constant
-            $groupMember->action_group_id = $group->id;
-            $groupMember->is_Admin = 0;
-            $groupMember->save();
+            try {
+                $groupMember = new GroupMember;
+                $groupMember->group_id = $group->id;
+                $groupMember->username = $req->groupMembers[$i];
+                $groupMember->status_code = GroupsStatusCodeEnum::PENDING; // have to change 'pending' into a constant
+                $groupMember->action_group_id = $group->id;
+                $groupMember->is_Admin = 0;
+                $groupMember->save();
+            } catch (QueryException $qe) {
+                return response()->json(array("message" => "Group member addition QueryException"), 500);
+            }
         }
         return redirect()->action('GroupCreateController@index');
     }
-
+    /*
+    // Not Working must Cascade Delete
     public function deleteGroup(Request $req) {
         if (Group::find($req->modal_groupid_delete)) {
             $group = Group::find($req->modal_groupid_delete);
@@ -57,6 +63,8 @@ class GroupCreateController extends Controller
         }
         return redirect()->action('GroupCreateController@index');
     }
+    */
+
 
     public function updateGroup(Request $req) {
         if (Group::find($req->id)) {
