@@ -64,7 +64,7 @@ class GroupCreateController extends Controller
             $group->name = $req->name;
             $group->description = $req->description;
             $group->save();
-            
+
             $adminGroupMember = new GroupMember;
             $adminGroupMember->group_id = $group->id;
             $adminGroupMember->username = Auth::user()->username;
@@ -111,6 +111,7 @@ class GroupCreateController extends Controller
 
         $groups = DB::table('groups AS g')
             ->join('groupmembers AS gm','g.id', '=', 'gm.group_id')
+            ->where('username', '=', Auth::user()->username)
             ->get();
         //$groups =Group::All();
 
