@@ -18,4 +18,9 @@ class Group extends Model
     {
         return $this->belongsToMany('App\User', 'groupmembers', 'group_id', 'username');
     }
+    public function groupExpenses()
+    {
+        return $this->hasMany('App\GroupExpense');
+
+    }
 }

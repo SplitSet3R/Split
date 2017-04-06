@@ -12,5 +12,5 @@ class SharedExpense extends Model
     protected $fillable = [
         'id','expense_id', 'amount_owed', 'secondary_username', 'comments', 'date_added', 'date_settled'
     ];
-    protected $table = 'sharedexpenses';
+//    protected $table = 'sharedexpenses';
 }
