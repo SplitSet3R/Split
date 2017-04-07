@@ -30,7 +30,7 @@
                         @if(session('success'))
                             <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}</p>
                         @endif
-                        @if($permission==config('constants.FRIENDS') || $permission==config('constants.SELF'))
+                        @if($permission==config('constants.FRIENDS') || $user->username==Auth::user()->username)
                         <table class="table table-striped table-bordered table-hover text-center control-label">
                             <tr class="active">
                                 <td>First Name: </td>

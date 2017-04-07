@@ -44,9 +44,9 @@ class ProfileController extends Controller
         //what if username1 == username2? this shouldn't happen but is a possibility.
         if(Auth::user()->username == $profile_name){
             return config("constants.SELF");
-        }else if ($friendship->count() === 0) {
+        }else if ($friendship->count() == 0) {
             return config('constants.NOT_FRIENDS');
-        } else if ($friendship->first()->status_code == "pending") {
+        } else if ($friendship->first()->status_code =="pending") {
             return config('constants.PENDING');
         } else if ($friendship->first()->status_code == "accepted") {
             return config('constants.FRIENDS');
