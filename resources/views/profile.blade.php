@@ -50,7 +50,7 @@
                             </tr>
                         </table>
                           @if($permission==config('constants.FRIENDS'))
-                          <h3>You and {{$user->username}} are the bitchin'-est of friends.</h3>
+                          <h3>You and {{$user->username}} are friends! Buy lots of things together!</h3>
                           @endif
                         @endif
                         @if($permission==config('constants.NOT_FRIENDS'))
@@ -67,7 +67,7 @@
                           <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Your Friend Request is Pending</button>
                         </span>
                         @endif
-                        @if($permission==config('constants.SELF'))
+                        @if($user->username==Auth::user()->username)
                         <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
                         @endif
                     </div>
