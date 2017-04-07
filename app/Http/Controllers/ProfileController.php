@@ -20,7 +20,7 @@ class ProfileController extends Controller
     /*
      * Returns user's info based on the profile name specified in the URL
      */
-    public function getProfile($profile_name) {
+    public function getUser($profile_name) {
         return User::find($profile_name);
     }
 
@@ -29,17 +29,20 @@ class ProfileController extends Controller
      * and the profile_name specified in the url.
      *
      * Returns:
-     * 0 if they are friends
-     * 1 if friend request is pending
-     * 2 if they are not friends
-     * 3 if some major error has occured
+       0 if they are self
+     * 1 if they are friends
+     * 2 if friend request is pending
+     * 3 if they are not friends
+     * 4 if some major error has occured
      */
-    public function friendCheck($profile_name) {
+    public function permissionCheck($profile_name) {
         $friendship = Friend::whereIn('username1', [Auth::user()->username, $profile_name])
             ->whereIn('username2', [Auth::user()->username, $profile_name])
             ->where('status_code', 'approved')->get();
         //what if username1 == username2? this shouldn't happen but is a possibility.
-        if ($friendship->count() == 0) {
+        if(Auth::user()->username == $profile_name){
+            return config("constants.SELF");
+        }else if ($friendship->count() == 0) {
             return config('constants.NOT_FRIENDS');
         } else if ($friendship->first()->status_code == "pending") {
             return config('constants.PENDING');
@@ -144,24 +147,24 @@ class ProfileController extends Controller
     /*
      * Default behaviour for visiting a profile. Profile_name variable
      * passed in URL.
+      permission status is passed to the view where the information is displayed based on
+      permission status and the user object
+      SELF, FRIENDS, NOT FRIENDS, PENDING are acceptable permissions
      */
     public function index($profile_name) {
-        $profile_name = trim($profile_name);
-        if (Auth::user()->username == $profile_name) {
-            // TODO: return own profile - DONE
-            return view('profile');
-        }
-        $status = $this->friendCheck($profile_name);
-        if($status == config('constants.FRIENDS')) {
-            $profile = $this->getProfile($profile_name);
+            $profile_name = trim($profile_name);
+            $permission = $this->permissionCheck($profile_name);
+            if($permission == config('constants.PROFILE_ERROR'))
+              return "Profile Error";
+            $user = $this->getUser($profile_name);
             $owedexpenses = $this->getOwedExpenses($profile_name);
             $owingexpenses = $this->getOwingExpenses($profile_name);
             $sharedgroups = $this->getSharedGroups($profile_name);
-            return view('debug', compact('profile','status', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
+            return view('profile', compact('user','permission', 'owedexpenses', 'owingexpenses', 'sharedgroups'));
             //TODO: implement redirect to frontend, replace "debug" with whatever page.
-        } else {
-            return view('debug', compact('ststus'));
+        /*} else {
+            return view('debug', compact('status'));
             //TODO: this should return to a view where a limited profile is shown displaying either pending or not friends
-        }
+        }*/
     }
 }

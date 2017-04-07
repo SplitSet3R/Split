@@ -30,7 +30,7 @@
                 <div class="well">
                 @foreach($acceptedFriends as $user)
                     <!-- TODO route to user's profile-->
-                        <a href="#"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
+                        <a href="profile/{{$user->username}}"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
                         <hr />
                     @endforeach
                 </div>
