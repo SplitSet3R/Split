@@ -21,43 +21,6 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(Request $req)
-    {
-        $this->validate($req, [
-            'expAmount' => 'required|numeric|min:1',
-            'expType' => 'required|max:255',
-            'expDate' => 'required|date'
-        ]);
-        $newExpense = new Expense;
-        $newExpense->owner_username= Auth::user()->username;
-        $newExpense->amount=$req->expAmount;
-        $newExpense->type=$req->expType;
-        $newExpense->date=$req->expDate;
-        $newExpense->comments=$req->expComments;
-
-        // TODO Refactor to not save an expense row when shared expenses has errors
-        if($newExpense->save()) {
-
-            // Band-aid fix for a bug. This whole functionality needs to be refactored.
-            // Not a good fix but covers most use cases
-            if(isset($req->username) || ($req->expOwedAmount != "0.00")) {
-
-              $this->validate($req, [
-                  'expOwedAmount'   => 'required|numeric|min:1',
-                  'username'        => 'exists:users|required|max:255'
-              ]);
-
-              $newSharedExpense = new SharedExpense;
-              $newSharedExpense->expense_id=$newExpense->id;
-              $newSharedExpense->amount_owed=$req->expOwedAmount;
-              $newSharedExpense->comments=$req->expOwerComments;
-              $newSharedExpense->secondary_username=$req->username;
-              $newSharedExpense->save();
-            }
-        }
-        return redirect()->action('DashboardController@index');
-    }
-
     public function getExpenses()
     {
         $expensesWhereUserOwns = DB::table('expenses AS e')

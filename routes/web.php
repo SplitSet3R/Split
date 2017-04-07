@@ -20,9 +20,8 @@ Route::get('profile/{profile_name}','ProfileController@index');
 Route::post('profile/{profile_name}/edit', 'ProfileController@edit');
 
 /*Dashboard Routes*/
-Route::post('/{username}/addexpense', 'DashboardController@store');
+Route::post('/{username}/addexpense', 'ExpenseController@addExpense');
 Route::get('/dashboard', 'DashboardController@index');
-Route::post('/{username}/add', 'DashboardController@store');
 
 /*Search Routes*/
 Route::get('/search', 'SearchController@index');

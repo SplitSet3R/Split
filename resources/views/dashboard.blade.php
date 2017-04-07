@@ -12,20 +12,6 @@
           </div>
         </div>
         <div class="col-sm-9">
-              <!--
-              <form method="get" action="">
-              <label>Order By</label>
-              <select name="orderby">
-                  <option value="most_recent">Most Recent</option>
-                  <option value="amount">Highest Total Amount</option>
-                  <option value="amount_owed">Highest Amount Owed</option>
-                  <option value="type">Type</option>
-              </select>
-              <h3>You have no friends!</h3>
-
-                      <br>
-              <input type="submit" name="sortBtn">
-              </form>-->
               <div class='container'>
                 <table class='table' style='width:75%;' id='displayTable'>
                     <thead class='thead-default'>

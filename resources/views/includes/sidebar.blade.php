@@ -141,7 +141,7 @@
                     <label class="control-label">Amount</label>
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        <input type="number" value="0.00" id="expAmountInput" class="form-control required"
+                        <input type="number" placeholder="0.00" id="expAmountInput" class="form-control required"
                                min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expAmount">
                     </div>
 
@@ -171,7 +171,7 @@
                         <label class="control-label">Owed</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
-                            <input type="number" value="0.00" id="expOwedInput" class="form-control required"
+                            <input type="number" value="" placeholder="0.00" id="expOwedInput" class="form-control required"
                                    min="0" max="9999.99" step="0.01" data-number-to-fixed="2" data-number-stepfactor="100" name="expOwedAmount">
                         </div>
                         @if ($errors->has('expOwedAmount'))
