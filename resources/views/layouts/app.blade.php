@@ -72,7 +72,7 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
 
-                            <li class=".addExdansebtn"><button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">
+                            <li class=".addExdansebtn" style="padding-top: 6px;"><button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">
                                     Add Expense</button>&nbsp &nbsp</li>
                             <li class="dropdown">
 
