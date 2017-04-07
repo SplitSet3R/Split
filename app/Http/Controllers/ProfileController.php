@@ -36,17 +36,19 @@ class ProfileController extends Controller
      * 4 if some major error has occured
      */
     public function permissionCheck($profile_name) {
-        $friendship = Friend::whereIn('username1', [Auth::user()->username, $profile_name])
+        $friendship = DB::table('friends')
+            ->whereIn('username1', [Auth::user()->username, $profile_name])
             ->whereIn('username2', [Auth::user()->username, $profile_name])
-            ->where('status_code', 'approved')->get();
+            //->where('status_code', 'accepted');
+            ->get();
         //what if username1 == username2? this shouldn't happen but is a possibility.
         if(Auth::user()->username == $profile_name){
             return config("constants.SELF");
-        }else if ($friendship->count() == 0) {
+        }else if ($friendship->count() === 0) {
             return config('constants.NOT_FRIENDS');
         } else if ($friendship->first()->status_code == "pending") {
             return config('constants.PENDING');
-        } else if ($friendship->first()->status_code == "approved") {
+        } else if ($friendship->first()->status_code == "accepted") {
             return config('constants.FRIENDS');
         }
         return config('constants.PROFILE_ERROR');

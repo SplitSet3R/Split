@@ -1,9 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <div class="wrapper">
-        <div class="sidebar" data-color="green" >
-            @include('includes.sidebar')
-        </div>
 
         <div class="main-panel">
             <div class="container-fluid">
@@ -17,14 +14,14 @@
                     <div class="col-md-3 text-center">
                         @php
                             // TODO upload user profile image - feature not yet implemented;
-                            $avatar = Auth::user()->avatar;
+                            $avatar = $user->avatar;
                             if (isset($avatar)) {
                                 echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
                             } else {
                                 echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
                             }
                         @endphp
-                        <h2>{{ Auth::user()->username }}</h2>
+                        <h2>{{ $user->username }}</h2>
                     </div>
                     <div class="col-md-6">
                         @if(session('error'))
@@ -33,25 +30,46 @@
                         @if(session('success'))
                             <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}</p>
                         @endif
+                        @if($permission==config('constants.FRIENDS') || $permission==config('constants.SELF'))
                         <table class="table table-striped table-bordered table-hover text-center control-label">
                             <tr class="active">
                                 <td>First Name: </td>
-                                <td>{{ Auth::user()->firstname }}</td>
+                                <td>{{ $user->firstname }}</td>
                             </tr>
                             <tr class="active">
                                 <td>Last Name: </td>
-                                <td>{{ Auth::user()->lastname }}</td>
+                                <td>{{ $user->lastname }}</td>
                             </tr>
                             <tr class="active">
                                 <td>Email: </td>
-                                <td>{{ Auth::user()->email }}</td>
+                                <td>{{ $user->email }}</td>
                             </tr>
                             <tr class="active">
                                 <td>Biography: </td>
-                                <td>{{ Auth::user()->bio }}</td>
+                                <td>{{ $user->bio }}</td>
                             </tr>
                         </table>
+                          @if($permission==config('constants.FRIENDS'))
+                          <h3>You and {{$user->username}} are the bitchin'-est of friends.</h3>
+                          @endif
+                        @endif
+                        @if($permission==config('constants.NOT_FRIENDS'))
+                        <form method="POST" action="/search">
+                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                          <span class="pull-right">
+                            <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Add Friend</button>
+                            <h1>You are not yet friends with {{$user->username}}</h1>
+                          </span>
+                        </form>
+                        @endif
+                        @if($permission==config('constants.PENDING'))
+                        <span class="pull-right">
+                          <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Your Friend Request is Pending</button>
+                        </span>
+                        @endif
+                        @if($permission==config('constants.SELF'))
                         <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+                        @endif
                     </div>
                 </div> <!-- row -->
             </div> <!-- container-fluid -->
