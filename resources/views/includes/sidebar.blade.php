@@ -2,20 +2,20 @@
 <div class="sidebar" data-color="green">
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="active">
+            <li id="colorDashboard">
                 <a href="/dashboard">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
                 </a>
             </li>
-            <li>
+            <li id="colorProfile">
                 <!-- redirects to profile page based on username -->
                 <a href="../profile/{{ Auth::user()->username }}">
                     <i class="material-icons">face</i>
                     <p>User Profile</p>
                 </a>
             </li>
-            <li>
+            <li id="colorNofications">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-toggle">
                     <i class="material-icons">notifications_active</i>
                     <p>Notifications</p>
@@ -67,26 +67,25 @@
                     });*/
                 </script>
             </li>
-            <li>
+            <li id="colorTableList">
                 <a href="">
                     <i class="material-icons">content_paste</i>
                     <p>Table List</p>
                 </a>
             </li>
-            <li>
-
+            <li id="colorAddFriend">
                 <a href='/search'>
                     <i class="material-icons">library_books</i>
                     <p>Add Friend</p>
                 </a>
             </li>
-            <li>
+            <li id="colorFriendsList">
                 <a href="/friends">
                     <i class="material-icons">content_paste</i>
                     <p>Friends List</p>
                 </a>
             </li>
-            <li>
+            <li id="colorGroups">
                 <a href="/groups">
                     <i class="material-icons">group</i>
                     <p>Groups</p>
@@ -206,4 +205,42 @@
         $("#owedButton").click();
       @endif
   @endif
+
+  $(document).ready(function() {
+      var currentUrl = window.location.pathname;
+      // add more url's here when needed
+      var dashboard = "/dashboard";
+      var profile = "/profile/{{ Auth::user()->username }}";
+      var notifications = "/notifications";
+      var addFriend = "/search";
+      var friends = "/friends";
+      var groups = "/groups";
+
+      // sidebar will highlight based on current page
+      switch(currentUrl) {
+          case dashboard:
+              $('#colorDashboard').addClass('active');
+              break;
+          case profile:
+              $('#colorProfile').addClass('active');
+              // added this here because the text on user profile would persist as gray even when clicked on
+              $('#colorProfile a i').css('color', 'white');
+              $('#colorProfile a p').css('color', 'white');
+              break;
+          case notifications:
+              $('#colorNofications').addClass('active');
+              break;
+          case addFriend:
+              $('#colorAddFriend').addClass('active');
+              break;
+          case friends:
+              $('#colorFriendsList').addClass('active');
+              break;
+          case groups:
+              $('#colorGroups').addClass('active');
+              break;
+          default:
+              $('#colorDashboard').addClass('active');
+      }
+  });
 </script>
