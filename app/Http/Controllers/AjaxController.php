@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomClasses\Notifications\NotificationCategoryEnum;
 use Illuminate\Http\Request;
 use App\Friend;
 use DB;
+use App\Notification;
 use App\CustomClasses\Notifications\FriendNotification;
 use App\CustomClasses\Notifications\NotificationManager;
 use Illuminate\Support\Facades\Auth;
@@ -75,26 +77,37 @@ class AjaxController extends Controller
     public function getNotifications(Request $req)
     {
         if($req->ajax()) {
-            $requests = DB::table('notifications')
-                ->where('recipient_username', Auth::user()->username)
-                ->where('category', 2) //category 2 is for just Friend notifications
-                //->where('type', 1) //Just request notifications
-                ->orderBy('is_read', 'ASC')
+            $notifications = Notification::where('recipient_username', Auth::user()->username)
+                ->whereIn('category', [1, 2])
+                //->where('type', 1)//requests only
+                ->orderBy('date_added', 'DESC')
                 ->get();
-            $notifications = array();
-            foreach($requests as $request)
-            {
-                $n = new FriendNotification($request->recipient_username,
-                    $request->sender_username,$request->category,
-                    $request->type,$request->parameters,$request->reference_id);
-
-                array_push($notifications, array('refid'=>$request->reference_id, 'message'=>$n->messageForNotification($n)));
+            $fri_not = array();
+            $exp_not = array();
+            foreach ($notifications as $not) {
+                switch($not->type){
+                    case NotificationCategoryEnum::FRIEND:
+                        $n = new FriendNotification($not->recipient_username, $not->sender_username,
+                            $not->category, $not->type, $not->parameters, $not->reference_id);
+                        array_push($fri_not, array('message'=>$n->messageForNotification($n),
+                            'ref_id'=>$not->reference_id));
+                        break;
+                    case NotificationCategoryEnum::EXPENSE:
+                        $n = new ExpenseNotification($not->recipient_username, $not->sender_username,
+                            $not->category, $not->type, $not->parameters, $not->reference_id);
+                        array_push($exp_not, array('message'=>$n->messageForNotification($n),
+                            'ref_id'=>$not->reference_id));
+                        break;
+                    default:
+                        break;
+                }
             }
-            return response()->json(array("requestnotifications"=>$notifications));
+            return response()->json(array("fri_not"=>$fri_not, "exp_not"=>$exp_not));
         } else {
             return response()->json(array("error"=>"error with notifications"));
         }
     }
+
 
     /**
      * Update a notification once it has been viewed.
@@ -102,11 +115,6 @@ class AjaxController extends Controller
      */
     public function updateNotifications(Request $req)
     {
-        //update when viewed
-        if($req->ajax()) {
-            if(isset($req->viewed)) {
-                dd($req->viewed);
-            }
-        }
+
     }
 }
