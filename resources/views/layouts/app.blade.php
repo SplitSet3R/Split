@@ -66,6 +66,87 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-toggle">
+                                    <i class="material-icons">people</i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right" id="dropdown-notifications"></ul>
+                                <script>
+                                    $(document).ready(function() {
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            }
+                                        });
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '/notifications',
+                                            data: {},
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                if(data["requestnotifications"].length > 0) {
+                                                    for(var i=0; i<data["requestnotifications"].length; i++) {
+                                                        var newreq = document.createElement('LI');
+                                                        newreq.innerHTML = data["requestnotifications"][i]['message'];
+                                                        document.getElementById('dropdown-notifications').append(newreq);
+                                                    }
+                                                } else {
+                                                    var noreq = document.createElement('LI');
+                                                    noreq.innerHTML = "no notifications";
+                                                    document.getElementById('dropdown-notifications').append(noreq);
+                                                }
+                                            }
+                                        });
+                                    });
+                                </script>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-toggle">
+                                    <i class="material-icons">notifications_active</i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right" id="dropdown-notifications"></ul>
+                                <script>
+                                    $(document).ready(function() {
+                                        $.ajaxSetup({
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            }
+                                        });
+                                        $.ajax({
+                                            type: 'GET',
+                                            url: '/notifications',
+                                            data: {},
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                if(data["requestnotifications"].length > 0) {
+                                                    for(var i=0; i<data["requestnotifications"].length; i++) {
+                                                        var newreq = document.createElement('LI');
+                                                        newreq.innerHTML = data["requestnotifications"][i]['message'];
+                                                        document.getElementById('dropdown-notifications').append(newreq);
+                                                    }
+                                                } else {
+                                                    var noreq = document.createElement('LI');
+                                                    noreq.innerHTML = "no notifications";
+                                                    document.getElementById('dropdown-notifications').append(noreq);
+                                                }
+                                            }
+                                        });
+                                    });
+                                    /*
+                                     $('#notifications-toggle').on('click', function(e){
+                                     //set all to viewed
+                                     $.ajax({
+                                     type: 'POST',
+                                     url: '/notifications',
+                                     data: {}, //Data values are reference ids
+                                     dataType: 'json',
+                                     success: function (data) {
+
+                                     }
+                                     });
+                                     });*/
+                                </script>
+                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->email }} <span class="caret"></span>
