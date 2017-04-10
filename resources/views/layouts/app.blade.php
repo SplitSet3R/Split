@@ -13,7 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
-
+    <link href="{{ asset('css/notifications.css') }}" rel="stylesheet"/>
 
     <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
