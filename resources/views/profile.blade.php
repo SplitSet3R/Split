@@ -62,7 +62,7 @@
                             </form>
                         @elseif($permission==config('constants.PENDING_FRIENDS'))
                             <span class="pull-right">
-                              <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Your Friend Request is Pending</button>
+                              <button type="button" onclick="" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Your Friend Request is Pending</button>
                             </span>
                         @elseif($permission == config("constants.SELF"))
                             <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
