@@ -12,15 +12,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        @php
-                            // TODO upload user profile image - feature not yet implemented;
-                            $avatar = $user->avatar;
-                            if (isset($avatar)) {
-                                echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
-                            } else {
-                                echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
-                            }
-                        @endphp
+                        @if(Auth::user()->avatar)
+                            <img src="{{asset('avatars/'. Auth::user()->avatar)}}" id="profileImage">;
+                        @else
+                            <img src="{{asset('avatars/default-profile-picture.jpg')}}" id="profileImage">
+                        @endif
                         <h2>{{ $user->username }}</h2>
                     </div>
                     <div class="col-md-6">
@@ -115,9 +111,17 @@
                                 --}}
                                 <select name="avatar" id="modal_avatar" class="alert-info">
                                     <option value="default-profile-picture.jpg">Default</option>
-                                    <option value="avatar1">Avatar 1</option>
-                                    <option value="avatar2">Avatar 2</option>
-                                    <option value="avatar3">Avatar 3</option>
+                                    <option value="dog-1.png">Dog</option>
+                                    <option value="cat.png">Cat</option>
+                                    <option value="parrot.png">Parrot</option>
+                                    <option value="ostrich.png">Ostrich</option>
+                                    <option value="seal.png">Seal</option>
+                                    <option value="rooster.png">Rooster</option>
+                                    <option value="snake.png">Snake</option>
+                                    <option value="hedgehog.png">Hedgehog</option>
+                                    <option value="crow.png">Crow</option>
+                                    <option value="chicken.png">Chicken</option>
+                                    <option value="octopus.png">Octopus</option>
                                 </select>
                             </div>
                         </div>
@@ -137,4 +141,7 @@
              </div>
          </div>
      </div>
+    <script>
+        $('#modal_avatar option[value="{{ Auth::user()->avatar }}"').attr('selected', 'selected');
+    </script>
  @endsection
