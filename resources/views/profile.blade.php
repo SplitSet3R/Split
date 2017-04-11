@@ -101,9 +101,9 @@
                             <div class="col-md-6 text-center">
                                 <br>
                                 @if(Auth::user()->avatar)
-                                    <img src="{{asset('images/'. Auth::user()->avatar)}}" id="profileImage">;
+                                    <img src="{{asset('avatars/'. Auth::user()->avatar)}}" id="profileImage">;
                                 @else
-                                    <img src="{{asset('images/default-profile-picture.jpg')}}" id="profileImage">
+                                    <img src="{{asset('avatars/default-profile-picture.jpg')}}" id="profileImage">
                                 @endif
                                 <br><br>
                                 {{-- TODO avatar table to pull selections, unless we hardcode their options below
