@@ -4,6 +4,7 @@
         <div class="container-fluid">
           <h4>{{ Auth::user()->firstname}}'s expenses</h4>
           <div>
+            <h2>Summary of Expenses</h2>
               <table class='table'>
                 <thead>
                   <tr><th>OWED</th><th>OWES</th><th>TTL</th><th>BAL</th></tr></thead>
@@ -13,12 +14,13 @@
         </div>
         <div class="col-sm-9">
               <div class='container'>
+                <h2>Outstanding Expenses</h2>
                 <table class='table' style='width:75%;' id='displayTable'>
                     <thead class='thead-default'>
                       <th>Type<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Owed<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Balance<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
                     </thead>
@@ -28,8 +30,8 @@
                             <td>{{$expense->type}}</td>
                             <td>{{$expense->date_added}}</td>
                             <td>{{$expense->amount}}</td>
-                            <td>{{$expense->amount_owed}}</td>
-                            <td>{{$expense->secondary_username}}</td>
+                            <td style="">{{$expense->amount_owed}}</td>
+                            <td><a href="profile/{{$expense->secondary_username}}">{{$expense->secondary_username}}</a></td>
                             <td>{{$expense->comments}}</td>
                         </tr>
                     @endforeach

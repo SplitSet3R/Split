@@ -29,7 +29,6 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="well">
                 @foreach($acceptedFriends as $user)
-                    <!-- TODO route to user's profile-->
                         <a href="profile/{{$user->username}}"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
                         <hr />
                     @endforeach
