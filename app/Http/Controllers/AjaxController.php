@@ -19,9 +19,8 @@ class AjaxController extends Controller
     {
         if ($req->json() && isset($req->username)) {
             $friendstatus = Friend::whereIn('username1', [Auth::user()->username, $req->username])
-                ->whereIn('username2', [Auth::user()->username, $req->username])
-                ->count();
-            if ($friendstatus < 1) { // Authenticated user is not friends with $req->username
+                ->whereIn('username2', [Auth::user()->username, $req->username]);
+            if ($friendstatus->count() < 1) { // Authenticated user is not friends with $req->username
                 $friendship = new Friend;
                 $friendship->username1 = Auth::user()->username;
                 $friendship->username2 = $req->username;
@@ -30,6 +29,16 @@ class AjaxController extends Controller
                 $friendship->save();
                 NotificationManager::makeFriendRequestNotification($friendship); //generate notification on success
                 return response()->json(array("message" => "friend request sent!"), 200);
+            } else {
+                $friends = $friendstatus->first();
+                switch ($friends->status_code) {
+                    case "pending":
+                        return response()->json(array("message" => "Friend request pending!"), 200);
+                    case "accepted":
+                        return response()->json(array("message" => "Silly you, you're already friends!"), 200);
+                    case "declined":
+                        return response()->json(array("message" => "This person hates your guts!"), 200);
+                }
             }
         }
         return response()->json(array("message" => "generic error message"), 500);
