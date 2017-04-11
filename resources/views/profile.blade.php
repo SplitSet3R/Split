@@ -51,7 +51,7 @@
                             </table>
                         @endif
                         @if($permission==config('constants.FRIENDS'))
-                            <h3>You and {{$user->username}} are friends! Buy lots of things together!</h3>
+                            <h3 style="text-align:center">You and {{$user->username}} are friends!</h3><<h3 style="text-align:center"> Buy lots of things together!</h3>
                         @elseif($permission==config('constants.NOT_FRIENDS'))
                             <form method="POST" action="/search">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -62,7 +62,7 @@
                             </form>
                         @elseif($permission==config('constants.PENDING_FRIENDS'))
                             <span class="pull-right">
-                              <button type="button" onclick="" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Your Friend Request is Pending</button>
+                              <button type="button" onclick="" class="btn btn-danger" name="add-friend" value="">Your Friend Request is Pending</button>
                             </span>
                         @elseif($permission == config("constants.SELF"))
                             <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
