@@ -38,7 +38,8 @@ class DashboardController extends Controller
     }
 
     public function getExpenseSummary($expenses){
-
+      //make an summary
+      //return new
 
     }
 
@@ -50,6 +51,7 @@ class DashboardController extends Controller
     public function index()
     {
         $expenses = $this->getExpenses();
+        //$summary = 
 
 
         return view('dashboard', compact('expenses'));
