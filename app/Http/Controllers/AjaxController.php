@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Friend;
 use DB;
 use App\Notification;
+use App\CustomClasses\Notifications\ExpenseNotification;
 use App\CustomClasses\Notifications\FriendNotification;
 use App\CustomClasses\Notifications\NotificationManager;
 use Illuminate\Support\Facades\Auth;
@@ -115,8 +116,9 @@ class AjaxController extends Controller
      */
     public function getNotifications(Request $req)
     {
+        $username = Auth::user()->username;
         if($req->ajax()) {
-            $notifications = Notification::where('recipient_username', Auth::user()->username)
+            $notifications = Notification::where('recipient_username', $username)
                 ->whereIn('category', [1, 2])
                 //->where('type', 1)//requests only
                 ->orderBy('date_added', 'DESC')
@@ -124,7 +126,7 @@ class AjaxController extends Controller
             $fri_not = array();
             $exp_not = array();
             foreach ($notifications as $not) {
-                switch($not->type){
+                switch($not->category){
                     case NotificationCategoryEnum::FRIEND:
                         $n = new FriendNotification($not->recipient_username, $not->sender_username,
                             $not->category, $not->type, $not->parameters, $not->reference_id);
@@ -136,8 +138,6 @@ class AjaxController extends Controller
                             $not->category, $not->type, $not->parameters, $not->reference_id);
                         array_push($exp_not, array('message'=>$n->messageForNotification($n),
                             'ref_id'=>$not->reference_id));
-                        break;
-                    default:
                         break;
                 }
             }
