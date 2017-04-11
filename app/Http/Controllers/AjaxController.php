@@ -38,6 +38,8 @@ class AjaxController extends Controller
                         return response()->json(array("message" => "Silly you, you're already friends!"), 200);
                     case "declined":
                         return response()->json(array("message" => "This person hates your guts!"), 200);
+                    default:
+                        break;
                 }
             }
         }
