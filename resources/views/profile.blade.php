@@ -12,15 +12,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        @php
-                            // TODO upload user profile image - feature not yet implemented;
-                            $avatar = $user->avatar;
-                            if (isset($avatar)) {
-                                echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
-                            } else {
-                                echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
-                            }
-                        @endphp
+                        @if(Auth::user()->avatar)
+                            <img src="{{asset('avatars/'. Auth::user()->avatar)}}" id="profileImage">;
+                        @else
+                            <img src="{{asset('avatars/default-profile-picture.jpg')}}" id="profileImage">
+                        @endif
                         <h2>{{ $user->username }}</h2>
                     </div>
                     <div class="col-md-6">
