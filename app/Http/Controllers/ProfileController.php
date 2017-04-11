@@ -47,7 +47,7 @@ class ProfileController extends Controller
         }else if ($friendship->count() == 0) {
             return config('constants.NOT_FRIENDS');
         } else if ($friendship->first()->status_code =="pending") {
-            return config('constants.PENDING');
+            return config('constants.PENDING_FRIENDS');
         } else if ($friendship->first()->status_code == "accepted") {
             return config('constants.FRIENDS');
         }

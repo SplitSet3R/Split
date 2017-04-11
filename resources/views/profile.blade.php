@@ -31,44 +31,41 @@
                             <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}</p>
                         @endif
                         @if($permission==config('constants.FRIENDS') || $user->username==Auth::user()->username)
-                        <table class="table table-striped table-bordered table-hover text-center control-label">
-                            <tr class="active">
-                                <td>First Name: </td>
-                                <td>{{ $user->firstname }}</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Last Name: </td>
-                                <td>{{ $user->lastname }}</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Email: </td>
-                                <td>{{ $user->email }}</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Biography: </td>
-                                <td>{{ $user->bio }}</td>
-                            </tr>
-                        </table>
-                          @if($permission==config('constants.FRIENDS'))
-                          <h3>You and {{$user->username}} are friends! Buy lots of things together!</h3>
-                          @endif
+                            <table class="table table-striped table-bordered table-hover text-center control-label">
+                                <tr class="active">
+                                    <td>First Name: </td>
+                                    <td>{{ $user->firstname }}</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>Last Name: </td>
+                                    <td>{{ $user->lastname }}</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>Email: </td>
+                                    <td>{{ $user->email }}</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>Biography: </td>
+                                    <td>{{ $user->bio }}</td>
+                                </tr>
+                            </table>
                         @endif
-                        @if($permission==config('constants.NOT_FRIENDS'))
-                        <form method="POST" action="/search">
-                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                          <span class="pull-right">
-                            <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Add Friend</button>
-                            <h1>You are not yet friends with {{$user->username}}</h1>
-                          </span>
-                        </form>
-                        @endif
-                        @if($permission==config('constants.PENDING'))
-                        <span class="pull-right">
-                          <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Your Friend Request is Pending</button>
-                        </span>
-                        @endif
-                        @if($user->username==Auth::user()->username)
-                        <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+                        @if($permission==config('constants.FRIENDS'))
+                            <h3>You and {{$user->username}} are friends! Buy lots of things together!</h3>
+                        @elseif($permission==config('constants.NOT_FRIENDS'))
+                            <form method="POST" action="/search">
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                              <span class="pull-right">
+                                <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Add Friend</button>
+                                <h1>You are not yet friends with {{$user->username}}</h1>
+                              </span>
+                            </form>
+                        @elseif($permission==config('constants.PENDING_FRIENDS'))
+                            <span class="pull-right">
+                              <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Your Friend Request is Pending</button>
+                            </span>
+                        @elseif($permission == config("constants.SELF"))
+                            <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
                         @endif
                     </div>
                 </div> <!-- row -->
@@ -103,14 +100,11 @@
                             </div>
                             <div class="col-md-6 text-center">
                                 <br>
-                                @php
-                                    $avatar = Auth::user()->avatar;
-                                    if (isset($avatar)) {
-                                        echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
-                                    } else {
-                                        echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
-                                    }
-                                @endphp
+                                @if(Auth::user()->avatar)
+                                    <img src="{{asset('images/'. Auth::user()->avatar)}}" id="profileImage">;
+                                @else
+                                    <img src="{{asset('images/default-profile-picture.jpg')}}" id="profileImage">
+                                @endif
                                 <br><br>
                                 {{-- TODO avatar table to pull selections, unless we hardcode their options below
                                 <select name="avatar" id="modal_avatar" class="alert-info">
