@@ -1,9 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <div class="wrapper">
-        <div class="sidebar" data-color="green" >
-            @include('includes.sidebar')
-        </div>
 
         <div class="main-panel">
             <div class="container-fluid">
@@ -15,16 +12,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        @php
-                            // TODO upload user profile image - feature not yet implemented;
-                            $avatar = Auth::user()->avatar;
-                            if (isset($avatar)) {
-                                echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
-                            } else {
-                                echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
-                            }
-                        @endphp
-                        <h2>{{ Auth::user()->username }}</h2>
+                        @if(Auth::user()->avatar)
+                            <img src="{{asset('avatars/'. Auth::user()->avatar)}}" id="profileImage">;
+                        @else
+                            <img src="{{asset('avatars/default-profile-picture.jpg')}}" id="profileImage">
+                        @endif
+                        <h2>{{ $user->username }}</h2>
                     </div>
                     <div class="col-md-6">
                         @if(session('error'))
@@ -33,25 +26,43 @@
                         @if(session('success'))
                             <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('success') }}</p>
                         @endif
-                        <table class="table table-striped table-bordered table-hover text-center control-label">
-                            <tr class="active">
-                                <td>First Name: </td>
-                                <td>{{ Auth::user()->firstname }}</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Last Name: </td>
-                                <td>{{ Auth::user()->lastname }}</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Email: </td>
-                                <td>{{ Auth::user()->email }}</td>
-                            </tr>
-                            <tr class="active">
-                                <td>Biography: </td>
-                                <td>{{ Auth::user()->bio }}</td>
-                            </tr>
-                        </table>
-                        <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+                        @if($permission==config('constants.FRIENDS') || $user->username==Auth::user()->username)
+                            <table class="table table-striped table-bordered table-hover text-center control-label">
+                                <tr class="active">
+                                    <td>First Name: </td>
+                                    <td>{{ $user->firstname }}</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>Last Name: </td>
+                                    <td>{{ $user->lastname }}</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>Email: </td>
+                                    <td>{{ $user->email }}</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>Biography: </td>
+                                    <td>{{ $user->bio }}</td>
+                                </tr>
+                            </table>
+                        @endif
+                        @if($permission==config('constants.FRIENDS'))
+                            <h3 style="text-align:center">You and {{$user->username}} are friends!</h3><<h3 style="text-align:center"> Buy lots of things together!</h3>
+                        @elseif($permission==config('constants.NOT_FRIENDS'))
+                            <form method="POST" action="/search">
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                              <span class="pull-right">
+                                <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Add Friend</button>
+                                <h1>You are not yet friends with {{$user->username}}</h1>
+                              </span>
+                            </form>
+                        @elseif($permission==config('constants.PENDING_FRIENDS'))
+                            <span class="pull-right">
+                              <button type="button" onclick="" class="btn btn-danger" name="add-friend" value="">Your Friend Request is Pending</button>
+                            </span>
+                        @elseif($permission == config("constants.SELF"))
+                            <button class="btn btn-success openEditProfileModal" data-toggle="modal" data-target="#editProfileModal">Edit Profile</button>
+                        @endif
                     </div>
                 </div> <!-- row -->
             </div> <!-- container-fluid -->
@@ -85,14 +96,11 @@
                             </div>
                             <div class="col-md-6 text-center">
                                 <br>
-                                @php
-                                    $avatar = Auth::user()->avatar;
-                                    if (isset($avatar)) {
-                                        echo "'<img src='" . asset('images/'. $avatar) . "' id='profileImage'>";
-                                    } else {
-                                        echo "'<img src='" . asset('images/default-profile-picture.jpg') . "' id='profileImage'>";
-                                    }
-                                @endphp
+                                @if(Auth::user()->avatar)
+                                    <img src="{{asset('avatars/'. Auth::user()->avatar)}}" id="profileImage">;
+                                @else
+                                    <img src="{{asset('avatars/default-profile-picture.jpg')}}" id="profileImage">
+                                @endif
                                 <br><br>
                                 {{-- TODO avatar table to pull selections, unless we hardcode their options below
                                 <select name="avatar" id="modal_avatar" class="alert-info">
@@ -103,9 +111,17 @@
                                 --}}
                                 <select name="avatar" id="modal_avatar" class="alert-info">
                                     <option value="default-profile-picture.jpg">Default</option>
-                                    <option value="avatar1">Avatar 1</option>
-                                    <option value="avatar2">Avatar 2</option>
-                                    <option value="avatar3">Avatar 3</option>
+                                    <option value="dog-1.png">Dog</option>
+                                    <option value="cat.png">Cat</option>
+                                    <option value="parrot.png">Parrot</option>
+                                    <option value="ostrich.png">Ostrich</option>
+                                    <option value="seal.png">Seal</option>
+                                    <option value="rooster.png">Rooster</option>
+                                    <option value="snake.png">Snake</option>
+                                    <option value="hedgehog.png">Hedgehog</option>
+                                    <option value="crow.png">Crow</option>
+                                    <option value="chicken.png">Chicken</option>
+                                    <option value="octopus.png">Octopus</option>
                                 </select>
                             </div>
                         </div>
@@ -125,4 +141,7 @@
              </div>
          </div>
      </div>
+    <script>
+        $('#modal_avatar option[value="{{ Auth::user()->avatar }}"').attr('selected', 'selected');
+    </script>
  @endsection

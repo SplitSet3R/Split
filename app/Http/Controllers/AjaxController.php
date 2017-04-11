@@ -17,12 +17,12 @@ class AjaxController extends Controller
      * AJAX Request to handle adding a friend specified in the request
      * conducted by the user currently authenticated
      */
-    public function addfriend(Request $req) {
+    public function addfriend(Request $req)
+    {
         if ($req->json() && isset($req->username)) {
             $friendstatus = Friend::whereIn('username1', [Auth::user()->username, $req->username])
-                ->whereIn('username2', [Auth::user()->username, $req->username])
-                ->count();
-            if ($friendstatus < 1) { // Authenticated user is not friends with $req->username
+                ->whereIn('username2', [Auth::user()->username, $req->username]);
+            if ($friendstatus->count() < 1) { // Authenticated user is not friends with $req->username
                 $friendship = new Friend;
                 $friendship->username1 = Auth::user()->username;
                 $friendship->username2 = $req->username;
@@ -31,6 +31,18 @@ class AjaxController extends Controller
                 $friendship->save();
                 NotificationManager::makeFriendRequestNotification($friendship); //generate notification on success
                 return response()->json(array("message" => "friend request sent!"), 200);
+            } else {
+                $friends = $friendstatus->first();
+                switch ($friends->status_code) {
+                    case "pending":
+                        return response()->json(array("message" => "Friend request pending!"), 200);
+                    case "accepted":
+                        return response()->json(array("message" => "Silly you, you're already friends!"), 200);
+                    case "declined":
+                        return response()->json(array("message" => "This person hates your guts!"), 200);
+                    default:
+                        break;
+                }
             }
         }
         return response()->json(array("message" => "generic error message"), 500);
@@ -39,10 +51,11 @@ class AjaxController extends Controller
     /*
      * AJAX Request to handle accepting/declining a friend request
      */
-    public function processFriendRequest(Request $req) {
+    public function processFriendRequest(Request $req)
+    {
         if ($req->json() && isset ($req->username)) {
             $friendship = Friend::where('username2', '=', Auth::user()->username)
-                ->where('username1', '=',  $req->username)
+                ->where('username1', '=', $req->username)
                 ->where('status_code', '=', 'pending')
                 ->where('action_username', '!=', Auth::user()->username)
                 ->first();
@@ -69,6 +82,32 @@ class AjaxController extends Controller
     }
 
     /**
+     * Ajax Request to retrieve a user's friends
+     *
+     */
+    public function retrieveFriends(Request $req)
+    {
+
+        if ($req->json() && isset($req->search)) {
+            $terms = explode(" ", $req->search);
+
+            $friends = Auth::user()->acceptedFriends()->filter(function ($d) use ($terms) {
+                foreach ($terms as $term) {
+                    if (strpos($d->username, $term) !== false || strpos($d->firstname, $term) !== false || strpos($d->lastname, $term) !== false) {
+                        return true;
+                    }
+                }
+
+                return false;
+            });
+
+            return response()->json($friends, 200);
+        }
+
+        return response()->json(array("message" => "generic error message"), 500);
+    }
+
+    /*
      * Get notifications where user is the recipient of the request.
      * TODO currently only FRIEND notifications: add expense notifications too
      * TODO set a cap on how many notifications to pull.
@@ -104,7 +143,7 @@ class AjaxController extends Controller
             }
             return response()->json(array("fri_not"=>$fri_not, "exp_not"=>$exp_not));
         } else {
-            return response()->json(array("error"=>"error with notifications"));
+            return response()->json(array("error" => "error with notifications"));
         }
     }
 
@@ -115,6 +154,5 @@ class AjaxController extends Controller
      */
     public function updateNotifications(Request $req)
     {
-
     }
 }

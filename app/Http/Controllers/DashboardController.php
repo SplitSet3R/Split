@@ -1,9 +1,12 @@
 <?php
 namespace App\Http\Controllers;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\CustomClasses\Notifications\ExpenseNotification;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\SharedExpense;
+use App\User;
 use DB;
 use Auth;
 class DashboardController extends Controller
@@ -16,40 +19,6 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }
-
-    public function store(Request $req)
-    {
-        $this->validate($req, [
-            'expAmount' => 'required|numeric',
-            'expType' => 'required|max:255',
-            'expDate' => 'required|date',
-            'expComments' => 'nullable|max:255'
-        ]);
-        $newExpense = new Expense;
-        $newExpense->owner_username= Auth::user()->username;
-        $newExpense->amount=$req->expAmount;
-        $newExpense->type=$req->expType;
-        $newExpense->date=$req->expDate;
-        $newExpense->comments=$req->expComments;
-        if($newExpense->save()) {
-            if(isset($req->expOwedAmount)&&isset($req->expOwerUsername)) {
-                $this->validate($req, [
-                    'expOwedAmount' => 'required|numeric',
-                    'expOwerUsername' => 'required|max:255',
-                    'expOwerComments' => 'nullable|max:255'
-                ]);
-                $newSharedExpense = new SharedExpense;
-                $newSharedExpense->expense_id=$newExpense->id;
-                $newSharedExpense->amount_owed=$req->expOwedAmount;
-                $newSharedExpense->comments=$req->expOwerComments;
-                $newSharedExpense->secondary_username=$req->expOwerUsername;
-                if($newSharedExpense->save()) {
-                    //ExpenseNotification::makeExpenseRequestNotification($newExpense, $newSharedExpense);
-                }
-            }
-        }
-        return redirect()->action('DashboardController@index');
     }
 
     public function getExpenses()
