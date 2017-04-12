@@ -23,6 +23,7 @@ class DashboardController extends Controller
 
     public function getExpenses()
     {
+      //user owns means the user paid and they're owed money
         $expensesWhereUserOwns = DB::table('expenses AS e')
             ->leftjoin('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
             ->select('e.*', 'se.secondary_username', 'se.amount_owed')
@@ -36,6 +37,12 @@ class DashboardController extends Controller
         return $allExpenses;
     }
 
+    public function getExpenseSummary($expenses){
+      //make an summary
+      //return new
+
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -44,6 +51,9 @@ class DashboardController extends Controller
     public function index()
     {
         $expenses = $this->getExpenses();
+        //$summary = 
+
+
         return view('dashboard', compact('expenses'));
     }
 }
