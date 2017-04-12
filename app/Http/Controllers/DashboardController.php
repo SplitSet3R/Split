@@ -43,21 +43,21 @@ class DashboardController extends Controller
       //return new
         $summary = array();
         $owed = DB::table('expenses AS e')
-            ->leftjoin('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
-            ->select('e.*', 'se.secondary_username', 'se.amount_owed')
+            -join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->select('se.amount_owed')
             ->where('e.owner_username', Auth::user()->username)
             //->get();
             ->sum('se.amount_owed');
         $owing = DB::table('expenses AS e')
-            ->leftjoin('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
-            ->select('e.*', 'se.secondary_username', 'se.amount_owed')
+            ->join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->select('se.amount_owed')
             ->where('se.secondary_username', '=', Auth::user()->username)
             //->get();
             ->sum('se.amount_owed');
         // ttl means amount spent
             // assuming that means
-        $ttl = DB::table('expenses AS e')
-            ->where('e.owner_username', '=', Auth::user()->username)
+        $ttl = DB::table('expenses')
+            ->where('owner_username', '=', Auth::user()->username)
             //->get();
             ->sum('amount');
         //$bal = $owed - $ttl;
@@ -66,6 +66,7 @@ class DashboardController extends Controller
         $summary['owing'] = $owing;
         $summary['ttl'] = $ttl;
         $summary['bal'] = $bal;
+        //dd(Auth::user()->username);
         //dd($summary);
 
         return $summary;
@@ -83,7 +84,7 @@ class DashboardController extends Controller
         $summary = $this->getExpenseSummary($expenses);
         //$summary =
 
-
-        return view('dashboard', compact('expenses', 'summary'));
+        //return $summary;
+         return view('dashboard', compact('expenses', 'summary'));
     }
 }
