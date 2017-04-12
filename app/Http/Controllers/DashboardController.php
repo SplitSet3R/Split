@@ -28,6 +28,7 @@ class DashboardController extends Controller
             ->leftjoin('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
             ->select('e.*', 'se.secondary_username', 'se.amount_owed')
             ->where('e.owner_username', Auth::user()->username);
+        //dd($expensesWhereUserOwns->get());
         $allExpenses = DB::table('expenses AS e')
             ->join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
             ->select('e.*', 'se.secondary_username', 'se.amount_owed')
@@ -40,6 +41,34 @@ class DashboardController extends Controller
     public function getExpenseSummary($expenses){
       //make an summary
       //return new
+        $summary = array();
+        $owed = DB::table('expenses AS e')
+            ->leftjoin('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->select('e.*', 'se.secondary_username', 'se.amount_owed')
+            ->where('e.owner_username', Auth::user()->username)
+            //->get();
+            ->sum('se.amount_owed');
+        $owing = DB::table('expenses AS e')
+            ->leftjoin('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->select('e.*', 'se.secondary_username', 'se.amount_owed')
+            ->where('se.secondary_username', '=', Auth::user()->username)
+            //->get();
+            ->sum('se.amount_owed');
+        // ttl means amount spent
+            // assuming that means
+        $ttl = DB::table('expenses AS e')
+            ->where('e.owner_username', '=', Auth::user()->username)
+            //->get();
+            ->sum('amount');
+        //$bal = $owed - $ttl;
+        $bal = $owed - $owing;
+        $summary['owed'] = $owed;
+        $summary['owing'] = $owing;
+        $summary['ttl'] = $ttl;
+        $summary['bal'] = $bal;
+        //dd($summary);
+
+        return $summary;
 
     }
 
@@ -51,9 +80,10 @@ class DashboardController extends Controller
     public function index()
     {
         $expenses = $this->getExpenses();
-        //$summary = 
+        $summary = $this->getExpenseSummary($expenses);
+        //$summary =
 
 
-        return view('dashboard', compact('expenses'));
+        return view('dashboard', compact('expenses', 'summary'));
     }
 }
