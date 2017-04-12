@@ -43,7 +43,7 @@ class DashboardController extends Controller
       //return new
         $summary = array();
         $owed = DB::table('expenses AS e')
-            -join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
             ->select('se.amount_owed')
             ->where('e.owner_username', Auth::user()->username)
             //->get();
