@@ -20,10 +20,10 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td class='text-success'><strong>{{$summary->owed}}</strong></td>
-                            <td class='text-danger'><strong>{{$summary->owing}}</strong></td>
-                            <td>{{$summary->ttl}}</td>
-                            <td>{{$summary->bal}}</td>
+                            <td class='text-success'><strong>{{$summary['owed']}}</strong></td>
+                            <td class='text-danger'><strong>{{$summary['owing']}}</strong></td>
+                            <td>{{$summary['ttl']}}</td>
+                            <td>{{$summary['bal']}}</td>
                         </tr>
                         </tbody>
                     </table>
