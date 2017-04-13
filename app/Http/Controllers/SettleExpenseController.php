@@ -33,7 +33,7 @@ class SettleExpenseController extends Controller
             $settledexpense->secondary_username = $sharedexpense->secondary_username;
             $settledexpense->comments = $sharedexpense->comments;
             $settledexpense->date_added = $sharedexpense->date_added;
-            $settledexpense->date_settled = Carbon::now()->toDateString();
+            $settledexpense->date_settled = Carbon::now();
 
             //no need for try-catch, id not specified will pick one that isn't used alrady
             $settledexpense->save();
