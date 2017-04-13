@@ -15,57 +15,6 @@
                     <p>User Profile</p>
                 </a>
             </li>
-            <li id="colorNotifications">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-toggle">
-                    <i class="material-icons">notifications_active</i>
-                    <p>Notifications</p>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-right" id="dropdown-notifications">
-
-
-
-                </ul>
-                <script>
-                    $(document).ready(function() {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            type: 'GET',
-                            url: '/notifications',
-                            data: {},
-                            dataType: 'json',
-                            success: function (data) {
-                                if(data["requestnotifications"].length > 0) {
-                                    for(var i=0; i<data["requestnotifications"].length; i++) {
-                                        var newreq = document.createElement('LI');
-                                        newreq.innerHTML = data["requestnotifications"][i]['message'];
-                                        document.getElementById('dropdown-notifications').append(newreq);
-                                    }
-                                } else {
-                                    var noreq = document.createElement('LI');
-                                    noreq.innerHTML = "no notifications";
-                                    document.getElementById('dropdown-notifications').append(noreq);
-                                }
-                            }
-                        });
-                    });
-                    /*
-                    $('#notifications-toggle').on('click', function(e){
-                        //set all to viewed
-                        $.ajax({
-                            type: 'POST',
-                            url: '/notifications',
-                            data: {}, //Data values are reference ids
-                            dataType: 'json',
-                            success: function (data) {
-
-                            }
-                        });
-                    });*/
-                </script>
             <li id="colorAddFriend">
                 <a href='/search'>
                     <i class="material-icons">library_books</i>
@@ -143,7 +92,7 @@
                         </span>
                     @endif
                     <label class="control-label">Comments</label>
-                    <input type="textarea" name="expComments" class="form-control">
+                    <input type="textarea" name="expComments" class="form-control" required="true">
                     <br>
                     <button id="owedButton" href="#newExpenseOwed" data-toggle="collapse" class="btn btn-default">Owed</button>
                     <div class="collapse" id="newExpenseOwed">
@@ -172,7 +121,7 @@
                             </span>
                         @endif
                         <label class="control-label">Comments:</label>
-                        <input type="textarea" class="form-control" name="expOwerComments">
+                        <input type="textarea" class="form-control" name="expOwerComments" required="true">
 
                         <!-- TODO comments should be nullable. Back end issue -->
                         @if ($errors->has('expOwerComments'))

@@ -3,6 +3,7 @@
 
 
     <div class="main-panel">
+
         <div class="col-sm-10">
             <div class='container'>
                 <div class = "col-sm-7" id = "center-block">
@@ -45,6 +46,16 @@
                       <?php $balanceStyle = array(['class'=>'', 'operator' => '']); ?>
                       @endif
                           <tr>
+                              <td>
+                                  @foreach ($allSharedExpenses as $sharedExpense)
+                                      @if($sharedExpense->expense_id == $expense->id && Auth::user()->username == $sharedExpense->owner_username)
+                                          {{ Form::open(['url' => 'settleSharedExpense', 'id' => 'settleSharedExpenseForm']) }}
+                                          {{ Form::hidden('id', $sharedExpense->shared_expense_id, ['id'=>'id']) }}
+                                          {{ Form::submit('Settle',['class'=> 'btn btn-info']) }}
+                                          {{ Form::close() }}
+                                      @endif
+                                  @endforeach
+                              </td>
                               <td>{{$expense->type}}</td>
                               <td>{{$expense->date_added}}</td>
                               <td>{{$expense->amount}}</td>
@@ -84,17 +95,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(isset($settledExpenses))
-                    @foreach ($settledExpenses as $expense)
-                        <tr>
-                            <td>{{$expense->type}}</td>
-                            <td>{{$expense->date_added}}</td>
-                            <td>{{$expense->amount}}</td>
-                            <td style="">{{$expense->amount_owed}}</td>
-                            <td><a href="profile/{{$expense->secondary_username}}">{{$expense->secondary_username}}</a></td>
-                            <td>{{$expense->comments}}</td>
-                        </tr>
-                    @endforeach
+                    @if(isset($allSettledExpenses))
+                        @foreach ($allSettledExpenses as $settledExpense)
+                            <tr>
+                                <td>{{$settledExpense->id}}</td>
+                                <td>{{$settledExpense->date_added}}</td>
+                                <td>{{$settledExpense->date_settled}}</td>
+                                <td style="">{{$settledExpense->amount_owed}}</td>
+                                <td><a href="profile/{{$settledExpense->secondary_username}}">{{$settledExpense->secondary_username}}</a></td>
+                                <td>{{$settledExpense->comments}}</td>
+                            </tr>
+                        @endforeach
                     @endif
                     </tbody>
                 </table>
