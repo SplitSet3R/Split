@@ -702,3 +702,8 @@ h2.title {
 .navbar .navbar-nav > li > a.btn.btn-danger.active {
   box-shadow: none;
 }
+#center-block {
+  display: block;
+  margin-left: 200px;
+  margin-right: auto;
+}

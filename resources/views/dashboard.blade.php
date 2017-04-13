@@ -3,9 +3,9 @@
 
 
     <div class="main-panel">
-        <div class="col-sm-8">
+        <div class="col-sm-10">
             <div class='container'>
-                <div class = "col-sm-7">
+                <div class = "col-sm-7" id = "center-block">
                     <h2><span style="color:darkgreen;font-weight:bold">{{ Auth::user()->firstname}}'s expenses</span></h2>
                     <hr>
 
