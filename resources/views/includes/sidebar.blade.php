@@ -66,13 +66,6 @@
                         });
                     });*/
                 </script>
-            </li>
-            <li id="colorTableList">
-                <a href="">
-                    <i class="material-icons">content_paste</i>
-                    <p>Table List</p>
-                </a>
-            </li>
             <li id="colorAddFriend">
                 <a href='/search'>
                     <i class="material-icons">library_books</i>
