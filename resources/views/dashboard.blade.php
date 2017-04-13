@@ -4,14 +4,27 @@
 
     <div class="main-panel">
         <div class="col-sm-7">
-          <h4>{{ Auth::user()->firstname}}'s expenses</h4>
-          <div>
-            <h2>Summary of Expenses</h2>
-              <table class='table' id="displayTable">
-                <thead>
-                  <tr><th>OWED</th><th>OWES</th><th>TTL</th><th>BAL</th></tr></thead>
-                  <tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
-              </table>
+            <div class="container">
+                <h4>{{ Auth::user()->firstname}}'s expenses</h4>
+                <div>
+                    <h2>Summary of Expenses</h2>
+                    <table class='table' id="displayTable">
+                        <thead>
+                        <th>OWED</th>
+                        <th>OWES</th>
+                        <th>TTL</th>
+                        <th>BAL</th>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class='text-success'><strong>+0</strong></td>
+                            <td class='text-danger'><strong>-0</strong></td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
           </div>
         </div>
         <div class="col-sm-7">

@@ -38,7 +38,7 @@ class DashboardController extends Controller
         return $allExpenses;
     }
 
-    public function getExpenseSummary($expenses){
+    public function getExpenseSummary($expenses) {
       //make an summary
       //return new
         $summary = array();
