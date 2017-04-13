@@ -17,9 +17,10 @@ class CreateExpensesTable extends Migration
             $table->increments('id');
             $table->string('owner_username');
             $table->float('amount');
+            $table->date('date');
             $table->string('type');
-            $table->string('comments');
-            $table->date('date_added');
+            $table->string('comments')->nullable();
+            $table->timestamp('date_added');
         });
     }
 

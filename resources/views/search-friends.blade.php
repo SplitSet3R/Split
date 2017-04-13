@@ -21,7 +21,7 @@
     <div class="well">
         @foreach($search_users as $user)
         <!-- TODO route to user's profile-->
-        <a href="#"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
+        <a href="profile/{{$user->username}}"> {{ $user->firstname . " " . $user->lastname }}</a> ( {{$user->username}} )
           @if(!($related_users->contains($user)))
             <span class="pull-right">
               <button type="button" onclick="addFriend(this.value)" class="btn btn-danger" name="add-friend" value="{{$user->username}}">Add</button>

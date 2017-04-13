@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'FRIENDS' => 0,
-    'PENDING_FRIENDS' => 1,
-    'NOT_FRIENDS' => 2,
-    'PROFILE_ERROR' => 3
+    'SELF' => 0,
+    'FRIENDS' => 1,
+    'PENDING_FRIENDS' => 2,
+    'NOT_FRIENDS' => 3,
+    'PROFILE_ERROR' => 4
 ];

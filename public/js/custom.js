@@ -1,3 +1,10 @@
+/*
+ * Put initialization related stuff
+ */
+function init() {
+  retrieveFriends();
+}
+
 function addFriend(username, token) {
     $.ajax({
         type: "POST",
@@ -24,3 +31,47 @@ function friendRequestResponse(username, response) {
         }
     })
 };
+
+function retrieveFriends() {
+  $( "#expOwerUsername" ).autocomplete({
+    appendTo: "#expForm",
+    minLength: 1,
+    focus: function( event, ui ) {
+      $( "#expOwerUsername" ).val( ui.item.username );
+      return false;
+    },
+    select: function( event, ui ) {
+      $("#friend-pill .friend-text").text(ui.item.username);
+      $("#friend-pill").show();
+      $( "#expOwerUsername" ).hide();
+      return false;
+    },
+    source: function(request, response) {
+      $.ajax({
+         type : "POST",
+         url: '/friends/sharedexpense',
+         data: { 'search' : request.term },
+         dataType: 'json',
+         success: function( data ) {
+           var usernames = _.map(data, d => {
+             return {
+               'username' : d.username,
+               'firstname': d.firstname,
+               'lastname' : d.lastname
+             };
+           });
+           response( usernames );
+         }
+       })
+    }
+  }).data("uiAutocomplete")._renderItem =  function( ul, item ) {
+    return $( "<li>" )
+    .append(item.firstname + " " + item.lastname + " (" + item.username +")" )
+    .appendTo( ul );
+  };
+}
+
+function deleteFriendFromAddExpense() {
+  $("#expOwerUsername").show();
+  $("#friend-pill").hide();
+}
