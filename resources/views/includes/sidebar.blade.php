@@ -144,7 +144,7 @@
                         </span>
                     @endif
                     <label class="control-label">Comments</label>
-                    <input type="textarea" name="expComments" class="form-control">
+                    <input type="textarea" name="expComments" class="form-control" required="true">
                     <br>
                     <button id="owedButton" href="#newExpenseOwed" data-toggle="collapse" class="btn btn-default">Owed</button>
                     <div class="collapse" id="newExpenseOwed">
@@ -173,7 +173,7 @@
                             </span>
                         @endif
                         <label class="control-label">Comments:</label>
-                        <input type="textarea" class="form-control" name="expOwerComments">
+                        <input type="textarea" class="form-control" name="expOwerComments" required="true">
 
                         <!-- TODO comments should be nullable. Back end issue -->
                         @if ($errors->has('expOwerComments'))

@@ -5,6 +5,9 @@
     <div class="main-panel">
         <div class="col-sm-7">
             <div class="container">
+                @if(session('settled'))
+                    <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('settled') }}</p>
+                @endif
                 <h4>{{ Auth::user()->firstname}}'s expenses</h4>
                 <div>
                     <h2>Summary of Expenses</h2>
@@ -52,12 +55,12 @@
                           <tr>
                               <td>
                                   @foreach ($allSharedExpenses as $sharedExpense)
-                                      {{ Form::open(['url' => 'settleSharedExpense', 'id' => 'settleSharedExpenseForm']) }}
                                       @if($sharedExpense->expense_id == $expense->id)
-                                        {{ Form::hidden('id', $sharedExpense->id, ['id'=>'id']) }}
+                                          {{ Form::open(['url' => 'settleSharedExpense', 'id' => 'settleSharedExpenseForm']) }}
+                                          {{ Form::hidden('id', $sharedExpense->id, ['id'=>'id']) }}
+                                          {{ Form::submit('Settle',['class'=> 'btn btn-info']) }}
+                                          {{ Form::close() }}
                                       @endif
-                                      {{ Form::submit('Settle',['class'=> 'btn btn-info']) }}
-                                      {{ Form::close() }}
                                   @endforeach
                               </td>
                               <td>{{$expense->type}}</td>
