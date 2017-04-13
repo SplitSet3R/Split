@@ -15,7 +15,7 @@
                     <p>User Profile</p>
                 </a>
             </li>
-            <li id="colorNofications">
+            <li id="colorNotifications">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-toggle">
                     <i class="material-icons">notifications_active</i>
                     <p>Notifications</p>

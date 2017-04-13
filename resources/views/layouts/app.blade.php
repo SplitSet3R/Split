@@ -11,20 +11,21 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-
-
-
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/commons/split.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/notifications.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/profile.css') }}" rel="stylesheet" />
 
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/notifications.js') }}"></script>
     <script
         src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
         integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
@@ -72,6 +73,42 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-toggle">
+                                    <i class="material-icons">people</i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-notifications"
+                                    id="friend-notifications"></ul>
+
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-toggle">
+                                    <i class="material-icons">notifications_active</i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-notifications"
+                                    id="expense-notifications"></ul>
+
+                            </li>
+                            <script>
+                                $(document).ready(function() {
+                                    $.ajaxSetup({
+                                        headers: {
+                                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                        }
+                                    });
+                                    $.ajax({
+                                        type: 'GET',
+                                        url: '/notifications',
+                                        data: {},
+                                        dataType: 'json',
+                                        success: function (data) {
+                                            //friend notifications
+                                            appendNotifications(data["fri_not"], "friend");
+                                            appendNotifications(data["exp_not"], "expense");
+                                        }
+                                    });
+                                });
+                            </script>
 
                             <li class=".addExdansebtn" style="padding-top: 6px;"><button class="btn btn-danger openAddExpenseModal" data-toggle="modal" data-target="#addExpenseModal">
                                     Add Expense</button>&nbsp &nbsp</li>
