@@ -28,6 +28,7 @@
                 <table class='table table-bordered' id='displayTable'>
                     <thead class='thead-default'>
                     <tr class="bg-warning">
+                        <th><i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th class="col-xs-1">Type<i class='fa fa-sort' aria-hidden='true'></i></>
                       <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
@@ -79,7 +80,7 @@
 
                     <div class="row">
                         <div class="col-sm-4">
-                    <h4 style="font-family:arial;"><span style="color:goldenrod;font-weight:bold">Settled</span> Expenses</h4>
+                    <h4 style="font-family:arial;"><span style="color:goldenrod;font-weight:bold">Paid</span> Expenses</h4>
                         </div>
                       <br><br><br>
                     </div>
@@ -90,7 +91,6 @@
                       <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Balance<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
                     </tr>
                     </thead>
@@ -102,7 +102,6 @@
                                 <td>{{$settledExpense->date_added}}</td>
                                 <td>{{$settledExpense->date_settled}}</td>
                                 <td style="">{{$settledExpense->amount_owed}}</td>
-                                <td><a href="profile/{{$settledExpense->secondary_username}}">{{$settledExpense->secondary_username}}</a></td>
                                 <td>{{$settledExpense->comments}}</td>
                             </tr>
                         @endforeach

@@ -94,7 +94,7 @@ class DashboardController extends Controller
     }
 
     public function getAllSettledExpenses() {
-        $allSettledExpenses = SettledExpense::all();
+        $allSettledExpenses = SettledExpense::where('secondary_username', Auth::user()->username)->get();
         return $allSettledExpenses;
     }
 
