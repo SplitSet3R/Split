@@ -55,9 +55,9 @@
                           <tr>
                               <td>
                                   @foreach ($allSharedExpenses as $sharedExpense)
-                                      @if($sharedExpense->expense_id == $expense->id)
+                                      @if($sharedExpense->expense_id == $expense->id && Auth::user()->username == $sharedExpense->owner_username)
                                           {{ Form::open(['url' => 'settleSharedExpense', 'id' => 'settleSharedExpenseForm']) }}
-                                          {{ Form::hidden('id', $sharedExpense->id, ['id'=>'id']) }}
+                                          {{ Form::hidden('id', $sharedExpense->shared_expense_id, ['id'=>'id']) }}
                                           {{ Form::submit('Settle',['class'=> 'btn btn-info']) }}
                                           {{ Form::close() }}
                                       @endif

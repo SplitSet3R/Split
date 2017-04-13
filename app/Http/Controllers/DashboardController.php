@@ -59,10 +59,18 @@ class DashboardController extends Controller
             // assuming that means
         $ttl = DB::table('expenses')
             ->where('owner_username', '=', Auth::user()->username)
-            //->get();
+            ->whereNotIn('id',function ($q) {
+                $q->select('expense_id')
+                    ->from('sharedexpenses');
+            })
+            ->whereNotIn('id', function ($q) {
+                $q->select('expense_id')
+                    ->from('settledexpenses');
+            })
             ->sum('amount');
         //$bal = $owed - $ttl;
         $bal = $owed - $owing;
+        $ttl = $ttl + $bal;
         $summary['owed'] = $owed;
         $summary['owing'] = $owing;
         $summary['ttl'] = $ttl;
@@ -75,7 +83,12 @@ class DashboardController extends Controller
     }
 
     public function getAllSharedExpenses() {
-        $allSharedExpenses = SharedExpense::all();
+        $allSharedExpenses = DB::table('expenses AS e')
+            ->join('sharedexpenses AS se', 'e.id', '=', 'se.expense_id')
+            ->select('se.id AS shared_expense_id',
+                'e.owner_username AS owner_username',
+                'se.expense_id AS expense_id')
+            ->get();
         return $allSharedExpenses;
     }
 
