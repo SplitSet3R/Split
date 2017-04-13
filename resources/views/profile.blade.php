@@ -47,7 +47,7 @@
                             </table>
                         @endif
                         @if($permission==config('constants.FRIENDS'))
-                            <h3 style="text-align:center">You and {{$user->username}} are friends!</h3><<h3 style="text-align:center"> Buy lots of things together!</h3>
+                            <h3 style="text-align:center">You and {{$user->username}} are friends!</h3><h3 style="text-align:center"> Buy lots of things together!</h3>
                         @elseif($permission==config('constants.NOT_FRIENDS'))
                             <form method="POST" action="/search">
                               <input type="hidden" name="_token" value="{{ csrf_token() }}">
