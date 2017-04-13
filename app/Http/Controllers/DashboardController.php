@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Expense;
 use App\SharedExpense;
 use App\User;
+use App\Friend;
 use DB;
 use Auth;
 class DashboardController extends Controller
@@ -109,6 +110,15 @@ class DashboardController extends Controller
         $allSharedExpenses = $this->getAllSharedExpenses();
         $allSettledExpenses = $this->getAllSettledExpenses();
         //$summary =
+
+        $friends = Friend::where('username1', '=', Auth::user()->username)
+            ->select('username2 AS username')
+            ->get();
+
+        $friends2 = Friend::where('username2', '=', Auth::user()->username)
+            ->select ('username1 AS username')
+            ->get();
+        $allfriends = $friends->union($friends2);
 
         //return $summary;
          return view('dashboard', compact('expenses', 'summary', 'allSharedExpenses', 'allSettledExpenses'));

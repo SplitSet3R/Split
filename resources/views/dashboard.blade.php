@@ -3,45 +3,38 @@
 
 
     <div class="main-panel">
-        <div class="col-sm-7">
-            <div class="container">
-                @if(session('settled'))
-                    <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('settled') }}</p>
-                @endif
-                <h4>{{ Auth::user()->firstname}}'s expenses</h4>
-                <div>
-                    <h2>Summary of Expenses</h2>
-                    <table class='table' id="displayTable">
-                        <thead>
-                        <th>OWED</th>
-                        <th>OWES</th>
-                        <th>TTL</th>
-                        <th>BAL</th>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class='text-success'><strong>{{$summary['owed']}}</strong></td>
-                            <td class='text-danger'><strong>{{$summary['owing']}}</strong></td>
-                            <td>{{$summary['ttl']}}</td>
-                            <td>{{$summary['bal']}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-7">
-              <div class='container'>
-                <h2>Outstanding Expenses</h2>
-                <table class='table' id='displayTable'>
+
+        <div class="col-sm-10">
+            <div class='container'>
+                <div class = "col-sm-7" id = "center-block">
+                    <h2><span style="color:darkgreen;font-weight:bold">{{ Auth::user()->firstname}}'s expenses</span></h2>
+                    <hr>
+
+                    <h4 style="font-family:arial;"><span style="color:goldenrod;font-weight:bold">Summary</span> of Expenses</h4>
+              <table class="table table-bordered "  id="displayTable">
+                <thead>
+                  <tr class="bg-warning">
+                      <th >OWED</th>
+                      <th >OWES</th>
+                      <th >TTL</th>
+                      <th >BAL</th>
+                  </tr>
+                </thead>
+                  <tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
+              </table>
+                <hr>
+
+                    <h4 style="font-family:arial;"><span style="color:goldenrod;font-weight:bold">Outstanding</span> Expenses</h4>
+                <table class='table table-bordered' id='displayTable'>
                     <thead class='thead-default'>
-                      <th>Settle<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Type<i class='fa fa-sort' aria-hidden='true'></i></th>
+                    <tr class="bg-warning">
+                      <th class="col-xs-1">Type<i class='fa fa-sort' aria-hidden='true'></i></>
                       <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Balance<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
+                    </tr>
                     </thead>
                     <tbody>
                       @foreach ($expenses as $expense)
@@ -79,20 +72,27 @@
                       @endforeach
                     </tbody>
                 </table>
-              </div>
+                    <hr>
+
+
               <!--<script>$('table').tablesort();</script>-->
-        </div>
-        <div class="col-sm-7">
-              <div class='container'>
-                <h2>Settled Expenses</h2>
-                <table class='table'  id='displayTable'>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                    <h4 style="font-family:arial;"><span style="color:goldenrod;font-weight:bold">Settled</span> Expenses</h4>
+                        </div>
+                      <br><br><br>
+                    </div>
+                <table class='table table-bordered'  id='displayTable'>
                     <thead class='thead-default'>
-                        <th><i class='fa fa-sort' aria-hidden='true'></i></th>
-                        <th>Date Added<i class='fa fa-sort' aria-hidden='true'></i></th>
-                        <th>Date Settled<i class='fa fa-sort' aria-hidden='true'></i></th>
-                        <th>Amount Owed<i class='fa fa-sort' aria-hidden='true'></i></th>
-                        <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
-                        <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
+                    <tr class="bg-warning">
+                      <th>Type<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Balance<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
+                    </tr>
                     </thead>
                     <tbody>
                     @if(isset($allSettledExpenses))
@@ -109,6 +109,7 @@
                     @endif
                     </tbody>
                 </table>
+                </div>
               </div>
               <!--<script>$('table').tablesort();</script>-->
         </div>
