@@ -20,7 +20,9 @@
                       <th >BAL</th>
                   </tr>
                 </thead>
-                  <tbody><tr><td class='text-success'><strong>+0</strong></td><td class='text-danger'><strong>-0</strong></td><td>0</td><td>0</td></tr></tbody>
+                  <tbody><tr><td class='text-success'><strong>{{$summary['owed']}}</strong></td>
+                      <td class='text-danger'><strong>{{$summary['owing']}}</strong></td>
+                      <td>{{$summary['ttl']}}</td><td>{{$summary['bal']}}</td></tr></tbody>
               </table>
                 <hr>
 
