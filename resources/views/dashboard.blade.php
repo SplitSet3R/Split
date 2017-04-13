@@ -51,10 +51,14 @@
                       @endif
                           <tr>
                               <td>
-                                  {{ Form::open(['url' => 'settleSharedExpense', 'id' => 'settleSharedExpenseForm']) }}
-                                  {{ Form::hidden('id', $expense->id, ['id'=>'id']) }}
-                                  {{ Form::submit('Settle',['class'=> 'btn btn-info']) }}
-                                  {{ Form::close() }}
+                                  @foreach ($allSharedExpenses as $sharedExpense)
+                                      {{ Form::open(['url' => 'settleSharedExpense', 'id' => 'settleSharedExpenseForm']) }}
+                                      @if($sharedExpense->expense_id == $expense->id)
+                                        {{ Form::hidden('id', $sharedExpense->id, ['id'=>'id']) }}
+                                      @endif
+                                      {{ Form::submit('Settle',['class'=> 'btn btn-info']) }}
+                                      {{ Form::close() }}
+                                  @endforeach
                               </td>
                               <td>{{$expense->type}}</td>
                               <td>{{$expense->date_added}}</td>

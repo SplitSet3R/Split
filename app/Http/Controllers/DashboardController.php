@@ -73,6 +73,11 @@ class DashboardController extends Controller
 
     }
 
+    public function getAllSharedExpenses() {
+        $allSharedExpenses = SharedExpense::all();
+        return $allSharedExpenses;
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -82,9 +87,10 @@ class DashboardController extends Controller
     {
         $expenses = $this->getExpenses();
         $summary = $this->getExpenseSummary($expenses);
+        $allSharedExpenses = $this->getAllSharedExpenses();
         //$summary =
 
         //return $summary;
-         return view('dashboard', compact('expenses', 'summary'));
+         return view('dashboard', compact('expenses', 'summary', 'allSharedExpenses'));
     }
 }

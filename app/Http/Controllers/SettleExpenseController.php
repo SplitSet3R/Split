@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\SettledExpense;
+use App\Expense;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -24,6 +26,7 @@ class SettleExpenseController extends Controller
         if(isset($req->id) && $this->owedUserCheck($req->id)) {
             //don't need to try-catch this, already checked in owedUserCheck()
             $sharedexpense = SharedExpense::findOrFail($req->id);
+            $expense = Expense::findOrFail($sharedexpense->expense_id);
             $settledexpense = new SettledExpense;
             $settledexpense->expense_id = $sharedexpense->expense_id;
             $settledexpense->amount_owed = $sharedexpense->amount_owed;
@@ -37,10 +40,12 @@ class SettleExpenseController extends Controller
 
             try {
                 $sharedexpense->delete();
+                $expense->delete();
             } catch (QueryException $e) {
                 return redirect()->back()->with("error", "shared expense could not be deleted");
             }
         }
+        return redirect()->back()->with('settled', 'Expense settled!');
     }
 
     /*
@@ -62,7 +67,7 @@ class SettleExpenseController extends Controller
             return redirect()->back()->with("error", "shared expense does not have an associated expense");
         }
 
-        if($owner_username != Auth::username()) {
+        if($owner_username != Auth::user()->username) {
             return redirect()->back()->with("error", "Only the owner of the expense can settled the expense");
         }
         return true;
@@ -75,5 +80,9 @@ class SettleExpenseController extends Controller
 
     function settleGroupExpense(Request $req) {
 
+    }
+
+    public function index() {
+        return view('dashboard');
     }
 }
