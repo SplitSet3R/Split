@@ -87,10 +87,9 @@
                 <table class='table table-bordered'  id='displayTable'>
                     <thead class='thead-default'>
                     <tr class="bg-warning">
-                      <th>Type<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Date Added<i class='fa fa-sort' aria-hidden='true'></i></th>
+                      <th>Date Settled<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Balance<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
                     </tr>
                     </thead>
@@ -98,7 +97,6 @@
                     @if(isset($allSettledExpenses))
                         @foreach ($allSettledExpenses as $settledExpense)
                             <tr>
-                                <td>{{$settledExpense->id}}</td>
                                 <td>{{$settledExpense->date_added}}</td>
                                 <td>{{$settledExpense->date_settled}}</td>
                                 <td style="">{{$settledExpense->amount_owed}}</td>
