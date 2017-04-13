@@ -32,6 +32,7 @@
                 <h2>Outstanding Expenses</h2>
                 <table class='table' id='displayTable'>
                     <thead class='thead-default'>
+                      <th>Settle<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Type<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
                       <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
@@ -49,6 +50,12 @@
                       <?php $balanceStyle = array(['class'=>'', 'operator' => '']); ?>
                       @endif
                           <tr>
+                              <td>
+                                  {{ Form::open(['url' => 'settleSharedExpense', 'id' => 'settleSharedExpenseForm']) }}
+                                  {{ Form::hidden('id', $expense->id, ['id'=>'id']) }}
+                                  {{ Form::submit('Settle',['class'=> 'btn btn-info']) }}
+                                  {{ Form::close() }}
+                              </td>
                               <td>{{$expense->type}}</td>
                               <td>{{$expense->date_added}}</td>
                               <td>{{$expense->amount}}</td>

@@ -21,7 +21,7 @@ class SettleExpenseController extends Controller
      *
      */
     function settleSharedExpense(Request $req) {
-        if(isset($req->id) && owedUserCheck($req->id)) {
+        if(isset($req->id) && $this->owedUserCheck($req->id)) {
             //don't need to try-catch this, already checked in owedUserCheck()
             $sharedexpense = SharedExpense::findOrFail($req->id);
             $settledexpense = new SettledExpense;
