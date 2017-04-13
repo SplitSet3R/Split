@@ -87,25 +87,25 @@
                 <h2>Settled Expenses</h2>
                 <table class='table'  id='displayTable'>
                     <thead class='thead-default'>
-                      <th>Type<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Date<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Amount<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Balance<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
-                      <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th><i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Date Added<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Date Settled<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Amount Owed<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Shared with<i class='fa fa-sort' aria-hidden='true'></i></th>
+                        <th>Comments<i class='fa fa-sort' aria-hidden='true'></i></th>
                     </thead>
                     <tbody>
-                    @if(isset($settledExpenses))
-                    @foreach ($settledExpenses as $expense)
-                        <tr>
-                            <td>{{$expense->type}}</td>
-                            <td>{{$expense->date_added}}</td>
-                            <td>{{$expense->amount}}</td>
-                            <td style="">{{$expense->amount_owed}}</td>
-                            <td><a href="profile/{{$expense->secondary_username}}">{{$expense->secondary_username}}</a></td>
-                            <td>{{$expense->comments}}</td>
-                        </tr>
-                    @endforeach
+                    @if(isset($allSettledExpenses))
+                        @foreach ($allSettledExpenses as $settledExpense)
+                            <tr>
+                                <td>{{$settledExpense->id}}</td>
+                                <td>{{$settledExpense->date_added}}</td>
+                                <td>{{$settledExpense->date_settled}}</td>
+                                <td style="">{{$settledExpense->amount_owed}}</td>
+                                <td><a href="profile/{{$settledExpense->secondary_username}}">{{$settledExpense->secondary_username}}</a></td>
+                                <td>{{$settledExpense->comments}}</td>
+                            </tr>
+                        @endforeach
                     @endif
                     </tbody>
                 </table>

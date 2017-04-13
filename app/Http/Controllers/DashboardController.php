@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\SettledExpense;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\CustomClasses\Notifications\ExpenseNotification;
 use Illuminate\Http\Request;
@@ -78,6 +79,11 @@ class DashboardController extends Controller
         return $allSharedExpenses;
     }
 
+    public function getAllSettledExpenses() {
+        $allSettledExpenses = SettledExpense::all();
+        return $allSettledExpenses;
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -88,9 +94,10 @@ class DashboardController extends Controller
         $expenses = $this->getExpenses();
         $summary = $this->getExpenseSummary($expenses);
         $allSharedExpenses = $this->getAllSharedExpenses();
+        $allSettledExpenses = $this->getAllSettledExpenses();
         //$summary =
 
         //return $summary;
-         return view('dashboard', compact('expenses', 'summary', 'allSharedExpenses'));
+         return view('dashboard', compact('expenses', 'summary', 'allSharedExpenses', 'allSettledExpenses'));
     }
 }
