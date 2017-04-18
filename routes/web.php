@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-  return view('welcome');
-})->middleware('guest');
+Route::get('/', 'WelcomeController@index')->middleware('guest');
 Auth::routes();
 
 /*Profile Routes*/
