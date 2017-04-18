@@ -11,13 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('css/common/split.css')}}">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/commons/split.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/common/split.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/notifications.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/profile.css') }}" rel="stylesheet" />

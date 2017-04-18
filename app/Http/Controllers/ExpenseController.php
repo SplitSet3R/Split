@@ -9,7 +9,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\CustomClasses\Notifications\ExpenseNotification;
+use App\CustomClasses\Notifications\NotificationManager;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\SharedExpense;
@@ -65,11 +65,12 @@ class ExpenseController extends Controller
                 return back()->withErrors($validateSharedExpense);
             }
 
-             SharedExpense::createSharedExpense()->withExpense($newExpense->id)
+             $newSharedExpense = SharedExpense::createSharedExpense()->withExpense($newExpense->id)
                                                  ->withAmountOwed($req->expOwedAmount)
                                                  ->withComments($req->expOwerComments)
                                                  ->withUserOwing($req->username)
                                                  ->saveSharedExpense();
+             NotificationManager::makeExpenseRequestNotification($newExpense, $newSharedExpense);
         }
 
         DB::commit();
